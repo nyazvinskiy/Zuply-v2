@@ -411,11 +411,6 @@
   const leadForm = document.getElementById('leadForm');
   const submitBtn = leadForm ? leadForm.querySelector('.form-submit') : null;
 
-  const TG_CONFIG = {
-    token: '8690599672:AAHSjFI50OLXxSnYv7cuAPyN5HDYM2Qi_qw',
-    chatId: 'YOUR_CHAT_ID' // User still needs to provide ChatID or I use a placeholder
-  };
-
   if (leadForm && submitBtn) {
     leadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -430,6 +425,26 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Отправка...';
 
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput ? fileInput.files[0] : null;
+      
+      let fileContent = '';
+      if (file) {
+        console.log('Reading file:', file.name, 'Size:', file.size);
+        fileContent = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            console.log('File read success. Base64 length:', reader.result.length);
+            resolve(reader.result);
+          };
+          reader.onerror = () => {
+            console.error('File read error');
+            resolve('');
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
       const formData = {
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
@@ -437,44 +452,40 @@
         material: document.getElementById('material').value,
         qty: document.getElementById('qty').value,
         comment: document.getElementById('comment').value,
-        file: document.getElementById('fileInput').files[0]?.name || 'Нет файла'
+        file: file ? file.name : 'Нет файла',
+        file_content: fileContent,
+        file_name: file ? file.name : ''
       };
 
-      const message = `
-🚀 *Новая заявка Zuply!*
-👤 *Имя:* ${formData.name || 'Не указано'}
-📞 *Телефон:* ${formData.phone || 'Не указано'}
-📱 *Telegram:* ${formData.telegram || 'Не указано'}
-🛠 *Материал:* ${formData.material}
-📦 *Тираж:* ${formData.qty || 'Не указано'}
-📝 *Комментарий:* ${formData.comment || '—'}
-📂 *Файл:* ${formData.file}
-      `;
-
       try {
-        const response = await fetch(`https://api.telegram.org/bot${TG_CONFIG.token}/sendMessage`, {
+        const response = await fetch(`http://localhost:8000/submit`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: TG_CONFIG.chatId,
-            text: message,
-            parse_mode: 'Markdown'
-          })
+          body: JSON.stringify(formData)
         });
 
         if (response.ok) {
+          const result = await response.json();
+          if (result.status === 'warning') {
+            console.warn(result.message);
+          }
           submitBtn.textContent = 'Успешно отправлено! ✓';
           submitBtn.style.background = '#00c853';
-          leadForm.reset();
-          const dzText = document.querySelector('.drop-zone-text');
-          if (dzText) dzText.textContent = 'Перетащите 3D-модель сюда';
-          const canvas = document.querySelector('.drop-zone canvas');
-          if (canvas) canvas.remove();
+          setTimeout(() => {
+            leadForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+            submitBtn.style.background = '';
+            const dzText = document.querySelector('.drop-zone-text');
+            if (dzText) dzText.textContent = 'Перетащите 3D-модель сюда';
+            const canvas = document.querySelector('.drop-zone canvas');
+            if (canvas) canvas.remove();
+          }, 3000);
         } else {
-          throw new Error('Ошибка API');
+          throw new Error('Ошибка сервера');
         }
       } catch (err) {
-        console.error(err);
+        console.error('Lead submission failed:', err);
         submitBtn.textContent = 'Ошибка отправки ❌';
         submitBtn.style.background = '#ff1744';
         setTimeout(() => {
@@ -483,6 +494,25 @@
           submitBtn.style.background = '';
         }, 3000);
       }
+    });
+  }
+
+  // ========== MOBILE NAV BURGER ==========
+  const navBurger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+  const navEl = document.getElementById('navbar');
+
+  if (navBurger && navLinks && navEl) {
+    navBurger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navEl.classList.toggle('nav-open');
+    });
+    // Close on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navEl.classList.remove('nav-open');
+      });
     });
   }
 

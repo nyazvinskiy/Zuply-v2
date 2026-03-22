@@ -528,3 +528,35 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   .process-grid { grid-template-columns: 1fr; }
   .process-step { border-right: none !important; border-bottom: 1px solid var(--border); }
 }
+
+/* ============================================
+   MOBILE HAMBURGER MENU
+   ============================================ */
+.nav-burger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 40px; height: 40px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-burger span {
+  display: block; width: 22px; height: 2px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (max-width: 900px) {
+  .nav-links { 
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,15,0.97); backdrop-filter: blur(24px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 40px; z-index: 999; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .nav-links.open { opacity: 1; pointer-events: auto; display: flex; }
+  .nav-links a { font-size: 1.5rem; color: rgba(255,255,255,0.85); }
+  .nav-burger { display: flex; z-index: 1001; }
+  /* Burger -> X animation */
+  .nav-open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-open .nav-burger span:nth-child(2) { opacity: 0; }
+  .nav-open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
