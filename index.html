@@ -65,7 +65,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
    ============================================ */
 .loader {
   position: fixed; inset: 0; z-index: 9999;
-  background: var(--bg);
+  background: #0a0a0f;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
@@ -91,9 +91,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   z-index: 1000; width: calc(100% - 32px); max-width: 1200px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 28px;
-  background: rgba(255,255,255,0.85);
+  background: rgba(10,10,15,0.9);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 980px;
   transition: max-width 0.45s cubic-bezier(0.16,1,0.3,1),
               padding 0.45s cubic-bezier(0.16,1,0.3,1),
@@ -104,17 +104,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   padding: 10px 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
 .nav-logo img { height: 26px; }
 .nav-logo span { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.03em; }
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-links a {
-  font-size: 0.85rem; color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; color: rgba(255,255,255,0.7); text-decoration: none;
   font-weight: 500; transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover { color: #fff; }
 .nav-cta {
-  padding: 9px 22px; background: var(--text); color: #fff; border: none;
+  padding: 9px 22px; background: #fff; color: #000; border: none;
   border-radius: 980px; font-family: var(--font-body); font-size: 0.82rem;
   font-weight: 600; cursor: pointer; transition: all 0.25s ease; text-decoration: none;
 }
@@ -439,21 +439,85 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 .form-submit:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,102,255,0.2); }
 
 /* ============================================
-   FOOTER
+   TECH CAPABILITIES
+   ============================================ */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 48px; }
+.tech-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: left; transition: transform 0.3s, box-shadow 0.3s; }
+.tech-card:hover { transform: translateY(-4px); border-color: var(--accent-border); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+.tech-card h3 { font-size: 1.15rem; font-family: var(--font-display); font-weight: 700; margin-bottom: 12px; }
+.tech-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+.tech-list li { padding-left: 16px; position: relative; }
+.tech-list li::before { content: ''; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* ============================================
+   PORTFOLIO CAROUSEL
+   ============================================ */
+.cases-carousel-section { position: relative; overflow: hidden; }
+.cases-carousel-container { position: relative; max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.cases-carousel-track-wrap { overflow: hidden; padding: 20px 0 40px; }
+.cases-grid { 
+  display: flex; gap: 32px; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.case-card { 
+  flex: 0 0 320px; background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; 
+}
+.case-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,0,0,0.1); }
+.case-img { height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--border); }
+.case-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.case-card:hover .case-img img { transform: scale(1.05); }
+.case-body { padding: 24px; text-align: left; }
+.case-tag { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.case-title { font-size: 1.15rem; font-family: var(--font-display); font-weight: 700; margin-bottom: 16px; line-height: 1.25; }
+.case-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.8rem; }
+.case-spec-label { color: var(--text-muted); margin-bottom: 2px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.case-spec-val { font-weight: 600; color: var(--text); }
+
+/* Carousel Arrows */
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%; background: #fff;
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10; transition: all 0.25s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  color: var(--text);
+}
+.carousel-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-50%) scale(1.1); box-shadow: 0 8px 20px rgba(0,102,255,0.1); }
+.carousel-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-prev { left: 0; }
+.btn-next { right: 0; }
+.carousel-btn svg { width: 24px; height: 24px; }
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-section { max-width: 800px; margin: 0 auto; text-align: left; }
+.faq-accordion { margin-top: 48px; border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); overflow: hidden; }
+.faq-q { padding: 24px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; transition: color 0.2s; user-select: none; }
+.faq-q:hover { color: var(--accent); }
+.faq-icon { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+.faq-a { max-height: 0; opacity: 0; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease; color: var(--text-secondary); line-height: 1.6; }
+.faq-a-inner { padding-bottom: 24px; }
+.faq-item.active .faq-a { max-height: 300px; opacity: 1; }
+.faq-item.active .faq-icon { transform: rotate(180deg); color: var(--accent); }
+
+/* ============================================
+   FOOTER (Dark Legal)
    ============================================ */
 .footer {
-  padding: 48px 24px;
-  border-top: 1px solid var(--border);
-  text-align: center;
+  padding: 80px 24px 40px; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1); background: #0a0a0f; color: rgba(255,255,255,0.8);
 }
 .footer-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 48px; text-align: left;
 }
-.footer-logo { display: flex; align-items: center; gap: 8px; }
-.footer-logo img { height: 22px; }
-.footer-logo span { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; }
-.footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+.footer-logo { margin-bottom: 24px; }
+.footer-logo img { height: 36px; display: block; }
+.footer-col h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 20px; }
+.footer-col p { font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.6); }
+.footer-col a { color: #fff; text-decoration: none; transition: opacity 0.2s; }
+.footer-col a:hover { opacity: 0.7; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
 
 /* ============================================
    RESPONSIVE
@@ -588,19 +652,58 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   <p class="section-desc">Мы не просто посредник. Мы инженерная инфраструктура, которая стоит между вашим чертежом и китайской фабрикой.</p>
   <div class="pain-grid">
     <div class="pain-card">
-      <div class="pain-icon">⚠️</div>
-      <h3>Брак на&nbsp;старте</h3>
-      <p>90% ошибок случается из-за усадки пластика и ошибок в 3D-модели. Мы делаем бесплатный DFM-аудит до того, как режут металл для пресс-формы.</p>
+      <div class="pain-icon">💸</div>
+      <h3>Высокая стоимость</h3>
+      <p>Местные цеха закладывают в цену риски и переработки. Мы работаем с пулом заводов, где цена в 2-3 раза ниже при том же качестве.</p>
     </div>
     <div class="pain-card">
-      <div class="pain-icon">🔒</div>
-      <h3>Китайская самодеятельность</h3>
-      <p>Фабрики втихаря меняют материалы ради экономии. Наши независимые инспекторы стоят прямо у станка через систему Live-QA.</p>
+      <div class="pain-icon">⏳</div>
+      <h3>Сроки до 3 месяцев</h3>
+      <p>Ожидание очереди на станок убивает итерации. Наш алгоритм находит свободные мощности за часы и запускает производство в день оплаты.</p>
     </div>
     <div class="pain-card">
-      <div class="pain-icon">🛡️</div>
-      <h3>Угроза кражи IP</h3>
-      <p>Страх отправлять чертежи в Китай. Мы дробим производство между фабриками и работаем по жёсткому NDA Российской Федерации.</p>
+      <div class="pain-icon">🔍</div>
+      <h3>Риск брака</h3>
+      <p>98% деталей проходят наш внутренний контроль. Мы не отгружаем, пока деталь не будет соответствовать вашему чертежу на 100%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH / CAPABILITIES ============ -->
+<section class="section" id="tech">
+  <div class="section-label">// Технологии</div>
+  <h2 class="section-title">Производственный арсенал</h2>
+  <p class="section-desc">Надёжная база для любых задач: от прототипирования до крупной серии.</p>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="pain-icon">⚙️</div>
+      <h3>ЧПУ-фрезеровка и токарка</h3>
+      <ul class="tech-list">
+        <li>Допуски до ±0.01 мм</li>
+        <li>Алюминий, сталь, титан, латунь</li>
+        <li>Обработка: анодирование, покраска</li>
+        <li>Срок от 5 дней</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <div class="pain-icon">💉</div>
+      <h3>Литьё пластмасс (ТПА)</h3>
+      <ul class="tech-list">
+        <li>Партии от 100 до 1 000 000 шт.</li>
+        <li>Изготовление пресс-форм в Китае</li>
+        <li>Инженерные пластики (ABS, PC, POM)</li>
+        <li>Закладные гайки и двухкомпонентное литьё</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <div class="pain-icon">🖨️</div>
+      <h3>Промышленная 3D-печать</h3>
+      <ul class="tech-list">
+        <li>Технологии: SLA, SLS, MJF, FDM</li>
+        <li>Гладкие поверхности без "ступенек"</li>
+        <li>Печать выжигеамых моделей для литья</li>
+        <li>Срок от 2 дней</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -634,6 +737,157 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
   </div>
 </section>
 
+<!-- ============ CASES / PORTFOLIO ============ -->
+<section class="section cases-carousel-section" id="cases">
+  <div class="section-label" style="text-align: center; display: block; margin: 0 auto 16px;">// Кейсы</div>
+  <h2 class="section-title" style="text-align: center; margin-left: auto; margin-right: auto;">Последние проекты</h2>
+  
+  <div class="cases-carousel-container">
+    <button class="carousel-btn btn-prev" id="casePrev" disabled aria-label="Предыдущий слайд">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="carousel-btn btn-next" id="caseNext" aria-label="Следующий слайд">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    
+    <div class="cases-carousel-track-wrap">
+      <div class="cases-grid" id="casesTrack">
+        <!-- 10 Projects -->
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio1.png" alt="CNC Milled Case"></div>
+          <div class="case-body">
+            <div class="case-tag">Связь & IoT</div>
+            <h3 class="case-title">Алюминиевый корпус роутера</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">ЧПУ-фрезеровка</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Alu 6061-T6</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">500 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">18 дней</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio2.png" alt="Injection Molded Gears"></div>
+          <div class="case-body">
+            <div class="case-tag">Робототехника</div>
+            <h3 class="case-title">Прецизионная шестерня</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Литье (ТПА)</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">POM Пластик</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">10 000 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">24 дня</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio3.png" alt="Medical Prototype"></div>
+          <div class="case-body">
+            <div class="case-tag">Медицина</div>
+            <h3 class="case-title">Прототип хирургического блока</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">3D-печать (SLA)</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Resin</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">3 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">4 дня</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio4.png" alt="Consumer Electronics Shell"></div>
+          <div class="case-body">
+            <div class="case-tag">Электроника</div>
+            <h3 class="case-title">Корпус портативной колонки</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Литье в силикон</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Soft PU</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">50 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">12 дней</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio5.png" alt="Industrial Shafts"></div>
+          <div class="case-body">
+            <div class="case-tag">Машиностроение</div>
+            <h3 class="case-title">Вал редуктора (HRC 45)</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">ЧПУ-токарка</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Сталь 40Х</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">250 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">15 дней</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio6.png" alt="Dental Model"></div>
+          <div class="case-body">
+            <div class="case-tag">Стоматология</div>
+            <h3 class="case-title">Мастер-модель челюсти</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">SLA Печать</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Dental Resin</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">10 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">2 дня</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio7.png" alt="Server Enclosure"></div>
+          <div class="case-body">
+            <div class="case-tag">IT Инфраструктура</div>
+            <h3 class="case-title">Шасси для дата-центра</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Гибка металла</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Сталь 1.5 мм</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">100 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">21 день</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio8.png" alt="Heatsink"></div>
+          <div class="case-body">
+            <div class="case-tag">Энергетика</div>
+            <h3 class="case-title">Радиатор охлаждения LED</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Экструзия</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Alu 6063</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">1500 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">30 дней</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio9.png" alt="Auto Part"></div>
+          <div class="case-body">
+            <div class="case-tag">Автопром</div>
+            <h3 class="case-title">Кронштейн торпедо</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Литье (ТПА)</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">PC/ABS Black</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">5000 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">28 дней</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-img"><img src="portfolio10.png" alt="Drone Arm"></div>
+          <div class="case-body">
+            <div class="case-tag">Аэрокосмос</div>
+            <h3 class="case-title">Луч рамы квадрокоптера</h3>
+            <div class="case-specs">
+              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Carbon Fiber</div></div>
+              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Carbon + Alu</div></div>
+              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">100 шт.</div></div>
+              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">14 дней</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SPECS ============ -->
 <section class="specs-section" id="specs">
   <div class="specs-inner">
@@ -656,6 +910,30 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
         <div class="spec-number" data-target="0" data-suffix="">0</div>
         <div class="spec-label">Стоимость DFM-аудита</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section faq-section" id="faq">
+  <div class="section-label">// Частые вопросы</div>
+  <h2 class="section-title" style="text-align: center;">Что волнует стартапы?</h2>
+  <div class="faq-accordion">
+    <div class="faq-item">
+      <div class="faq-q">Какая у вас минимальная партия (MOQ)? <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>
+      <div class="faq-a"><div class="faq-a-inner">Мы беремся даже за 1 штуку, если это фрезеровка или 3D-печать. Для литья пластика формы окупаются от 100-300 штук. Наша задача — вырасти вместе с вами от прототипа до миллионов деталей.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Что если деталь приедет с браком? <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>
+      <div class="faq-a"><div class="faq-a-inner">Такого не бывает благодаря нашей системе Live-QA. Деталь проверяется нашими инспекторами прямо у станка в Шэньчжэне. Если есть отклонения от ваших чертежей, фабрика переделывает её за свой счет еще до отправки в РФ.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Вы помогаете с логистикой и таможней? <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>
+      <div class="faq-a"><div class="faq-a-inner">Да. Мы доставляем детали прямо до вашей двери (или склада) в России со всеми закрывающими документами. Ваша задача — загрузить чертёж, наша — привезти готовую деталь.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Как происходит оплата? <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>
+      <div class="faq-a"><div class="faq-a-inner">Оплата производится по безналичному расчету на юрлицо в РФ (ООО «Свободный Интеллект»). Мы работаем полностью официально с подписанием договора и NDA.</div></div>
     </div>
   </div>
 </section>
@@ -753,7 +1031,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
       <button class="modal-close" id="closeNda">&times;</button>
     </div>
     <div class="modal-body">
-      <p>Настоящее Соглашение о неразглашении (далее — «NDA») является публичной офертой <strong>ООО «Свободный Интеллект»</strong> (далее — «Получатель») для любого пользователя сайта (далее — «Раскрывающая сторона»), передающего Конфиденциальную информацию через веб-формы.</p>
+      <p>Настоящее Соглашение о неразглашении (далее — «NDA») является публичной офертой <strong>ООО «СВОБИ»</strong> (ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ «СВОБОДНЫЙ ИНТЕЛЛЕКТ») (далее — «Получатель») для любого пользователя сайта (далее — «Раскрывающая сторона»), передающего Конфиденциальную информацию через веб-формы.</p>
       
       <h4>1. Предмет соглашения</h4>
       <p>1.1. Раскрывающая сторона передает Получателю 3D-модели, чертежи, спецификации, файлы в форматах .step, .stl, .iges и иную техническую информацию (далее — «Конфиденциальная информация») с целью оценки стоимости контрактного производства, DFM-аудита и возможного дальнейшего изготовления.</p>
@@ -776,10 +1054,32 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo">
-      <img src="logo.svg" alt="Zuply">
+    <div class="footer-col">
+      <div class="footer-logo"><img src="logo.svg" alt="Zuply"></div>
+      <p>Надежная инфраструктура контрактного производства механики для российских B2B компаний.</p>
     </div>
-    <div class="footer-copy">© 2026 Zuply. Контрактное производство в Азии.</div>
+    <div class="footer-col">
+      <h4>Реквизиты</h4>
+      <p>
+        ООО «СВОБИ» (ООО «Свободный Интеллект»)<br>
+        ИНН: 2373026340<br>
+        ОГРН: 1242300059330<br>
+        КПП: 237301001<br>
+        край Краснодарский, ст-ца Динская, ул. Тельмана, д. 89
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <p>
+        Email: <a href="mailto:hello@zuply.ru">hello@zuply.ru</a><br>
+        Telegram: <a href="https://t.me/zuply_support">@zuply_support</a><br>
+        Телефон: +7 (495) 000-00-00
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Zuply. Все права защищены.</div>
+    <div><a href="#cta" style="color: inherit; text-decoration: none;">Политика конфиденциальности</a></div>
   </div>
 </footer>
 
@@ -1129,6 +1429,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     if (e.target === ndaModal) closeModalFunc();
   });
 
+  // ========== FAQ ACCORDION ==========
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const q = item.querySelector('.faq-q');
+    q.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach(i => i.classList.remove('active'));
+      if (!isActive) item.classList.add('active');
+    });
+  });
+
   // ========== SMOOTH SCROLL FOR NAV LINKS ==========
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -1139,6 +1450,49 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
       }
     });
   });
+
+  // ========== PORTFOLIO CAROUSEL LOGIC ==========
+  const track = document.getElementById('casesTrack');
+  const btnPrev = document.getElementById('casePrev');
+  const btnNext = document.getElementById('caseNext');
+  
+  if (track && btnPrev && btnNext) {
+    let currentTranslate = 0;
+    const gap = 32;
+    const cardWidth = 320;
+    const step = cardWidth + gap;
+    
+    const updateButtons = () => {
+      const maxTranslate = -(track.scrollWidth - track.parentElement.clientWidth);
+      btnPrev.disabled = currentTranslate >= 0;
+      btnNext.disabled = currentTranslate <= maxTranslate;
+    };
+
+    btnNext.addEventListener('click', () => {
+      const maxTranslate = -(track.scrollWidth - track.parentElement.clientWidth);
+      currentTranslate -= step;
+      if (currentTranslate < maxTranslate) currentTranslate = maxTranslate;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+      updateButtons();
+    });
+
+    btnPrev.addEventListener('click', () => {
+      currentTranslate += step;
+      if (currentTranslate > 0) currentTranslate = 0;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+      updateButtons();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      currentTranslate = 0;
+      track.style.transform = `translateX(0px)`;
+      updateButtons();
+    });
+    
+    // Initial check
+    setTimeout(updateButtons, 100);
+  }
 
   // ========== INIT ==========
   resizeCanvas();
