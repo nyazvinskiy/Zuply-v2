@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066FF"/>
+      <stop offset="100%" style="stop-color:#0052CC"/>
+    </linearGradient>
+  </defs>
+  <text x="10" y="60" font-family="'Space Grotesk', -apple-system, sans-serif" font-size="64" font-weight="700" letter-spacing="-3" fill="#0A0A0F">
+    Zuply
+  </text>
+  <circle cx="218" cy="18" r="7" fill="url(#accent)"/>
+</svg>
