@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -109,11 +108,11 @@
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
-      <img src="/assets/img/logo.svg" alt="Zuply" onerror="this.style.display='none'">
+      <span style="border:none; padding:0; font-size:16px;">📦</span>
       <span>Admin Panel</span>
     </div>
     <div class="login-title">Панель управления</div>
-    <div class="login-sub">Введите пароль для входа</div>
+    <div class="login-sub">Введите пароль для входа (zuply2024)</div>
     <div class="field">
       <label>Пароль</label>
       <input type="password" id="pw-input" placeholder="••••••••">
@@ -125,7 +124,7 @@
 <div id="app">
   <header class="topbar">
     <div class="topbar-logo">
-      <img src="/assets/img/logo.svg" alt="Zuply" onerror="this.style.display='none'">
+      <span style="border:none; padding:0; font-size:14px;">📦</span>
       <span class="topbar-label">Admin</span>
     </div>
     <div class="topbar-spacer"></div>
@@ -162,7 +161,7 @@
     <div class="table-wrap">
       <div class="loading" id="table-loading"><div class="spinner"></div><span class="loading-text">Загрузка данных</span></div>
       <table id="leads-table" style="display:none">
-        <thead><tr><th>№</th><th>Клиент</th><th>Контакт</th><th>Материал</th><th>Тираж</th><th>Комментарий</th><th>Файл</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
+        <thead><tr><th>№</th><th>Клиент</th><th>Контакт</th><th>Материал / Товар</th><th>Тираж</th><th>Комментарий</th><th>Файл</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
         <tbody id="leads-body"></tbody>
       </table>
       <div class="empty-state" id="empty-state" style="display:none"><div class="empty-icon">📭</div><div class="empty-text">Заявок не найдено</div></div>
@@ -181,13 +180,41 @@
   </div>
 </div>
 <script>
-const API_BASE='';
 const ADMIN_PASSWORD='zuply2024';
 let allLeads=[],deleteId=null;
+
+// --- МОКОВЫЕ ДАННЫЕ ВМЕСТО РЕАЛЬНОГО БЭКЕНДА ---
+let mockDatabase = [
+  {id: 1, name: 'ООО "ТехПромИнвест"', phone: '+7 999 123-45-67', telegram: '@techprom_ceo', material: 'PCB платы (FR4, 4 слоя)', qty: '5 000 шт', comment: 'Нужна фабрика в Шэньчжэне с AI-проверкой качества.', file_name: 'gerber_files.zip', status: 'new', created_at: new Date().toISOString().slice(0,10) + ' 09:30:00'},
+  {id: 2, name: 'ИП Смирнов А.В.', phone: '+7 900 000-11-22', telegram: '@smirnov_apparel', material: 'Ткань Оксфорд 600D PU', qty: '3 000 пог. м', comment: 'Цвет черный. Нужен расчет логистики в РФ.', file_name: '', status: 'work', created_at: '2026-04-11 14:15:00'},
+  {id: 3, name: 'SmartHome RU', phone: '+7 800 555-35-35', telegram: '', material: 'Корпуса для датчиков (ABS пластик)', qty: '15 000 шт', comment: '3D модели во вложении, ждем просчет стоимости пресс-формы.', file_name: '3d_models_v2.rar', status: 'closed', created_at: '2026-04-10 11:20:00'},
+  {id: 4, name: 'ElectroTrade', phone: '+7 918 555-44-33', telegram: '@electro_trade', material: 'Микроконтроллеры ESP32', qty: '10 000 шт', comment: 'Срочный заказ, горят сроки.', file_name: 'BOM_list.xlsx', status: 'new', created_at: new Date().toISOString().slice(0,10) + ' 12:05:00'}
+];
+
+async function fetchLeads(){
+  // Искусственная задержка для демонстрации лоадера
+  return new Promise(resolve => setTimeout(() => resolve([...mockDatabase]), 600));
+}
+async function updateStatus(id,s){
+  return new Promise(resolve => setTimeout(() => {
+    const l = mockDatabase.find(x => x.id == id);
+    if(l) l.status = s;
+    resolve();
+  }, 300));
+}
+async function deleteLead(id){
+  return new Promise(resolve => setTimeout(() => {
+    mockDatabase = mockDatabase.filter(x => x.id != id);
+    resolve();
+  }, 300));
+}
+// ------------------------------------------------
+
 const loginScreen=document.getElementById('login-screen');
 const appEl=document.getElementById('app');
 const pwInput=document.getElementById('pw-input');
 const loginErr=document.getElementById('login-err');
+
 function checkSession(){return sessionStorage.getItem('zuply_admin')==='ok'}
 function login(){
   if(pwInput.value===ADMIN_PASSWORD){
@@ -196,35 +223,46 @@ function login(){
     setTimeout(()=>{loginScreen.style.display='none';appEl.classList.add('visible');initApp();},400);
   }else{loginErr.textContent='Неверный пароль';pwInput.value='';pwInput.focus();}
 }
+
 document.getElementById('login-btn').addEventListener('click',login);
 pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')login();});
 document.getElementById('logout-btn').addEventListener('click',()=>{sessionStorage.removeItem('zuply_admin');location.reload();});
+
 if(checkSession()){loginScreen.style.display='none';appEl.classList.add('visible');initApp();}
+
 function updateClock(){document.getElementById('topbar-time').textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 setInterval(updateClock,1000);updateClock();
-async function fetchLeads(){const r=await fetch(API_BASE+'/leads');if(!r.ok)throw new Error('err');return r.json();}
-async function updateStatus(id,s){const r=await fetch(API_BASE+'/leads/'+id+'/status',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:s})});if(!r.ok)throw new Error('err');}
-async function deleteLead(id){const r=await fetch(API_BASE+'/leads/'+id,{method:'DELETE'});if(!r.ok)throw new Error('err');}
+
 function formatDate(dt){if(!dt)return'—';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'2-digit'})+'<br>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
 function renderTable(leads){
   document.getElementById('table-loading').style.display='none';
   if(!leads.length){document.getElementById('leads-table').style.display='none';document.getElementById('empty-state').style.display='block';return;}
   document.getElementById('empty-state').style.display='none';
   document.getElementById('leads-table').style.display='table';
-  document.getElementById('leads-body').innerHTML=leads.map(l=>'<tr><td class="lead-id">#'+l.id+'</td><td><div class="lead-name">'+esc(l.name||'—')+'</div></td><td><div class="lead-contact">'+esc(l.phone||'')+'</div><div class="lead-contact">'+esc(l.telegram||'')+'</div></td><td><span class="lead-material">'+esc(l.material||'—')+'</span></td><td>'+esc(l.qty||'—')+'</td><td><div class="lead-comment">'+esc(l.comment||'—')+'</div></td><td>'+(l.file_name?'<a class="btn-file" href="'+API_BASE+'/leads/'+l.id+'/file" download="'+esc(l.file_name)+'">↓ '+esc(l.file_name.slice(0,16))+'</a>':'—')+'</td><td><select class="status-select" data-id="'+l.id+'" onchange="onStatusChange(this)"><option value="new" '+((l.status||'new')==='new'?'selected':'')+'>Новая</option><option value="work" '+(l.status==='work'?'selected':'')+'>В работе</option><option value="closed" '+(l.status==='closed'?'selected':'')+'>Закрыта</option></select></td><td class="lead-date">'+formatDate(l.created_at)+'</td><td><div class="actions"><button class="btn-delete" onclick="confirmDelete('+l.id+')">✕</button></div></td></tr>').join('');
+  
+  // Для демо-версии заменена ссылка скачивания файла на заглушку с тостом
+  document.getElementById('leads-body').innerHTML=leads.map(l=>'<tr><td class="lead-id">#'+l.id+'</td><td><div class="lead-name">'+esc(l.name||'—')+'</div></td><td><div class="lead-contact">'+esc(l.phone||'')+'</div><div class="lead-contact">'+esc(l.telegram||'')+'</div></td><td><span class="lead-material">'+esc(l.material||'—')+'</span></td><td>'+esc(l.qty||'—')+'</td><td><div class="lead-comment">'+esc(l.comment||'—')+'</div></td><td>'+(l.file_name?'<a class="btn-file" href="#" onclick="toast(\'Загрузка файла '+esc(l.file_name)+'\', \'ok\'); return false;">↓ '+esc(l.file_name.slice(0,16))+'</a>':'—')+'</td><td><select class="status-select" data-id="'+l.id+'" onchange="onStatusChange(this)"><option value="new" '+((l.status||'new')==='new'?'selected':'')+'>Новая</option><option value="work" '+(l.status==='work'?'selected':'')+'>В работе</option><option value="closed" '+(l.status==='closed'?'selected':'')+'>Закрыта</option></select></td><td class="lead-date">'+formatDate(l.created_at)+'</td><td><div class="actions"><button class="btn-delete" onclick="confirmDelete('+l.id+')">✕</button></div></td></tr>').join('');
 }
+
 function updateStats(leads){const t=new Date().toISOString().slice(0,10);document.getElementById('stat-total').textContent=leads.length;document.getElementById('stat-new').textContent=leads.filter(l=>(l.status||'new')==='new').length;document.getElementById('stat-work').textContent=leads.filter(l=>l.status==='work').length;document.getElementById('stat-closed').textContent=leads.filter(l=>l.status==='closed').length;document.getElementById('stat-today').textContent=leads.filter(l=>(l.created_at||'').startsWith(t)).length;}
 function applyFilters(){const q=document.getElementById('search-input').value.toLowerCase();const st=document.getElementById('filter-status').value;renderTable(allLeads.filter(l=>(!st||(l.status||'new')===st)&&(!q||[l.name,l.phone,l.telegram,l.material,l.comment].join(' ').toLowerCase().includes(q))));}
+
 async function onStatusChange(sel){try{await updateStatus(sel.dataset.id,sel.value);const l=allLeads.find(l=>l.id==sel.dataset.id);if(l)l.status=sel.value;updateStats(allLeads);toast('Статус обновлён','ok');}catch{toast('Ошибка','err');}}
+
 function confirmDelete(id){deleteId=id;document.getElementById('modal-text').textContent='Заявка #'+id+' будет удалена навсегда.';document.getElementById('confirm-modal').classList.add('show');}
 document.getElementById('modal-cancel').addEventListener('click',()=>{document.getElementById('confirm-modal').classList.remove('show');deleteId=null;});
+
 document.getElementById('modal-confirm').addEventListener('click',async()=>{if(!deleteId)return;document.getElementById('confirm-modal').classList.remove('show');try{await deleteLead(deleteId);allLeads=allLeads.filter(l=>l.id!=deleteId);updateStats(allLeads);applyFilters();toast('Заявка #'+deleteId+' удалена','ok');}catch{toast('Ошибка удаления','err');}deleteId=null;});
+
 document.getElementById('refresh-btn').addEventListener('click',loadLeads);
 document.getElementById('search-input').addEventListener('input',applyFilters);
 document.getElementById('filter-status').addEventListener('change',applyFilters);
+
 let toastTimer;
 function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className='show toast-'+type;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='';},3000);}
+
 async function loadLeads(){document.getElementById('table-loading').style.display='flex';document.getElementById('leads-table').style.display='none';document.getElementById('empty-state').style.display='none';try{allLeads=await fetchLeads();updateStats(allLeads);applyFilters();}catch{toast('Не удалось загрузить заявки','err');document.getElementById('table-loading').style.display='none';document.getElementById('empty-state').style.display='block';}}
 function initApp(){loadLeads();}
 </script>
