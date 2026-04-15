@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,177 +7,281 @@
 <meta name="description" content="Zuply — контрактное производство в Китае для инженеров и конструкторских бюро. Бесплатный DFM-аудит, Live-QA контроль, белая таможня с ГТД, строгий NDA. Без брака на первой партии.">
 <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zuply.ru/">
 <meta property="og:title" content="Zuply — Контрактное производство для инженеров и КБ">
 <meta property="og:description" content="Берём ваш STEP-файл и выдаём готовую партию в РФ. DFM-аудит, Live-QA, белая таможня с ГТД.">
 <meta property="og:image" content="https://zuply.ru/assets/img/portfolio1.png">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Zuply — Производство механики в Китае для КБ">
-<meta name="twitter:description" content="Бесплатный DFM-аудит. Live-QA у станка. Белая таможня с ГТД.">
-<meta name="twitter:image" content="https://zuply.ru/assets/img/portfolio1.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
 
 <style>
-  /* ── TRUST BADGES ── */
-  .hero-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
+  /* ============ BASE & RESET ============ */
+  :root {
+    --bg: #07090f;
+    --surface: #10141d;
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #e8ff59;
+    --accent-hover: #d4ed3f;
+    --text: #f0f0f0;
+    --text-dim: #9ca3af;
   }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Archivo', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 20px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(7, 9, 15, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img { height: 28px; filter: brightness(10); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #000;
+    padding: 10px 24px; border-radius: 8px;
+    font-weight: 600; font-size: 14px; transition: transform 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 140px 20px 60px;
+    background: radial-gradient(circle at center 30%, rgba(232,255,89,0.05) 0%, transparent 50%);
+  }
+  .hero-badge {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 13px; font-family: 'JetBrains Mono', monospace;
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
+  }
+  .hero-badge .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); }
+  .hero h1 { font-size: 56px; max-width: 1000px; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.02em; }
+  .hero .accent { color: var(--accent); }
+  .hero-sub { font-size: 18px; color: var(--text-dim); max-width: 700px; margin-bottom: 40px; line-height: 1.6; }
+  .hero-actions { display: flex; gap: 16px; justify-content: center; margin-bottom: 24px; }
+  .btn-primary {
+    background: var(--accent); color: #000; border: none;
+    padding: 16px 32px; border-radius: 8px;
+    font-weight: 700; font-size: 16px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border);
+    padding: 16px 32px; border-radius: 8px;
+    font-weight: 600; font-size: 16px; transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+  /* TRUST BADGES */
+  .hero-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 16px; }
   .hero-badge-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(255,255,255,0.75);
-    white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 8px 14px;
+    font-size: 12px; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.8);
   }
-  .hero-badge-item .check { color: #4ade80; font-size: 13px; }
+  .hero-badge-item .check { color: #4ade80; font-size: 14px; }
 
-  /* ── STICKY CTA BAR ── */
-  .sticky-cta {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 900;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity .35s, transform .35s;
-    pointer-events: none;
-  }
-  .sticky-cta.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .sticky-cta a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent, #e8ff59);
-    color: #0a0a0a;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 14px 22px;
-    border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 0 8px 32px rgba(232,255,89,.35);
-    transition: transform .2s, box-shadow .2s;
-  }
-  .sticky-cta a:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,255,89,.45); }
+  /* ============ COMMON SECTIONS ============ */
+  .section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 14px; margin-bottom: 16px; }
+  .section-title { font-size: 40px; margin-bottom: 24px; line-height: 1.2; letter-spacing: -0.01em; }
+  .section-desc { font-size: 18px; color: var(--text-dim); margin-bottom: 48px; max-width: 600px; line-height: 1.6; }
 
-  /* ── WHITE CUSTOMS BLOCK ── */
+  /* GRIDS & CARDS */
+  .pain-grid, .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .pain-card, .tech-card, .process-step { background: var(--surface); padding: 32px; border-radius: 16px; border: 1px solid var(--border); transition: border-color 0.3s; }
+  .pain-card:hover, .tech-card:hover { border-color: rgba(255,255,255,0.2); }
+  .pain-icon { font-size: 32px; margin-bottom: 20px; }
+  .pain-card h3, .tech-card h3 { font-size: 20px; margin-bottom: 16px; }
+  .pain-card p { color: var(--text-dim); font-size: 15px; line-height: 1.6; }
+  
+  .tech-list { list-style: none; }
+  .tech-list li { color: var(--text-dim); font-size: 15px; margin-bottom: 12px; padding-left: 20px; position: relative; }
+  .tech-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+  /* PROCESS */
+  .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .step-num { font-family: 'Space Grotesk'; font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.05); margin-bottom: 16px; line-height: 1; }
+  .process-step h3 { font-size: 20px; margin-bottom: 12px; }
+  .process-step p { color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+
+  /* ============ CUSTOMS BLOCK ============ */
   .customs-section {
     background: linear-gradient(135deg, rgba(74,222,128,.07) 0%, rgba(74,222,128,.02) 100%);
-    border: 1px solid rgba(74,222,128,.18);
-    border-radius: 20px;
-    padding: 64px 56px;
-    max-width: 1100px;
-    margin: 0 auto;
+    border: 1px solid rgba(74,222,128,.18); border-radius: 20px;
+    padding: 64px 56px; max-width: 1100px; margin: 0 auto;
   }
-  .customs-section .customs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 40px;
-  }
-  @media (max-width: 768px) {
-    .customs-section { padding: 36px 24px; }
-    .customs-section .customs-grid { grid-template-columns: 1fr; gap: 24px; }
-  }
+  .customs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
   .customs-item { display: flex; gap: 16px; align-items: flex-start; }
-  .customs-item .ci-icon {
-    font-size: 28px; flex-shrink: 0; margin-top: 2px;
-  }
-  .customs-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-  .customs-item p { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.6; }
+  .customs-item .ci-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .customs-item h4 { font-size: 16px; margin-bottom: 8px; }
+  .customs-item p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
   .customs-highlight {
-    display: inline-block;
-    background: rgba(74,222,128,.15);
-    border: 1px solid rgba(74,222,128,.3);
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    color: #4ade80;
-    margin-bottom: 8px;
+    display: inline-block; background: rgba(74,222,128,.15); border: 1px solid rgba(74,222,128,.3);
+    border-radius: 6px; padding: 2px 8px; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+    color: #4ade80; margin-bottom: 8px;
   }
 
-  /* ── SPECS FIX (real values instead of 0) ── */
-  .spec-num[data-target="0"] { color: #4ade80 !important; }
+  /* ============ CASES CAROUSEL ============ */
+  .cases-carousel-container { position: relative; margin-top: 40px; }
+  .cases-carousel-track-wrap { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 20px; }
+  .cases-carousel-track-wrap::-webkit-scrollbar { display: none; }
+  .cases-grid { display: flex; gap: 24px; }
+  .case-card {
+    min-width: 340px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; scroll-snap-align: start;
+  }
+  .case-img { height: 220px; background: #1a1f2b; display: flex; align-items: center; justify-content: center; }
+  .case-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+  .case-body { padding: 24px; }
+  .case-tag { font-size: 12px; color: var(--accent); font-family: 'JetBrains Mono'; margin-bottom: 8px; }
+  .case-title { font-size: 18px; margin-bottom: 16px; }
+  .case-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px; }
+  .case-spec-label { color: var(--text-dim); margin-bottom: 4px; }
+  .case-spec-val { font-weight: 500; }
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: var(--surface); border: 1px solid var(--border); color: #fff;
+    width: 48px; height: 48px; border-radius: 50%; cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+  }
+  .carousel-btn:hover { background: rgba(255,255,255,0.1); }
+  .btn-prev { left: -24px; } .btn-next { right: -24px; }
 
-  /* ── PRIVACY POLICY PAGE ── */
-  #privacy-modal {
-    display: none;
-    position: fixed; inset: 0; z-index: 10000;
-    background: rgba(0,0,0,.85);
-    overflow-y: auto;
-    padding: 40px 20px;
-  }
-  #privacy-modal.open { display: block; }
-  .privacy-content {
-    max-width: 700px; margin: 0 auto;
-    background: #111; border: 1px solid rgba(255,255,255,.1);
-    border-radius: 16px; padding: 48px;
-    position: relative;
-  }
-  .privacy-close {
-    position: absolute; top: 20px; right: 20px;
-    background: none; border: none; color: rgba(255,255,255,.5);
-    font-size: 24px; cursor: pointer; transition: color .2s;
-  }
-  .privacy-close:hover { color: #fff; }
-  .privacy-content h2 { margin-bottom: 24px; }
-  .privacy-content h3 { margin: 24px 0 12px; font-size: 16px; }
-  .privacy-content p, .privacy-content li { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.7; margin-bottom: 8px; }
-  .privacy-content ul { padding-left: 20px; }
+  /* ============ SPECS ============ */
+  .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; text-align: center; }
+  .spec-num { font-size: 56px; font-weight: 700; color: #fff; font-family: 'Space Grotesk'; }
+  .spec-num[data-target="0.01"], .spec-num[data-target="0"] { color: #4ade80 !important; }
+  .spec-label { color: var(--text-dim); font-size: 15px; margin-top: 8px; }
 
-  /* ── FORM MATERIAL: radio instead of checkbox ── */
+  /* ============ FAQ ============ */
+  .faq-list { display: flex; flex-direction: column; gap: 16px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; cursor: pointer; transition: background 0.2s; }
+  .faq-item:hover { background: rgba(255,255,255,0.03); }
+  .faq-q { font-size: 18px; font-weight: 600; padding-right: 20px; position: relative; }
+  .faq-q::after { content: '+'; position: absolute; right: 0; top: 0; color: var(--accent); font-size: 24px; font-weight: 400; transition: transform 0.3s; }
+  .faq-item.active .faq-q::after { transform: rotate(45deg); }
+  .faq-a { color: var(--text-dim); margin-top: 16px; line-height: 1.6; font-size: 15px; display: none; }
+  .faq-item.active .faq-a { display: block; }
+
+  /* ============ FORM ============ */
+  .cta-form { background: var(--surface); border: 1px solid var(--border); padding: 48px; border-radius: 20px; }
+  .form-row { display: flex; gap: 24px; margin-bottom: 24px; }
+  .form-group { flex: 1; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+  .form-group label { font-size: 14px; font-weight: 500; color: var(--text-dim); }
+  .form-group input[type="text"], .form-group input[type="tel"], .form-group textarea {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    padding: 16px; border-radius: 8px; color: #fff; font-family: 'Archivo'; outline: none; transition: border 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  
   .material-radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
   .material-radio-group label {
     display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 8px; padding: 10px 16px;
-    cursor: pointer; transition: border-color .2s, background .2s;
-    font-size: 14px;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px; padding: 10px 16px; cursor: pointer;
+    transition: all 0.2s; font-size: 14px;
   }
-  .material-radio-group input[type=radio] { accent-color: var(--accent, #e8ff59); width: 15px; height: 15px; }
-  .material-radio-group label:has(input:checked) {
-    border-color: var(--accent, #e8ff59);
-    background: rgba(232,255,89,.07);
+  .material-radio-group input[type=radio] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
+  .material-radio-group label:has(input:checked) { border-color: var(--accent); background: rgba(232,255,89,.07); }
+
+  .upload-zone {
+    border: 2px dashed var(--border); border-radius: 12px; padding: 40px;
+    text-align: center; cursor: pointer; transition: all 0.2s;
+  }
+  .upload-zone:hover { border-color: var(--accent); background: rgba(232,255,89,0.03); }
+  .upload-text { margin: 12px 0 8px; font-weight: 600; }
+  .upload-hint { color: var(--text-dim); font-size: 13px; }
+  .upload-status { font-size: 14px; margin-top: 8px; color: #4ade80; }
+  
+  .form-check { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-dim); }
+  .form-check a { color: var(--accent); text-decoration: underline; }
+  .btn-submit { width: 100%; font-size: 16px; padding: 18px; margin-top: 24px; }
+
+  /* ============ STICKY CTA ============ */
+  .sticky-cta {
+    position: fixed; bottom: 28px; right: 28px; z-index: 900;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .35s, transform .35s; pointer-events: none;
+  }
+  .sticky-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .sticky-cta a {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #000; font-weight: 700; font-size: 14px;
+    padding: 14px 24px; border-radius: 50px; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(232,255,89,.35); transition: transform .2s;
+  }
+  .sticky-cta a:hover { transform: translateY(-2px); }
+
+  /* ============ FOOTER ============ */
+  .footer { border-top: 1px solid var(--border); padding: 60px 20px 20px; background: var(--surface); margin-top: 60px;}
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand img { height: 24px; margin-bottom: 16px; filter: brightness(10); }
+  .footer-brand p { color: var(--text-dim); max-width: 300px; line-height: 1.6; font-size: 14px;}
+  .footer-col h4 { font-size: 16px; margin-bottom: 20px; }
+  .footer-col p { color: var(--text-dim); line-height: 1.6; font-size: 14px; }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; color: var(--text-dim); font-size: 14px; }
+
+  /* ============ MODALS ============ */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 10000; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--surface); padding: 40px; border-radius: 16px;
+    border: 1px solid var(--border); max-width: 650px; width: 100%;
+    position: relative; max-height: 90vh; overflow-y: auto;
+  }
+  .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-dim); font-size: 28px; cursor: pointer; }
+  .modal-close:hover { color: #fff; }
+  .modal-body { color: var(--text-dim); line-height: 1.6; font-size: 14px; margin-top: 24px; }
+  .modal-body h4 { color: #fff; margin: 20px 0 8px; font-size: 16px; }
+
+  /* ============ MOBILE RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    .navbar { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 20px 40px; }
+    .hero h1 { font-size: 36px; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; }
+    .section-title { font-size: 32px; }
+    .customs-section { padding: 40px 24px; }
+    .customs-grid { grid-template-columns: 1fr; gap: 32px; }
+    .form-row { flex-direction: column; gap: 0; }
+    .cta-form { padding: 24px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .btn-prev, .btn-next { display: none; }
+    .sticky-cta { bottom: 16px; right: 16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Scroll Progress Bar -->
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<!-- ============ LOADER ============ -->
-<div class="loader" id="loader">
-  <img src="assets/img/logo.svg" alt="Zuply" class="loader-logo">
-  <div class="loader-text">Загрузка</div>
-  <div class="loader-bar-track">
-    <div class="loader-bar-fill" id="loaderBar"></div>
-  </div>
-</div>
-
-<!-- ============ STICKY CTA ============ -->
 <div class="sticky-cta" id="stickyCta">
   <a href="#cta">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -186,12 +289,11 @@
   </a>
 </div>
 
-<!-- ============ NAVBAR ============ -->
 <nav class="navbar" id="navbar">
   <a href="#" class="nav-logo">
-    <img src="assets/img/logo.svg" alt="Zuply">
+    <span style="font-family: 'Space Grotesk'; font-size: 24px; font-weight: 700; letter-spacing: -1px;">ZUPLY</span>
   </a>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <a href="#why">Почему мы</a>
     <a href="#process">Процесс</a>
     <a href="#cases">Кейсы</a>
@@ -199,117 +301,50 @@
     <a href="#faq">FAQ</a>
   </div>
   <a href="#cta" class="nav-cta">Загрузить модель</a>
-  <button class="nav-burger" id="navBurger" aria-label="Меню">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
-<!-- ============ HERO ============ -->
 <section class="hero" id="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      B2B · Контрактное производство для инженеров и КБ
-    </div>
-    <h1>Контрактное производство деталей в&nbsp;Китае. <span class="accent">Без брака</span> на&nbsp;первой партии.</h1>
-    <p class="hero-sub">Берём ваш STEP-файл и выдаём готовую партию в&nbsp;РФ. Сами подбираем профильный завод, контролируем допуски у станка и привозим с&nbsp;полным пакетом белых закрывающих документов (ГТД + УПД).</p>
-    <div class="hero-actions">
-      <a href="#cta" class="btn-primary">Загрузить модель на DFM-аудит</a>
-      <a href="#why" class="btn-secondary">Подробнее</a>
-    </div>
-    <!-- TRUST BADGES — закрывают боль «серая схема» сразу на Hero -->
-    <div class="hero-badges">
-      <div class="hero-badge-item"><span class="check">✅</span> Оплата на ООО в РФ</div>
-      <div class="hero-badge-item"><span class="check">✅</span> ГТД и закрывающие документы</div>
-      <div class="hero-badge-item"><span class="check">✅</span> Строгий NDA до отправки файла</div>
-      <div class="hero-badge-item"><span class="check">✅</span> Инспектор в Шэньчжэне</div>
-    </div>
+  <div class="hero-badge">
+    <span class="dot"></span>
+    B2B · Контрактное производство для инженеров и КБ
   </div>
-  <div class="scroll-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-    Скролль
+  <h1>Контрактное производство деталей в&nbsp;Китае. <span class="accent">Без брака</span> на&nbsp;первой партии.</h1>
+  <p class="hero-sub">Берём ваш STEP-файл и выдаём готовую партию в&nbsp;РФ. Сами подбираем профильный завод, контролируем допуски у станка и привозим с&nbsp;полным пакетом белых закрывающих документов (ГТД + УПД).</p>
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Загрузить модель на DFM-аудит</a>
+    <a href="#why" class="btn-secondary">Подробнее</a>
+  </div>
+  <div class="hero-badges">
+    <div class="hero-badge-item"><span class="check">✅</span> Оплата на ООО в РФ</div>
+    <div class="hero-badge-item"><span class="check">✅</span> ГТД и закрывающие документы</div>
+    <div class="hero-badge-item"><span class="check">✅</span> Строгий NDA до отправки файла</div>
+    <div class="hero-badge-item"><span class="check">✅</span> Инспектор в Шэньчжэне</div>
   </div>
 </section>
 
-<!-- ============ SCROLL ANIMATION ============ -->
-<section class="scroll-animation" id="scrollAnimation">
-  <div class="scroll-canvas-wrap">
-    <canvas id="scrollCanvas"></canvas>
-  </div>
-</section>
-
-<!-- Annotation cards (positioned fixed, shown/hidden by JS) -->
-<div class="annotation-card" id="annot1" data-show="0.02" data-hide="0.22">
-  <div class="annotation-inner">
-    <div class="annotation-num">1</div>
-    <div class="annotation-text">
-      <h4>Приём CAD и NDA</h4>
-      <p>Вы загружаете STEP-файл. Мы сразу подписываем NDA — ваша интеллектуальная собственность защищена.</p>
-    </div>
-  </div>
-</div>
-<div class="annotation-card" id="annot2" data-show="0.22" data-hide="0.42">
-  <div class="annotation-inner">
-    <div class="annotation-num">2</div>
-    <div class="annotation-text">
-      <h4>DFM-Аудит и подбор мощностей</h4>
-      <p>Проверяем уклоны, допуски и усадку до резки пресс-формы. Алгоритм подбирает свободный завод под вашу задачу. Бесплатно.</p>
-    </div>
-  </div>
-</div>
-<div class="annotation-card" id="annot3" data-show="0.42" data-hide="0.62">
-  <div class="annotation-inner">
-    <div class="annotation-num">3</div>
-    <div class="annotation-text">
-      <h4>Физическое воплощение</h4>
-      <p>Цифра превращается в поликарбонат и фрезерованный алюминий на проверенной фабрике.</p>
-    </div>
-  </div>
-</div>
-<div class="annotation-card" id="annot4" data-show="0.62" data-hide="0.82">
-  <div class="annotation-inner">
-    <div class="annotation-num">4</div>
-    <div class="annotation-text">
-      <h4>Live-QA контроль у станка</h4>
-      <p>Наш инспектор с 3D-сканером и штангенциркулем физически в Китае. Деталь сверяется с CAD-файлом. Отклонение — фабрика переделывает за свой счёт.</p>
-    </div>
-  </div>
-</div>
-<div class="annotation-card" id="annot5" data-show="0.82" data-hide="0.98">
-  <div class="annotation-inner">
-    <div class="annotation-num">5</div>
-    <div class="annotation-text">
-      <h4>Доставка с документами</h4>
-      <p>Груз проходит официальную таможенную очистку. Приезжает к вам на склад с ГТД и УПД.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ============ WHY ZUPLY ============ -->
 <section class="section" id="why">
   <div class="section-label">// Почему Zuply</div>
-  <h2 class="section-title">Три главные боли КБ, которые мы&nbsp;закрываем</h2>
+  <h2 class="section-title">Три главные боли КБ,<br>которые мы&nbsp;закрываем</h2>
   <p class="section-desc">Мы не просто посредник. Мы инженерная инфраструктура, которая стоит между вашим чертежом и китайской фабрикой.</p>
   <div class="pain-grid">
     <div class="pain-card">
       <div class="pain-icon">📐</div>
       <h3>Игнорирование допусков</h3>
-      <p>Китайцы на Alibaba говорят «yes, yes», а присылают деталь, которая не собирается. Наш инспектор с 3D-сканером физически в Шэньчжэне — сверяет деталь с вашим CAD-файлом прямо у станка. Есть отклонение в микронах — фабрика переделывает за свой счёт до отправки.</p>
+      <p>Китайцы на Alibaba говорят «yes, yes», а присылают деталь, которая не собирается. Наш инспектор с 3D-сканером физически в Шэньчжэне — сверяет деталь с вашим CAD-файлом прямо у станка. Есть отклонение в микронах — фабрика переделывает за свой счёт.</p>
     </div>
     <div class="pain-card">
       <div class="pain-icon">📋</div>
-      <h3>«Серая» логистика и бухгалтерия</h3>
+      <h3>«Серая» логистика</h3>
       <p>Никаких переводов на карту и серых схем. Вы оплачиваете счёт на ООО в РФ. Мы сами проводим валютный контроль, растамаживаем груз под свой контракт и передаём детали с ГТД и УПД. Идеально для грантов и строгой отчётности.</p>
     </div>
     <div class="pain-card">
       <div class="pain-icon">🔍</div>
-      <h3>Поиск адекватного подрядчика</h3>
-      <p>Вам не нужно общаться с десятками менеджеров через переводчик. Наш алгоритм и локальная команда в Китае анализируют вашу деталь и подбирают фабрику, чьи станки (5-осевые ЧПУ, ТПА) идеально подходят под вашу задачу и материал.</p>
+      <h3>Поиск подрядчика</h3>
+      <p>Вам не нужно общаться с десятками менеджеров через переводчик. Наш алгоритм и локальная команда в Китае анализируют вашу деталь и подбирают фабрику, чьи станки (5-осевые ЧПУ, ТПА) идеально подходят под задачу и материал.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ TECH / CAPABILITIES ============ -->
 <section class="section" id="tech">
   <div class="section-label">// Технологии</div>
   <h2 class="section-title">Производственный арсенал</h2>
@@ -341,14 +376,13 @@
       <ul class="tech-list">
         <li>Технологии: SLA, SLS, MJF, FDM</li>
         <li>Гладкие поверхности без «ступенек»</li>
-        <li>Печать выжигаемых моделей для литья</li><!-- ИСПРАВЛЕНО: "выжигеамых" → "выжигаемых" -->
+        <li>Печать выжигаемых моделей для литья</li>
         <li>Срок от 2 дней</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ WHITE CUSTOMS BLOCK ============ -->
 <section class="section" id="customs">
   <div class="customs-section">
     <div class="section-label">// Таможня и документы</div>
@@ -359,7 +393,7 @@
         <div class="ci-icon">🧾</div>
         <div>
           <div class="customs-highlight">ГТД + УПД</div>
-          <h4>Полный пакет закрывающих документов</h4>
+          <h4>Полный пакет документов</h4>
           <p>Грузовая таможенная декларация (ГТД) и универсальный передаточный документ (УПД) с НДС или без — на выбор. Бухгалтерия примет без вопросов.</p>
         </div>
       </div>
@@ -368,7 +402,7 @@
         <div>
           <div class="customs-highlight">Валютный контроль</div>
           <h4>Оплата на ООО в РФ</h4>
-          <p>Никаких переводов на карту или крипты. Выставляем счёт на ваше юрлицо. Сами проводим валютный контроль и работаем по договору в российской юрисдикции.</p>
+          <p>Выставляем счёт на ваше юрлицо. Сами проводим валютный контроль и работаем по договору в российской юрисдикции.</p>
         </div>
       </div>
       <div class="customs-item">
@@ -376,7 +410,7 @@
         <div>
           <div class="customs-highlight">Под свой контракт</div>
           <h4>Таможня на нас</h4>
-          <p>Растамаживаем груз под собственный внешнеторговый контракт. Вам не нужна ВЭД-лицензия и таможенный брокер — берём всё на себя.</p>
+          <p>Растамаживаем груз под собственный внешнеторговый контракт. Вам не нужна ВЭД-лицензия и брокер — берём всё на себя.</p>
         </div>
       </div>
       <div class="customs-item">
@@ -391,50 +425,43 @@
   </div>
 </section>
 
-<!-- ============ PROCESS ============ -->
 <section class="section" id="process">
   <div class="section-label">// Как мы работаем</div>
   <h2 class="section-title">От файла до&nbsp;идеальной партии за&nbsp;4&nbsp;шага</h2>
-  <p class="section-desc">Загрузите 3D-модель — дальше мы берём всё на себя.</p>
   <div class="process-grid">
     <div class="process-step">
       <div class="step-num">01</div>
       <h3>Приём CAD и NDA</h3>
-      <p>Вы загружаете .step или .stl через защищённую форму. Мы сразу подписываем NDA — чертежи передаются на фабрики в обезличенном виде только для настройки ЧПУ-программ.</p>
+      <p>Вы загружаете .step или .stl. Мы сразу подписываем NDA — чертежи передаются на фабрики в обезличенном виде.</p>
     </div>
     <div class="process-step">
       <div class="step-num">02</div>
-      <h3>DFM-аудит и подбор мощностей</h3>
-      <p>Наши инженеры проверяют геометрию на технологичность. Алгоритм подбирает завод с нужными станками, свободный прямо сейчас. Просчёт стоимости — за 24 часа.</p>
+      <h3>DFM-аудит и фабрика</h3>
+      <p>Наши инженеры проверяют геометрию. Алгоритм подбирает завод с нужными станками. Просчёт стоимости — за 24 часа.</p>
     </div>
     <div class="process-step">
       <div class="step-num">03</div>
-      <h3>Локальный контроль (Китай)</h3>
-      <p>Партнёр в Шэньчжэне запускает деталь в работу и лично проверяет первую готовую единицу с 3D-сканером. Отклонение от чертежа — переделка за счёт фабрики.</p>
+      <h3>Локальный контроль</h3>
+      <p>Партнёр в Шэньчжэне лично проверяет первую готовую единицу с 3D-сканером. Отклонение от чертежа — переделка за счёт фабрики.</p>
     </div>
     <div class="process-step">
       <div class="step-num">04</div>
       <h3>Доставка и документы</h3>
-      <p>Груз летит или едет в РФ, проходит официальную таможенную очистку. Приезжает к вам на склад с ГТД и УПД.</p>
+      <p>Груз проходит официальную таможенную очистку. Приезжает к вам на склад с полным пакетом белых документов.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ CASES / PORTFOLIO ============ -->
-<section class="section cases-carousel-section" id="cases">
-  <div class="section-label" style="text-align: center; display: block; margin: 0 auto 16px;">// Кейсы</div>
-  <h2 class="section-title" style="text-align: center; margin-left: auto; margin-right: auto;">Последние проекты</h2>
+<section class="section" id="cases">
+  <div class="section-label" style="text-align: center;">// Кейсы</div>
+  <h2 class="section-title" style="text-align: center;">Последние проекты</h2>
   <div class="cases-carousel-container">
-    <button class="carousel-btn btn-prev" id="casePrev" disabled aria-label="Предыдущий слайд">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <button class="carousel-btn btn-next" id="caseNext" aria-label="Следующий слайд">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
-    <div class="cases-carousel-track-wrap">
-      <div class="cases-grid" id="casesTrack">
+    <button class="carousel-btn btn-prev" id="casePrev">❮</button>
+    <button class="carousel-btn btn-next" id="caseNext">❯</button>
+    <div class="cases-carousel-track-wrap" id="casesTrack">
+      <div class="cases-grid">
         <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio1.png" alt="CNC Milled Case"></div>
+          <div class="case-img"><span style="font-size: 48px; opacity:0.5;">📡</span></div>
           <div class="case-body">
             <div class="case-tag">Связь & IoT</div>
             <h3 class="case-title">Алюминиевый корпус роутера</h3>
@@ -447,7 +474,7 @@
           </div>
         </div>
         <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio2.png" alt="Injection Molded Gears"></div>
+          <div class="case-img"><span style="font-size: 48px; opacity:0.5;">⚙️</span></div>
           <div class="case-body">
             <div class="case-tag">Робототехника</div>
             <h3 class="case-title">Прецизионная шестерня</h3>
@@ -460,10 +487,10 @@
           </div>
         </div>
         <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio3.png" alt="Medical Prototype"></div>
+          <div class="case-img"><span style="font-size: 48px; opacity:0.5;">🏥</span></div>
           <div class="case-body">
             <div class="case-tag">Медицина</div>
-            <h3 class="case-title">Прототип хирургического блока</h3>
+            <h3 class="case-title">Прототип хирург. блока</h3>
             <div class="case-specs">
               <div><div class="case-spec-label">Технология</div><div class="case-spec-val">3D-печать (SLA)</div></div>
               <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Resin</div></div>
@@ -473,20 +500,7 @@
           </div>
         </div>
         <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio4.png" alt="Consumer Electronics Shell"></div>
-          <div class="case-body">
-            <div class="case-tag">Электроника</div>
-            <h3 class="case-title">Корпус портативной колонки</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Литьё в силикон</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Soft PU</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">50 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">12 дней</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio5.png" alt="Industrial Shafts"></div>
+          <div class="case-img"><span style="font-size: 48px; opacity:0.5;">🔩</span></div>
           <div class="case-body">
             <div class="case-tag">Машиностроение</div>
             <h3 class="case-title">Вал редуктора (HRC 45)</h3>
@@ -498,474 +512,222 @@
             </div>
           </div>
         </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio6.png" alt="Dental Model"></div>
-          <div class="case-body">
-            <div class="case-tag">Стоматология</div>
-            <h3 class="case-title">Мастер-модель челюсти</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">SLA Печать</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Dental Resin</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">10 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">2 дня</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio7.png" alt="Server Enclosure"></div>
-          <div class="case-body">
-            <div class="case-tag">IT Инфраструктура</div>
-            <h3 class="case-title">Шасси для дата-центра</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Гибка металла</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Сталь 1.5 мм</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">100 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">21 день</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio8.png" alt="Heatsink"></div>
-          <div class="case-body">
-            <div class="case-tag">Энергетика</div>
-            <h3 class="case-title">Радиатор охлаждения LED</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Экструзия</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Alu 6063</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">1500 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">30 дней</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio9.png" alt="Auto Part"></div>
-          <div class="case-body">
-            <div class="case-tag">Автопром</div>
-            <h3 class="case-title">Кронштейн торпедо</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Литьё (ТПА)</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">PC/ABS Black</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">5000 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">28 дней</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-img"><img src="assets/img/portfolio10.png" alt="Drone Arm"></div>
-          <div class="case-body">
-            <div class="case-tag">Аэрокосмос</div>
-            <h3 class="case-title">Луч рамы квадрокоптера</h3>
-            <div class="case-specs">
-              <div><div class="case-spec-label">Технология</div><div class="case-spec-val">Carbon Fiber</div></div>
-              <div><div class="case-spec-label">Материал</div><div class="case-spec-val">Carbon + Alu</div></div>
-              <div><div class="case-spec-label">Партия</div><div class="case-spec-val">100 шт.</div></div>
-              <div><div class="case-spec-label">Срок</div><div class="case-spec-val">14 дней</div></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SPECS — РЕАЛЬНЫЕ ЦИФРЫ вместо нулей ============ -->
 <section class="section" id="specs">
-  <div class="section-label">// Цифры</div>
-  <h2 class="section-title">Инженерные факты о&nbsp;Zuply</h2>
-  <div class="specs-grid">
+  <div class="section-label" style="text-align:center;">// Цифры</div>
+  <h2 class="section-title" style="text-align:center;">Инженерные факты о&nbsp;Zuply</h2>
+  <div class="specs-grid" style="margin-top:48px;">
     <div class="spec-item">
       <div class="spec-num" data-target="0.01" data-suffix=" мм" data-prefix="±">±0.01 мм</div>
-      <div class="spec-label">Точность фрезерной обработки</div>
+      <div class="spec-label">Точность фрезеровки</div>
     </div>
     <div class="spec-item">
-      <div class="spec-num" data-target="100" data-suffix="%">0</div>
-      <div class="spec-label">Сертификаты на материалы по запросу</div>
+      <div class="spec-num" data-target="100" data-suffix="%">100%</div>
+      <div class="spec-label">Сертификаты на материалы</div>
     </div>
     <div class="spec-item">
       <div class="spec-num" data-target="0" data-suffix=" ч">0 ч</div>
-      <div class="spec-label">Вашего времени на китайскую таможню</div>
+      <div class="spec-label">Вашего времени на таможню</div>
     </div>
     <div class="spec-item">
-      <div class="spec-num" data-target="20" data-suffix="+" data-prefix=">">0</div>
-      <div class="spec-label">Проверенных заводов-партнёров в пуле</div>
+      <div class="spec-num" data-target="20" data-suffix="+" data-prefix=">">>20</div>
+      <div class="spec-label">Заводов-партнёров в пуле</div>
     </div>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
 <section class="section" id="faq">
   <div class="section-label">// Частые вопросы</div>
   <h2 class="section-title">Что волнует инженеров и КБ?</h2>
   <div class="faq-list">
     <div class="faq-item">
       <div class="faq-q">Какая у вас минимальная партия (MOQ)?</div>
-      <div class="faq-a">Мы беремся даже за 1 штуку, если это фрезеровка или 3D-печать. Для литья пластика формы окупаются от 100–300 штук. Наша задача — вырасти вместе с вами от прототипа до миллионов деталей.</div>
+      <div class="faq-a">Мы беремся даже за 1 штуку, если это фрезеровка или 3D-печать. Для литья пластика формы окупаются от 100–300 штук. Наша задача — вырасти вместе с вами от прототипа до серии.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Что если деталь приедет с браком?</div>
-      <div class="faq-a">Такого не бывает благодаря нашей системе Live-QA. Деталь проверяется нашими инспекторами прямо у станка в Шэньчжэне. Если есть отклонения от ваших чертежей, фабрика переделывает её за свой счёт ещё до отправки в РФ.</div>
+      <div class="faq-a">Деталь проверяется нашими инспекторами прямо у станка в Китае. Если есть отклонения от чертежей, фабрика переделывает её за свой счёт ещё до отправки в РФ.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Вы даёте сертификаты на металл и пластик?</div>
-      <div class="faq-a">Да. Мы работаем только с проверенным сырьём и по запросу предоставляем сертификат качества материала (Material Certificate) от завода. Китайцы часто подменяют сплавы — у нас это исключено системой контроля.</div>
+      <div class="faq-a">Да. Мы работаем только с проверенным сырьём и по запросу предоставляем сертификат качества (Material Certificate) от завода.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Вы помогаете с логистикой и таможней?</div>
-      <div class="faq-a">Да. Мы растамаживаем груз под собственный внешнеторговый контракт и доставляем детали прямо до вашего склада в России с ГТД и УПД. Ваша задача — загрузить чертёж, наша — привезти готовую партию с документами.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Как происходит оплата?</div>
-      <div class="faq-a">Оплата производится по безналичному расчёту на юрлицо в РФ (ООО «Свободный Интеллект»). Мы работаем полностью официально с подписанием договора и NDA.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Как вы гарантируете, что мой чертёж не утечёт к конкурентам?</div>
-      <div class="faq-a">Мы подписываем жёсткий NDA до того, как вы отправите файл. Чертежи передаются на фабрики в обезличенном виде только для настройки ЧПУ-программ. Все заводы-партнёры также связаны NDA с нами.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Можно ли заключить сложный договор или приехать в офис?</div>
-      <div class="faq-a">Конечно. Мы работаем по договору контрактного производства в юрисдикции РФ. Отвечаем по российским законам, а все риски с китайской стороной берём на себя.</div>
+      <div class="faq-q">Как вы гарантируете, что мой чертёж не утечёт?</div>
+      <div class="faq-a">Мы подписываем жёсткий NDA до того, как вы отправите файл. Чертежи передаются на фабрики в обезличенном виде только для настройки ЧПУ.</div>
     </div>
   </div>
 </section>
 
-<!-- ============ CTA FORM ============ -->
 <section class="section" id="cta">
   <div class="section-label">// Начать</div>
   <h2 class="section-title">Бесплатный DFM-аудит вашей детали</h2>
-  <p class="section-desc">Загрузите вашу модель — мы проведём DFM-аудит и дадим просчёт стоимости за 24 часа.</p>
+  <p class="section-desc">Загрузите вашу модель — мы дадим просчёт стоимости за 24 часа.</p>
 
-  <form class="cta-form" id="leadForm" novalidate>
+  <form class="cta-form" id="leadForm">
     <div class="form-row">
       <div class="form-group">
-        <label for="name">Имя</label>
-        <input type="text" id="name" name="name" placeholder="Иван Иванов">
+        <label>Имя</label>
+        <input type="text" placeholder="Иван Иванов" required>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="phone">Телефон</label>
-        <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__">
+        <label>Телефон</label>
+        <input type="tel" placeholder="+7 (___) ___-__-__" required>
       </div>
       <div class="form-group">
-        <label for="telegram">Telegram</label>
-        <input type="text" id="telegram" name="telegram" placeholder="@username">
+        <label>Telegram</label>
+        <input type="text" placeholder="@username">
       </div>
     </div>
 
-    <!-- ИСПРАВЛЕНО: radio вместо checkbox — одна деталь не может быть из двух материалов -->
     <div class="form-group">
       <label>Материал</label>
       <div class="material-radio-group">
-        <label><input type="radio" name="material" value="ABS (АБС-пластик)"> ABS (АБС-пластик)</label>
-        <label><input type="radio" name="material" value="PC (Поликарбонат)"> PC (Поликарбонат)</label>
-        <label><input type="radio" name="material" value="PA (Нейлон / Полиамид)"> PA (Нейлон / Полиамид)</label>
-        <label><input type="radio" name="material" value="POM (Полиацеталь)"> POM (Полиацеталь)</label>
-        <label><input type="radio" name="material" value="Алюминий"> Алюминий</label>
-        <label><input type="radio" name="material" value="Сталь / Нержавейка"> Сталь / Нержавейка</label>
-        <label><input type="radio" name="material" value="Нужна консультация"> Нужна консультация</label>
+        <label><input type="radio" name="material" value="ABS"> ABS</label>
+        <label><input type="radio" name="material" value="PC"> Поликарбонат</label>
+        <label><input type="radio" name="material" value="PA"> Нейлон</label>
+        <label><input type="radio" name="material" value="Alu"> Алюминий</label>
+        <label><input type="radio" name="material" value="Steel"> Сталь</label>
+        <label><input type="radio" name="material" value="Consult"> Нужна консультация</label>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="qty">Примерный тираж</label>
-      <input type="text" id="qty" name="qty" placeholder="100 шт.">
+      <label>Примерный тираж</label>
+      <input type="text" placeholder="100 шт.">
     </div>
     <div class="form-group">
-      <label for="comment">Комментарий к детали</label>
-      <textarea id="comment" name="comment" rows="3" placeholder="Опишите деталь, требования к допускам, особые пожелания..."></textarea>
+      <label>Комментарий к детали</label>
+      <textarea rows="3" placeholder="Опишите требования к допускам, особые пожелания..."></textarea>
     </div>
 
     <div class="form-group">
       <div class="upload-zone" id="uploadZone">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         <div class="upload-text">Перетащите 3D-модель сюда</div>
         <div class="upload-hint">.step, .stl, .iges — до 100 МБ</div>
-        <input type="file" id="fileInput" accept=".step,.stl,.iges,.stp" style="display:none">
+        <input type="file" id="fileInput" style="display:none">
       </div>
       <div class="upload-status" id="uploadStatus"></div>
     </div>
 
     <div class="form-check">
       <input type="checkbox" id="ndaCheck" required>
-      <label for="ndaCheck">Я согласен с условиями <a href="#" id="ndaLink">Соглашения о неразглашении (NDA)</a></label>
+      <label for="ndaCheck">Я согласен с условиями <a href="#" id="ndaLink">NDA</a></label>
     </div>
 
-    <button type="submit" class="btn-primary btn-submit" id="submitBtn">
-      <span id="submitText">Отправить на просчёт</span>
-      <div class="btn-loader" id="btnLoader" style="display:none"></div>
-    </button>
-
-    <div class="form-success" id="formSuccess" style="display:none">
-      ✅ Заявка принята! Мы свяжемся с вами в течение 24 часов.
-    </div>
-    <div class="form-error" id="formError" style="display:none">
-      ❌ Ошибка отправки. Напишите нам напрямую: <a href="mailto:hello@zuply.ru">hello@zuply.ru</a>
-    </div>
+    <button type="submit" class="btn-primary btn-submit" id="submitBtn">Отправить на просчёт</button>
   </form>
 </section>
 
-<!-- ============ NDA MODAL ============ -->
 <div class="modal-overlay" id="ndaModal">
   <div class="modal-box">
     <button class="modal-close" id="ndaClose">×</button>
     <h3>Соглашение о конфиденциальности (NDA)</h3>
     <div class="modal-body">
-      <p>Настоящее Соглашение о неразглашении (далее — «NDA») является публичной офертой <strong>ООО «СВОБИ»</strong> (ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ «СВОБОДНЫЙ ИНТЕЛЛЕКТ») (далее — «Получатель») для любого пользователя сайта (далее — «Раскрывающая сторона»), передающего Конфиденциальную информацию через веб-формы.</p>
-      <h4>1. Предмет соглашения</h4>
-      <p>1.1. Раскрывающая сторона передает Получателю 3D-модели, чертежи, спецификации, файлы в форматах .step, .stl, .iges и иную техническую информацию (далее — «Конфиденциальная информация») с целью оценки стоимости контрактного производства, DFM-аудита и возможного дальнейшего изготовления.</p>
-      <h4>2. Обязанности Получателя</h4>
-      <p>2.1. Получатель обязуется строго соблюдать режим коммерческой тайны и не разглашать Конфиденциальную информацию любым третьим лицам без предварительного письменного согласия Раскрывающей стороны.</p>
-      <p>2.2. Исключением является необходимость передачи информации сертифицированным фабрикам-партнерам (подрядчикам) исключительно с целью технологической подготовки. Все партнеры связаны аналогичными NDA.</p>
-      <p>2.3. Получатель обязуется принимать все необходимые меры для защиты переданных 3D-моделей от кражи и несанкционированного доступа.</p>
-      <h4>3. Интеллектуальная собственность</h4>
-      <p>3.1. Передача информации не означает передачу прав на интеллектуальную собственность. Все права остаются за Раскрывающей стороной.</p>
-      <h4>4. Срок действия</h4>
-      <p>4.1. Соглашение вступает в силу с момента проставления отметки о согласии и действует 5 (пять) лет.</p>
-      <p>4.2. По первому запросу Раскрывающей стороны Получатель безвозвратно удаляет все переданные данные в течение 3 рабочих дней и предоставляет письменное подтверждение.</p>
+      <p>Настоящее Соглашение о неразглашении является публичной офертой ООО «СВОБИ» для любого пользователя сайта, передающего информацию через веб-формы.</p>
+      <h4>1. Обязанности Получателя</h4>
+      <p>Получатель обязуется строго соблюдать режим коммерческой тайны и не разглашать Конфиденциальную информацию любым третьим лицам без согласия.</p>
+      <h4>2. Интеллектуальная собственность</h4>
+      <p>Передача информации не означает передачу прав на интеллектуальную собственность. Все права остаются за Раскрывающей стороной.</p>
     </div>
   </div>
 </div>
 
-<!-- ============ PRIVACY POLICY MODAL ============ -->
-<div id="privacy-modal">
-  <div class="privacy-content">
-    <button class="privacy-close" id="privacyClose">×</button>
-    <h2>Политика конфиденциальности</h2>
-    <h3>1. Общие положения</h3>
-    <p>ООО «Свободный Интеллект» (ИНН: 2373026340) обязуется защищать персональные данные пользователей сайта zuply.ru в соответствии с Федеральным законом №152-ФЗ «О персональных данных».</p>
-    <h3>2. Какие данные мы собираем</h3>
-    <ul>
-      <li>Имя и контактные данные (телефон, Telegram), указанные в форме заявки</li>
-      <li>Технические данные: 3D-модели и чертежи, загруженные через форму</li>
-      <li>Данные об использовании сайта (cookies, IP-адрес) в аналитических целях</li>
-    </ul>
-    <h3>3. Цели обработки данных</h3>
-    <p>Данные используются исключительно для: обработки заявок на производство, проведения DFM-аудита, связи с вами по вопросам заказа, улучшения работы сайта.</p>
-    <h3>4. Передача данных третьим лицам</h3>
-    <p>Мы не продаём и не передаём ваши данные третьим лицам, за исключением заводов-партнёров в рамках выполнения заказа. Все партнёры связаны NDA.</p>
-    <h3>5. Хранение и удаление данных</h3>
-    <p>Данные хранятся на защищённых серверах. По вашему запросу на hello@zuply.ru мы удалим все ваши данные в течение 3 рабочих дней.</p>
-    <h3>6. Контакты</h3>
-    <p>По вопросам обработки персональных данных: <a href="mailto:hello@zuply.ru" style="color:#e8ff59;">hello@zuply.ru</a></p>
-  </div>
-</div>
-
-<!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="assets/img/logo.svg" alt="Zuply">
-      <p>Надежная инфраструктура контрактного производства механики для российских инженеров, КБ и B2B компаний.</p>
+      <span style="font-family: 'Space Grotesk'; font-size: 20px; font-weight: 700; color:#fff;">ZUPLY</span>
+      <p style="margin-top:12px;">Инфраструктура контрактного производства механики для инженеров и КБ.</p>
     </div>
     <div class="footer-col">
       <h4>Реквизиты</h4>
-      <p>ООО «СВОБИ» (ООО «Свободный Интеллект»)<br>
-      ИНН: 2373026340<br>
-      ОГРН: 1242300059330<br>
-      КПП: 237301001<br>
-      край Краснодарский, ст-ца Динская, ул. Тельмана, д. 89</p>
+      <p>ООО «СВОБИ»<br>ИНН: 2373026340<br>ОГРН: 1242300059330</p>
     </div>
     <div class="footer-col">
       <h4>Контакты</h4>
-      <p>Email: <a href="mailto:hello@zuply.ru">hello@zuply.ru</a><br>
-      Telegram: <a href="https://t.me/zuply_support">@zuply_support</a></p>
+      <p><a href="mailto:hello@zuply.ru">hello@zuply.ru</a><br><a href="https://t.me/zuply_support">@zuply_support</a></p>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Zuply. Все права защищены.</span>
-    <!-- ИСПРАВЛЕНО: ссылка на реальную политику конфиденциальности вместо #cta -->
-    <a href="#" id="privacyLink">Политика конфиденциальности</a>
+    <a href="#">Политика конфиденциальности</a>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
 <script>
-// ── STICKY CTA: показываем после прокрутки Hero ──
-(function() {
-  var stickyCta = document.getElementById('stickyCta');
-  var hero = document.getElementById('hero');
-  if (!stickyCta || !hero) return;
-  window.addEventListener('scroll', function() {
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    if (heroBottom < 0) {
-      stickyCta.classList.add('visible');
-    } else {
-      stickyCta.classList.remove('visible');
-    }
-  }, { passive: true });
-})();
+// --- STICKY CTA ---
+const stickyCta = document.getElementById('stickyCta');
+const hero = document.getElementById('hero');
+window.addEventListener('scroll', () => {
+  if (hero.getBoundingClientRect().bottom < 0) stickyCta.classList.add('visible');
+  else stickyCta.classList.remove('visible');
+}, { passive: true });
 
-// ── SPECS COUNTER: анимация счётчика при попадании в viewport ──
-(function() {
-  var specNums = document.querySelectorAll('.spec-num[data-target]');
-  if (!specNums.length) return;
-
-  function animateCounter(el) {
-    var target = parseFloat(el.dataset.target);
-    var suffix = el.dataset.suffix || '';
-    var prefix = el.dataset.prefix || '';
-    var duration = 1800;
-    var start = null;
-
-    // Статические значения для нулей и дробных
-    if (target === 0) { el.textContent = prefix + '0' + suffix; return; }
-    if (target === 0.01) { el.textContent = '±0.01 мм'; return; }
-
-    function step(timestamp) {
-      if (!start) start = timestamp;
-      var progress = Math.min((timestamp - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(eased * target);
-      el.textContent = prefix + current + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = prefix + target + suffix;
-    }
-    requestAnimationFrame(step);
-  }
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting && !entry.target.dataset.animated) {
-        entry.target.dataset.animated = '1';
-        animateCounter(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  specNums.forEach(function(el) { observer.observe(el); });
-})();
-
-// ── NDA MODAL ──
-(function() {
-  var link = document.getElementById('ndaLink');
-  var modal = document.getElementById('ndaModal');
-  var closeBtn = document.getElementById('ndaClose');
-  if (!link || !modal) return;
-  link.addEventListener('click', function(e) { e.preventDefault(); modal.classList.add('open'); });
-  closeBtn && closeBtn.addEventListener('click', function() { modal.classList.remove('open'); });
-  modal.addEventListener('click', function(e) { if (e.target === modal) modal.classList.remove('open'); });
-})();
-
-// ── PRIVACY POLICY MODAL ──
-(function() {
-  var privacyLink = document.getElementById('privacyLink');
-  var privacyModal = document.getElementById('privacy-modal');
-  var privacyClose = document.getElementById('privacyClose');
-  if (!privacyLink || !privacyModal) return;
-  privacyLink.addEventListener('click', function(e) { e.preventDefault(); privacyModal.classList.add('open'); });
-  privacyClose && privacyClose.addEventListener('click', function() { privacyModal.classList.remove('open'); });
-  privacyModal.addEventListener('click', function(e) { if (e.target === privacyModal) privacyModal.classList.remove('open'); });
-})();
-
-// ── FORM SUBMIT ──
-(function() {
-  var form = document.getElementById('leadForm');
-  if (!form) return;
-
-  // Upload zone
-  var uploadZone = document.getElementById('uploadZone');
-  var fileInput = document.getElementById('fileInput');
-  var uploadStatus = document.getElementById('uploadStatus');
-  var fileData = { content: '', name: '' };
-
-  if (uploadZone && fileInput) {
-    uploadZone.addEventListener('click', function() { fileInput.click(); });
-    uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
-    uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('dragover'); });
-    uploadZone.addEventListener('drop', function(e) {
-      e.preventDefault();
-      uploadZone.classList.remove('dragover');
-      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-    });
-    fileInput.addEventListener('change', function() {
-      if (fileInput.files.length) handleFile(fileInput.files[0]);
-    });
-  }
-
-  function handleFile(file) {
-    var allowed = ['.step','.stl','.iges','.stp'];
-    var ext = '.' + file.name.split('.').pop().toLowerCase();
-    if (!allowed.includes(ext)) {
-      if (uploadStatus) uploadStatus.textContent = '❌ Неверный формат. Допустимы: .step, .stl, .iges';
-      return;
-    }
-    if (file.size > 100 * 1024 * 1024) {
-      if (uploadStatus) uploadStatus.textContent = '❌ Файл слишком большой (макс. 100 МБ)';
-      return;
-    }
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      fileData.content = e.target.result;
-      fileData.name = file.name;
-      if (uploadStatus) uploadStatus.textContent = '✅ Файл готов: ' + file.name;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var nda = document.getElementById('ndaCheck');
-    if (!nda || !nda.checked) {
-      alert('Пожалуйста, подтвердите согласие с условиями NDA');
-      return;
-    }
-
-    var material = '';
-    var checked = form.querySelector('input[name="material"]:checked');
-    if (checked) material = checked.value;
-
-    var submitBtn = document.getElementById('submitBtn');
-    var submitText = document.getElementById('submitText');
-    var btnLoader = document.getElementById('btnLoader');
-    var formSuccess = document.getElementById('formSuccess');
-    var formError = document.getElementById('formError');
-
-    if (submitBtn) submitBtn.disabled = true;
-    if (submitText) submitText.style.display = 'none';
-    if (btnLoader) btnLoader.style.display = 'block';
-    if (formSuccess) formSuccess.style.display = 'none';
-    if (formError) formError.style.display = 'none';
-
-    var payload = {
-      name: (document.getElementById('name') || {}).value || '',
-      phone: (document.getElementById('phone') || {}).value || '',
-      telegram: (document.getElementById('telegram') || {}).value || '',
-      material: material,
-      qty: (document.getElementById('qty') || {}).value || '',
-      comment: (document.getElementById('comment') || {}).value || '',
-      file_content: fileData.content,
-      file_name: fileData.name
-    };
-
-    // NOTE для разработчика: замените URL на ваш backend endpoint
-    // В продакшне используйте переменную окружения вместо хардкода
-    fetch('https://your-backend.fly.dev/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (submitText) submitText.style.display = '';
-      if (btnLoader) btnLoader.style.display = 'none';
-      if (submitBtn) submitBtn.disabled = false;
-      if (data.status === 'ok') {
-        if (formSuccess) formSuccess.style.display = 'block';
-        form.reset();
-        fileData = { content: '', name: '' };
-        if (uploadStatus) uploadStatus.textContent = '';
-      } else {
-        if (formError) formError.style.display = 'block';
-      }
-    })
-    .catch(function() {
-      if (submitText) submitText.style.display = '';
-      if (btnLoader) btnLoader.style.display = 'none';
-      if (submitBtn) submitBtn.disabled = false;
-      if (formError) formError.style.display = 'block';
-    });
+// --- FAQ ACCORDION ---
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    if (!isActive) item.classList.add('active');
   });
-})();
+});
+
+// --- CAROUSEL ---
+const track = document.getElementById('casesTrack');
+document.getElementById('caseNext').addEventListener('click', () => track.scrollBy({ left: 364, behavior: 'smooth' }));
+document.getElementById('casePrev').addEventListener('click', () => track.scrollBy({ left: -364, behavior: 'smooth' }));
+
+// --- MODALS ---
+const ndaModal = document.getElementById('ndaModal');
+document.getElementById('ndaLink').addEventListener('click', (e) => { e.preventDefault(); ndaModal.classList.add('open'); });
+document.getElementById('ndaClose').addEventListener('click', () => ndaModal.classList.remove('open'));
+ndaModal.addEventListener('click', (e) => { if(e.target === ndaModal) ndaModal.classList.remove('open'); });
+
+// --- FILE UPLOAD ---
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const uploadStatus = document.getElementById('uploadStatus');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.style.borderColor = '#e8ff59'; });
+uploadZone.addEventListener('dragleave', () => uploadZone.style.borderColor = 'rgba(255,255,255,0.1)');
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.style.borderColor = 'rgba(255,255,255,0.1)';
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+function handleFile(file) {
+  uploadStatus.textContent = '✅ Выбран файл: ' + file.name;
+  uploadStatus.style.color = '#4ade80';
+}
+
+// --- FORM SUBMIT (Mock) ---
+document.getElementById('leadForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Отправка...';
+  btn.style.opacity = '0.7';
+  setTimeout(() => {
+    btn.textContent = '✅ Заявка отправлена';
+    btn.style.background = '#4ade80';
+    btn.style.color = '#000';
+    setTimeout(() => {
+      e.target.reset();
+      uploadStatus.textContent = '';
+      btn.textContent = 'Отправить на просчёт';
+      btn.style.background = '#e8ff59';
+      btn.style.opacity = '1';
+    }, 3000);
+  }, 1500);
+});
 </script>
 </body>
 </html>
