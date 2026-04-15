@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zuply \u2014 \u041f\u0430\u043d\u0435\u043b\u044c \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f</title>
+<title>Zuply — Панель управления</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -117,9 +117,9 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle}
 .btn-confirm-del{flex:1;padding:10px;background:var(--red);border:none;color:#fff;font-family:var(--mono);font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
 .btn-ok{flex:1;padding:10px;background:var(--accent);border:none;color:#000;font-family:var(--mono);font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-weight:700}
 
-/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+/* ═══════════════════════════════
    DETAIL MODAL
-\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 */
+═══════════════════════════════ */
 #detail-modal{position:fixed;inset:0;background:rgba(7,10,14,.95);backdrop-filter:blur(8px);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
 #detail-modal.show{opacity:1;pointer-events:all}
 .detail-inner{max-width:1100px;margin:0 auto;padding:24px}
@@ -202,12 +202,12 @@ table,#table-loading,#empty-state{display:none!important}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo"><span style="font-size:18px">\ud83d\udce6</span><span>Zuply \u00b7 Admin</span></div>
-    <div class="login-title">\u041f\u0430\u043d\u0435\u043b\u044c \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f</div>
-    <div class="login-sub">\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043f\u0430\u0440\u043e\u043b\u044c \u0434\u043b\u044f \u0432\u0445\u043e\u0434\u0430</div>
-    <div class="field"><label>\u041f\u0430\u0440\u043e\u043b\u044c</label><input type="password" id="pw-input" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"></div>
+    <div class="login-logo"><span style="font-size:18px">📦</span><span>Zuply · Admin</span></div>
+    <div class="login-title">Панель управления</div>
+    <div class="login-sub">Введите пароль для входа</div>
+    <div class="field"><label>Пароль</label><input type="password" id="pw-input" placeholder="••••••••"></div>
     <div class="login-err" id="login-err"></div>
-    <button class="btn-primary" id="login-btn">\u0412\u043e\u0439\u0442\u0438 \u2192</button>
+    <button class="btn-primary" id="login-btn">Войти →</button>
   </div>
 </div>
 
@@ -219,59 +219,59 @@ table,#table-loading,#empty-state{display:none!important}
     <span id="new-badge" class="new-badge">NEW</span>
     <div class="topbar-spacer"></div>
     <span class="topbar-time" id="topbar-time"></span>
-    <button class="btn-logout" id="logout-btn">\u0412\u044b\u0439\u0442\u0438</button>
+    <button class="btn-logout" id="logout-btn">Выйти</button>
   </header>
   <main class="content">
     <div class="page-header">
-      <div><h1 class="page-title">\u0417\u0430\u044f\u0432\u043a\u0438</h1><p class="page-sub">\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0432\u0445\u043e\u0434\u044f\u0449\u0438\u043c\u0438 \u0437\u0430\u043f\u0440\u043e\u0441\u0430\u043c\u0438 \u00b7 Zuply CRM</p></div>
-      <button class="btn-export" onclick="exportCSV()">\u2193 \u042d\u043a\u0441\u043f\u043e\u0440\u0442 CSV</button>
+      <div><h1 class="page-title">Заявки</h1><p class="page-sub">Управление входящими запросами · Zuply CRM</p></div>
+      <button class="btn-export" onclick="exportCSV()">↓ Экспорт CSV</button>
     </div>
     <div class="stats-grid">
-      <div class="stat-card" style="--accent-color:var(--accent)"><div class="stat-label">\u0412\u0441\u0435\u0433\u043e</div><div class="stat-value" id="stat-total">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u041d\u043e\u0432\u044b\u0435</div><div class="stat-value" style="--stat-color:var(--accent)" id="stat-new">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</div><div class="stat-value" style="--stat-color:var(--amber)" id="stat-work">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u0417\u0430\u043a\u0440\u044b\u0442\u044b</div><div class="stat-value" style="--stat-color:#4b5563" id="stat-closed">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u0421\u0435\u0433\u043e\u0434\u043d\u044f</div><div class="stat-value" style="--stat-color:var(--green)" id="stat-today">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u0417\u0430 \u043d\u0435\u0434\u0435\u043b\u044e</div><div class="stat-value" style="--stat-color:#818cf8" id="stat-week">\u2014</div></div>
-      <div class="stat-card"><div class="stat-label">\u0417\u0430 \u043c\u0435\u0441\u044f\u0446</div><div class="stat-value" style="--stat-color:#f472b6" id="stat-month">\u2014</div></div>
+      <div class="stat-card" style="--accent-color:var(--accent)"><div class="stat-label">Всего</div><div class="stat-value" id="stat-total">—</div></div>
+      <div class="stat-card"><div class="stat-label">Новые</div><div class="stat-value" style="--stat-color:var(--accent)" id="stat-new">—</div></div>
+      <div class="stat-card"><div class="stat-label">В работе</div><div class="stat-value" style="--stat-color:var(--amber)" id="stat-work">—</div></div>
+      <div class="stat-card"><div class="stat-label">Закрыты</div><div class="stat-value" style="--stat-color:#4b5563" id="stat-closed">—</div></div>
+      <div class="stat-card"><div class="stat-label">Сегодня</div><div class="stat-value" style="--stat-color:var(--green)" id="stat-today">—</div></div>
+      <div class="stat-card"><div class="stat-label">За неделю</div><div class="stat-value" style="--stat-color:#818cf8" id="stat-week">—</div></div>
+      <div class="stat-card"><div class="stat-label">За месяц</div><div class="stat-value" style="--stat-color:#f472b6" id="stat-month">—</div></div>
     </div>
     <div class="chart-section">
-      <div class="chart-title">\u0417\u0430\u044f\u0432\u043a\u0438 \u0437\u0430 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0435 7 \u0434\u043d\u0435\u0439</div>
+      <div class="chart-title">Заявки за последние 7 дней</div>
       <div class="chart-wrap" id="chart-wrap"></div>
     </div>
     <div class="toolbar">
-      <span class="toolbar-title">\u0421\u043f\u0438\u0441\u043e\u043a \u0437\u0430\u044f\u0432\u043e\u043a</span>
+      <span class="toolbar-title">Список заявок</span>
       <div class="toolbar-spacer"></div>
       <div class="search-box">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5a6a80" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="search-input" placeholder="\u041f\u043e\u0438\u0441\u043a \u043f\u043e #id, \u0438\u043c\u0435\u043d\u0438, \u043a\u043e\u043d\u0442\u0430\u043a\u0442\u0443...">
+        <input type="text" id="search-input" placeholder="Поиск по #id, имени, контакту...">
       </div>
       <select class="filter-select" id="filter-status">
-        <option value="">\u0412\u0441\u0435 \u0441\u0442\u0430\u0442\u0443\u0441\u044b</option>
-        <option value="new">\u041d\u043e\u0432\u044b\u0435</option>
-        <option value="work">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option>
-        <option value="closed">\u0417\u0430\u043a\u0440\u044b\u0442\u044b\u0435</option>
+        <option value="">Все статусы</option>
+        <option value="new">Новые</option>
+        <option value="work">В работе</option>
+        <option value="closed">Закрытые</option>
       </select>
-      <button class="btn-refresh" id="refresh-btn">\u21bb</button>
+      <button class="btn-refresh" id="refresh-btn">↻</button>
     </div>
     <div class="table-wrap">
-      <div class="loading" id="table-loading"><div class="spinner"></div><span class="loading-text">\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430</span></div>
+      <div class="loading" id="table-loading"><div class="spinner"></div><span class="loading-text">Загрузка</span></div>
       <table id="leads-table" style="display:none">
         <thead><tr>
-          <th onclick="sortBy('id')">\u2116 <span id="arr-id"></span></th>
-          <th onclick="sortBy('name')">\u041a\u043b\u0438\u0435\u043d\u0442 <span id="arr-name"></span></th>
-          <th>\u041a\u043e\u043d\u0442\u0430\u043a\u0442</th>
-          <th onclick="sortBy('material')">\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b <span id="arr-material"></span></th>
-          <th onclick="sortBy('qty')">\u0422\u0438\u0440\u0430\u0436 <span id="arr-qty"></span></th>
-          <th>\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439</th>
-          <th>\u0424\u0430\u0439\u043b</th>
-          <th onclick="sortBy('status')">\u0421\u0442\u0430\u0442\u0443\u0441 <span id="arr-status"></span></th>
-          <th onclick="sortBy('created_at')">\u0414\u0430\u0442\u0430 <span id="arr-created_at"></span></th>
-          <th>\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044f</th>
+          <th onclick="sortBy('id')">№ <span id="arr-id"></span></th>
+          <th onclick="sortBy('name')">Клиент <span id="arr-name"></span></th>
+          <th>Контакт</th>
+          <th onclick="sortBy('material')">Материал <span id="arr-material"></span></th>
+          <th onclick="sortBy('qty')">Тираж <span id="arr-qty"></span></th>
+          <th>Комментарий</th>
+          <th>Файл</th>
+          <th onclick="sortBy('status')">Статус <span id="arr-status"></span></th>
+          <th onclick="sortBy('created_at')">Дата <span id="arr-created_at"></span></th>
+          <th>Действия</th>
         </tr></thead>
         <tbody id="leads-body"></tbody>
       </table>
-      <div class="empty-state" id="empty-state" style="display:none"><div class="empty-icon">\ud83d\udced</div><div class="empty-text">\u0417\u0430\u044f\u0432\u043e\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e</div></div>
+      <div class="empty-state" id="empty-state" style="display:none"><div class="empty-icon">📭</div><div class="empty-text">Заявок не найдено</div></div>
     </div>
     <div class="mobile-cards" id="mobile-cards"></div>
   </main>
@@ -281,12 +281,12 @@ table,#table-loading,#empty-state{display:none!important}
 <div id="detail-modal">
   <div class="detail-inner">
     <div class="detail-topbar">
-      <button class="detail-back" onclick="closeDetail()">\u2190 \u041d\u0430\u0437\u0430\u0434</button>
-      <div class="detail-topbar-title">\u0417\u0430\u044f\u0432\u043a\u0430 <span id="d-id">#\u2014</span></div>
+      <button class="detail-back" onclick="closeDetail()">← Назад</button>
+      <div class="detail-topbar-title">Заявка <span id="d-id">#—</span></div>
       <div class="detail-topbar-spacer"></div>
       <div class="detail-status-wrap">
         <select class="status-select" id="d-status-select" onchange="onDetailStatusChange(this)" style="font-size:11px;padding:7px 12px"></select>
-        <button class="btn-delete" id="d-delete-btn" style="padding:7px 12px">\u2715 \u0423\u0434\u0430\u043b\u0438\u0442\u044c</button>
+        <button class="btn-delete" id="d-delete-btn" style="padding:7px 12px">✕ Удалить</button>
       </div>
     </div>
 
@@ -295,48 +295,48 @@ table,#table-loading,#empty-state{display:none!important}
       <div>
         <!-- CLIENT INFO -->
         <div class="detail-section">
-          <div class="detail-section-header"><div class="detail-section-dot"></div><div class="detail-section-title">\u041a\u043b\u0438\u0435\u043d\u0442</div></div>
+          <div class="detail-section-header"><div class="detail-section-dot"></div><div class="detail-section-title">Клиент</div></div>
           <div class="detail-body">
             <div class="detail-grid">
-              <div class="detail-field"><div class="detail-field-label">\u041a\u043e\u043c\u043f\u0430\u043d\u0438\u044f / \u0418\u043c\u044f</div><div class="detail-field-value" id="d-name">\u2014</div></div>
-              <div class="detail-field"><div class="detail-field-label">\u0414\u0430\u0442\u0430 \u0437\u0430\u044f\u0432\u043a\u0438</div><div class="detail-field-value mono" id="d-date">\u2014</div></div>
-              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b</div><div id="d-contacts"></div></div>
+              <div class="detail-field"><div class="detail-field-label">Компания / Имя</div><div class="detail-field-value" id="d-name">—</div></div>
+              <div class="detail-field"><div class="detail-field-label">Дата заявки</div><div class="detail-field-value mono" id="d-date">—</div></div>
+              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">Контакты</div><div id="d-contacts"></div></div>
             </div>
           </div>
         </div>
 
         <!-- ORDER INFO -->
         <div class="detail-section">
-          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--amber)"></div><div class="detail-section-title">\u041f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0437\u0430\u043a\u0430\u0437\u0430</div></div>
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--amber)"></div><div class="detail-section-title">Параметры заказа</div></div>
           <div class="detail-body">
             <div class="detail-grid">
-              <div class="detail-field"><div class="detail-field-label">\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b / \u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f</div><div class="detail-field-value accent mono" id="d-material">\u2014</div></div>
-              <div class="detail-field"><div class="detail-field-label">\u0422\u0438\u0440\u0430\u0436</div><div class="detail-field-value mono" id="d-qty">\u2014</div></div>
-              <div class="detail-field"><div class="detail-field-label">\u0411\u044e\u0434\u0436\u0435\u0442</div><div class="detail-field-value mono" id="d-budget">\u2014</div></div>
-              <div class="detail-field"><div class="detail-field-label">\u0421\u0440\u043e\u043a</div><div class="detail-field-value mono" id="d-deadline">\u2014</div></div>
-              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">\u0422\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\u044f</div><div class="detail-field-value comment" id="d-specs">\u2014</div></div>
+              <div class="detail-field"><div class="detail-field-label">Материал / Технология</div><div class="detail-field-value accent mono" id="d-material">—</div></div>
+              <div class="detail-field"><div class="detail-field-label">Тираж</div><div class="detail-field-value mono" id="d-qty">—</div></div>
+              <div class="detail-field"><div class="detail-field-label">Бюджет</div><div class="detail-field-value mono" id="d-budget">—</div></div>
+              <div class="detail-field"><div class="detail-field-label">Срок</div><div class="detail-field-value mono" id="d-deadline">—</div></div>
+              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">Технические требования</div><div class="detail-field-value comment" id="d-specs">—</div></div>
             </div>
           </div>
         </div>
 
         <!-- COMMENT -->
         <div class="detail-section">
-          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--green)"></div><div class="detail-section-title">\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043a\u043b\u0438\u0435\u043d\u0442\u0430</div></div>
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--green)"></div><div class="detail-section-title">Комментарий клиента</div></div>
           <div class="detail-body">
-            <div class="detail-field-value comment" id="d-comment" style="color:var(--text)">\u2014</div>
+            <div class="detail-field-value comment" id="d-comment" style="color:var(--text)">—</div>
           </div>
         </div>
 
         <!-- FILE -->
         <div class="detail-section" id="d-file-section">
-          <div class="detail-section-header"><div class="detail-section-dot" style="background:#818cf8"></div><div class="detail-section-title">\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u043b\u0451\u043d\u043d\u044b\u0439 \u0444\u0430\u0439\u043b</div></div>
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:#818cf8"></div><div class="detail-section-title">Прикреплённый файл</div></div>
           <div class="detail-body" style="display:flex;align-items:center;gap:16px">
-            <div class="detail-file-icon" id="d-file-icon">\ud83d\udce6</div>
+            <div class="detail-file-icon" id="d-file-icon">📦</div>
             <div style="flex:1">
-              <div style="font-weight:700;color:#e8edf5;margin-bottom:4px" id="d-file-name">\u2014</div>
-              <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim)" id="d-file-meta">\u2014</div>
+              <div style="font-weight:700;color:#e8edf5;margin-bottom:4px" id="d-file-name">—</div>
+              <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim)" id="d-file-meta">—</div>
             </div>
-            <a class="detail-file-btn" href="#" id="d-file-btn" onclick="toast('\u0424\u0430\u0439\u043b \u0434\u043e\u0441\u0442\u0443\u043f\u0435\u043d \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0431\u044d\u043a\u0435\u043d\u0434\u0430','info');return false">\u2193 \u0421\u043a\u0430\u0447\u0430\u0442\u044c</a>
+            <a class="detail-file-btn" href="#" id="d-file-btn" onclick="toast('Файл доступен после подключения бэкенда','info');return false">↓ Скачать</a>
           </div>
         </div>
       </div>
@@ -345,21 +345,21 @@ table,#table-loading,#empty-state{display:none!important}
       <div>
         <div class="viewer-section">
           <div class="viewer-header">
-            <div class="viewer-title">3D \u041c\u043e\u0434\u0435\u043b\u044c \u0434\u0435\u0442\u0430\u043b\u0438</div>
-            <div class="viewer-hint">Drag to rotate \u00b7 Scroll to zoom</div>
+            <div class="viewer-title">3D Модель детали</div>
+            <div class="viewer-hint">Drag to rotate · Scroll to zoom</div>
           </div>
           <div id="viewer-canvas-wrap">
             <div class="viewer-overlay">
-              <span class="viewer-label" id="viewer-part-label">\u2014</span>
-              <span class="viewer-label" id="viewer-mat-label">\u2014</span>
+              <span class="viewer-label" id="viewer-part-label">—</span>
+              <span class="viewer-label" id="viewer-mat-label">—</span>
             </div>
           </div>
           <div class="viewer-controls">
             <button class="viewer-btn active" onclick="setViewerMode('solid',this)">Solid</button>
             <button class="viewer-btn" onclick="setViewerMode('wire',this)">Wire</button>
             <button class="viewer-btn" onclick="setViewerMode('xray',this)">X-Ray</button>
-            <button class="viewer-btn" onclick="resetCamera()">\u21ba Reset</button>
-            <button class="viewer-btn" onclick="toggleAutoRotate()">\u27f3 Auto</button>
+            <button class="viewer-btn" onclick="resetCamera()">↺ Reset</button>
+            <button class="viewer-btn" onclick="toggleAutoRotate()">⟳ Auto</button>
           </div>
         </div>
       </div>
@@ -370,11 +370,11 @@ table,#table-loading,#empty-state{display:none!important}
 <!-- DELETE MODAL -->
 <div class="modal-bg" id="confirm-modal">
   <div class="modal-card danger" style="max-width:360px">
-    <div class="modal-title">\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0443?</div>
+    <div class="modal-title">Удалить заявку?</div>
     <div class="modal-text" id="modal-text"></div>
     <div class="modal-actions">
-      <button class="btn-cancel" id="modal-cancel">\u041e\u0442\u043c\u0435\u043d\u0430</button>
-      <button class="btn-confirm-del" id="modal-confirm">\u0423\u0434\u0430\u043b\u0438\u0442\u044c</button>
+      <button class="btn-cancel" id="modal-cancel">Отмена</button>
+      <button class="btn-confirm-del" id="modal-confirm">Удалить</button>
     </div>
   </div>
 </div>
@@ -385,94 +385,94 @@ table,#table-loading,#empty-state{display:none!important}
 const ADMIN_PASSWORD='zuply2024';
 let allLeads=[],deleteId=null,sortField='id',sortDir=-1,prevCount=0,currentDetailId=null;
 
-// \u2500\u2500 MOCK DATA \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── MOCK DATA ──────────────────────────────────────────────────────────────
 let mockDatabase=[
   {
     id:1,
-    name:'\u041e\u041e\u041e "\u0420\u043e\u0431\u043e\u0422\u0435\u0445 \u0421\u0438\u0441\u0442\u0435\u043c\u0441"',
+    name:'ООО "РобоТех Системс"',
     phone:'+7 (495) 120-44-87',
     telegram:'@robotech_cto',
-    material:'\u0410\u043b\u044e\u043c\u0438\u043d\u0438\u0435\u0432\u044b\u0439 \u0441\u043f\u043b\u0430\u0432 6061-T6',
-    qty:'500 \u0448\u0442.',
-    comment:'\u0414\u0435\u0442\u0430\u043b\u0438 \u0434\u043b\u044f \u0440\u043e\u0431\u043e\u0442\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0440\u0443\u043a\u0438 \u043f\u0440\u043e\u043c\u044b\u0448\u043b\u0435\u043d\u043d\u043e\u0433\u043e \u043c\u0430\u043d\u0438\u043f\u0443\u043b\u044f\u0442\u043e\u0440\u0430. \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044f \u0432\u044b\u0441\u043e\u043a\u0430\u044f \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c \u0441\u043e\u043f\u0440\u044f\u0436\u0451\u043d\u043d\u044b\u0445 \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u0435\u0439 \u2014 \u043f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0435 \u043e\u0442\u0432\u0435\u0440\u0441\u0442\u0438\u044f \u043f\u043e\u0434 \u043f\u043e\u0434\u0448\u0438\u043f\u043d\u0438\u043a\u0438 SKF 6204. \u0410\u043d\u043e\u0434\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0432 \u0447\u0451\u0440\u043d\u044b\u0439 \u0446\u0432\u0435\u0442, \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u043f\u043e\u043a\u0440\u044b\u0442\u0438\u044f 15\u201320 \u043c\u043a\u043c. \u0413\u043e\u0442\u043e\u0432\u044b \u043e\u0431\u0441\u0443\u0434\u0438\u0442\u044c NDA \u0434\u043e \u043f\u0435\u0440\u0435\u0434\u0430\u0447\u0438 \u0447\u0435\u0440\u0442\u0435\u0436\u0435\u0439.',
-    budget:'\u043e\u0442 2 400 000 \u20bd',
-    deadline:'28 \u043c\u0430\u044f 2026',
-    specs:'\u0414\u043e\u043f\u0443\u0441\u043a: \u00b10.015 \u043c\u043c \u043d\u0430 \u043f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0445 \u043e\u0442\u0432\u0435\u0440\u0441\u0442\u0438\u044f\u0445\n\u0428\u0435\u0440\u043e\u0445\u043e\u0432\u0430\u0442\u043e\u0441\u0442\u044c Ra 0.8 \u043d\u0430 \u0442\u0440\u0443\u0449\u0438\u0445\u0441\u044f \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u044f\u0445\n\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043a\u0430\u0442 EN 573-3\n\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430 \u043b\u0430\u0437\u0435\u0440\u043e\u043c: \u0441\u0435\u0440\u0438\u0439\u043d\u044b\u0439 \u043d\u043e\u043c\u0435\u0440 + QR',
+    material:'Алюминиевый сплав 6061-T6',
+    qty:'500 шт.',
+    comment:'Детали для роботизированной руки промышленного манипулятора. Требуется высокая точность сопряжённых поверхностей — посадочные отверстия под подшипники SKF 6204. Анодирование в чёрный цвет, толщина покрытия 15–20 мкм. Готовы обсудить NDA до передачи чертежей.',
+    budget:'от 2 400 000 ₽',
+    deadline:'28 мая 2026',
+    specs:'Допуск: ±0.015 мм на посадочных отверстиях\nШероховатость Ra 0.8 на трущихся поверхностях\nМатериал сертификат EN 573-3\nМаркировка лазером: серийный номер + QR',
     file_name:'arm_bracket_v3.step',
-    file_meta:'STEP \u00b7 3D CAD \u00b7 4.2 \u041c\u0411',
-    file_icon:'\u2699\ufe0f',
+    file_meta:'STEP · 3D CAD · 4.2 МБ',
+    file_icon:'⚙️',
     status:'new',
     created_at:new Date().toISOString().slice(0,10)+' 09:14:32',
     model:'cnc_bracket'
   },
   {
     id:2,
-    name:'\u0418\u041f \u041a\u0438\u0440\u0438\u043b\u043b\u043e\u0432 \u0414.\u0410. / SmartSensor',
+    name:'ИП Кириллов Д.А. / SmartSensor',
     phone:'+7 (903) 887-22-10',
     telegram:'@kirillov_smartsensor',
-    material:'\u041b\u0438\u0442\u044c\u0451 \u043f\u043e\u0434 \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435\u043c ABS+PC',
-    qty:'12 000 \u0448\u0442.',
-    comment:'\u041a\u043e\u0440\u043f\u0443\u0441 \u0434\u0430\u0442\u0447\u0438\u043a\u0430 \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b/\u0432\u043b\u0430\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u0443\u043c\u043d\u043e\u0433\u043e \u0434\u043e\u043c\u0430. \u0424\u0438\u043d\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u0435\u0440\u0441\u0438\u044f \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u0438\u0432\u0430. \u041d\u0443\u0436\u043d\u043e \u0438\u0437\u0433\u043e\u0442\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0435\u0441\u0441-\u0444\u043e\u0440\u043c\u044b \u0438 \u043f\u0440\u043e\u0431\u043d\u0430\u044f \u043f\u0430\u0440\u0442\u0438\u044f 200 \u0448\u0442. \u043d\u0430 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0443 \u0434\u043e \u0437\u0430\u043f\u0443\u0441\u043a\u0430 \u0441\u0435\u0440\u0438\u0438.',
-    budget:'680 000 \u20bd (\u043f\u0440\u0435\u0441\u0441-\u0444\u043e\u0440\u043c\u0430) + \u0441\u0435\u0440\u0438\u044f',
-    deadline:'15 \u0438\u044e\u043d\u044f 2026',
-    specs:'\u041a\u043b\u0430\u0441\u0441 \u0437\u0430\u0449\u0438\u0442\u044b IP54\n\u041f\u043e\u043b\u0438\u043c\u0435\u0440: ABS+PC Sabic Cycoloy C2950\n\u0426\u0432\u0435\u0442: RAL 9003 (\u0431\u0435\u043b\u044b\u0439)\n\u041b\u043e\u0433\u043e \u0442\u0438\u0441\u043d\u0435\u043d\u0438\u0435\u043c \u043d\u0430 \u043d\u0438\u0436\u043d\u0435\u0439 \u043a\u0440\u044b\u0448\u043a\u0435',
+    material:'Литьё под давлением ABS+PC',
+    qty:'12 000 шт.',
+    comment:'Корпус датчика температуры/влажности для умного дома. Финальная версия конструктива. Нужно изготовление пресс-формы и пробная партия 200 шт. на проверку до запуска серии.',
+    budget:'680 000 ₽ (пресс-форма) + серия',
+    deadline:'15 июня 2026',
+    specs:'Класс защиты IP54\nПолимер: ABS+PC Sabic Cycoloy C2950\nЦвет: RAL 9003 (белый)\nЛого тиснением на нижней крышке',
     file_name:'smartsensor_housing_r4.step',
-    file_meta:'STEP \u00b7 3D CAD \u00b7 1.8 \u041c\u0411',
-    file_icon:'\ud83c\udfe0',
+    file_meta:'STEP · 3D CAD · 1.8 МБ',
+    file_icon:'🏠',
     status:'work',
     created_at:'2026-04-13 14:22:05',
     model:'housing'
   },
   {
     id:3,
-    name:'\u0410\u041e "\u042d\u043d\u0435\u0440\u0433\u043e\u041c\u0430\u0448-\u0423\u0440\u0430\u043b"',
+    name:'АО "ЭнергоМаш-Урал"',
     phone:'+7 (343) 290-11-55',
     telegram:'',
-    material:'\u0421\u0442\u0430\u043b\u044c 40\u0425 / \u0427\u041f\u0423 \u0442\u043e\u043a\u0430\u0440\u043a\u0430 + \u0444\u0440\u0435\u0437\u0435\u0440\u043e\u0432\u043a\u0430',
-    qty:'250 \u0448\u0442.',
-    comment:'\u0412\u0430\u043b \u0440\u0435\u0434\u0443\u043a\u0442\u043e\u0440\u0430 \u0434\u043b\u044f \u043d\u0430\u0441\u043e\u0441\u043d\u043e\u0433\u043e \u0430\u0433\u0440\u0435\u0433\u0430\u0442\u0430 \u041d\u0414-80. \u041a\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u0432\u0430\u0436\u043d\u0430 \u0433\u0435\u043e\u043c\u0435\u0442\u0440\u0438\u044f \u0448\u043f\u043e\u043d\u043e\u0447\u043d\u044b\u0445 \u043f\u0430\u0437\u043e\u0432 \u0438 \u0440\u0435\u0437\u044c\u0431\u043e\u0432\u044b\u0445 \u0443\u0447\u0430\u0441\u0442\u043a\u043e\u0432. \u041f\u0440\u0438\u043b\u0430\u0433\u0430\u0435\u043c \u0442\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0447\u0435\u0440\u0442\u0451\u0436 \u043f\u043e \u0415\u0421\u041a\u0414. \u0422\u0440\u0435\u0431\u0443\u0435\u043c \u043f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u041e\u0422\u041a \u043d\u0430 \u043a\u0430\u0436\u0434\u0443\u044e \u0434\u0435\u0442\u0430\u043b\u044c.',
-    budget:'1 150 000 \u20bd',
-    deadline:'10 \u0438\u044e\u043b\u044f 2026',
-    specs:'\u0422\u0435\u0440\u043c\u043e\u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430: \u0437\u0430\u043a\u0430\u043b\u043a\u0430 HRC 45-50\n\u041f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0435 \u0434\u0438\u0430\u043c\u0435\u0442\u0440\u044b h6/k6\n\u0414\u0438\u0430\u043c\u0435\u0442\u0440: \u00d842 \u043c\u043c, \u0434\u043b\u0438\u043d\u0430 380 \u043c\u043c\n\u0411\u0438\u0435\u043d\u0438\u0435 \u043d\u0435 \u0431\u043e\u043b\u0435\u0435 0.02 \u043c\u043c',
+    material:'Сталь 40Х / ЧПУ токарка + фрезеровка',
+    qty:'250 шт.',
+    comment:'Вал редуктора для насосного агрегата НД-80. Критически важна геометрия шпоночных пазов и резьбовых участков. Прилагаем технический чертёж по ЕСКД. Требуем протокол ОТК на каждую деталь.',
+    budget:'1 150 000 ₽',
+    deadline:'10 июля 2026',
+    specs:'Термообработка: закалка HRC 45-50\nПосадочные диаметры h6/k6\nДиаметр: Ø42 мм, длина 380 мм\nБиение не более 0.02 мм',
     file_name:'shaft_ND80_rev2.step',
-    file_meta:'STEP \u00b7 3D CAD \u00b7 890 \u041a\u0411',
-    file_icon:'\ud83d\udd29',
+    file_meta:'STEP · 3D CAD · 890 КБ',
+    file_icon:'🔩',
     status:'closed',
     created_at:'2026-04-10 08:55:18',
     model:'shaft'
   },
   {
     id:4,
-    name:'\u0421\u0442\u0430\u0440\u0442\u0430\u043f Levio / \u041e\u041e\u041e "\u041b\u0435\u0432\u0438\u043e"',
+    name:'Стартап Levio / ООО "Левио"',
     phone:'+7 (916) 334-77-02',
     telegram:'@levio_founder',
-    material:'SLA-\u0441\u043c\u043e\u043b\u0430 Formlabs Grey Pro + \u043f\u043e\u043a\u0440\u0430\u0441\u043a\u0430',
-    qty:'15 \u0448\u0442.',
-    comment:'\u041f\u0440\u043e\u0442\u043e\u0442\u0438\u043f\u044b \u043a\u043e\u0440\u043f\u0443\u0441\u0430 \u0434\u043b\u044f \u043c\u0435\u0434\u0438\u0446\u0438\u043d\u0441\u043a\u043e\u0433\u043e \u043d\u043e\u0441\u0438\u043c\u043e\u0433\u043e \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430. \u041d\u0443\u0436\u043d\u0430 \u0438\u0434\u0435\u0430\u043b\u044c\u043d\u0430\u044f \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u044c \u043f\u043e\u0434 \u043f\u043e\u043a\u0440\u0430\u0441\u043a\u0443 \u2014 \u0443\u0440\u043e\u0432\u0435\u043d\u044c A-surface. \u041f\u043b\u0430\u043d\u0438\u0440\u0443\u0435\u043c \u043f\u0438\u0442\u0447 \u043f\u0435\u0440\u0435\u0434 \u0438\u043d\u0432\u0435\u0441\u0442\u043e\u0440\u0430\u043c\u0438 5 \u0438\u044e\u043d\u044f, \u0434\u0435\u0434\u043b\u0430\u0439\u043d \u043a\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439.',
-    budget:'\u0434\u043e 180 000 \u20bd',
-    deadline:'1 \u0438\u044e\u043d\u044f 2026',
-    specs:'\u0421\u043b\u043e\u0439 \u043f\u0435\u0447\u0430\u0442\u0438: 0.05 \u043c\u043c\n\u041f\u043e\u0441\u0442\u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430: \u0448\u043b\u0438\u0444\u043e\u0432\u043a\u0430 2000 \u0433\u0440\u0438\u0442 + \u0433\u0440\u0443\u043d\u0442\n\u0426\u0432\u0435\u0442: \u0431\u0435\u043b\u044b\u0439 \u043f\u043e\u043b\u0443\u043c\u0430\u0442\u043e\u0432\u044b\u0439 NCS S 0502-Y\n\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430 \u043f\u043e \u0448\u0430\u0431\u043b\u043e\u043d\u0443 (\u043b\u043e\u0433\u043e + CE)',
+    material:'SLA-смола Formlabs Grey Pro + покраска',
+    qty:'15 шт.',
+    comment:'Прототипы корпуса для медицинского носимого устройства. Нужна идеальная поверхность под покраску — уровень A-surface. Планируем питч перед инвесторами 5 июня, дедлайн критический.',
+    budget:'до 180 000 ₽',
+    deadline:'1 июня 2026',
+    specs:'Слой печати: 0.05 мм\nПостобработка: шлифовка 2000 грит + грунт\nЦвет: белый полуматовый NCS S 0502-Y\nМаркировка по шаблону (лого + CE)',
     file_name:'levio_wearable_proto.stl',
-    file_meta:'STL \u00b7 Mesh \u00b7 22.6 \u041c\u0411',
-    file_icon:'\u231a',
+    file_meta:'STL · Mesh · 22.6 МБ',
+    file_icon:'⌚',
     status:'new',
     created_at:new Date().toISOString().slice(0,10)+' 11:03:44',
     model:'wearable'
   },
   {
     id:5,
-    name:'\u041e\u041e\u041e "\u0410\u0432\u0438\u0430\u041a\u043e\u043c\u043f\u043e\u0437\u0438\u0442-\u041c"',
+    name:'ООО "АвиаКомпозит-М"',
     phone:'+7 (495) 780-33-19',
     telegram:'@aviacomp_msk',
-    material:'\u041a\u0430\u0440\u0431\u043e\u043d T700 / \u0432\u044b\u043a\u043b\u0430\u0434\u043a\u0430 + \u0430\u0432\u0442\u043e\u043a\u043b\u0430\u0432',
-    qty:'80 \u0448\u0442.',
-    comment:'\u041d\u0435\u0441\u0443\u0449\u0438\u0435 \u043b\u043e\u043d\u0436\u0435\u0440\u043e\u043d\u044b \u0434\u043b\u044f \u0411\u041f\u041b\u0410 \u0441\u0430\u043c\u043e\u043b\u0451\u0442\u043d\u043e\u0433\u043e \u0442\u0438\u043f\u0430. \u041f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0441\u0442\u0432\u043e \u0442\u043e\u043b\u044c\u043a\u043e \u043d\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u0446\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0445 \u043f\u0440\u0435\u0434\u043f\u0440\u0438\u044f\u0442\u0438\u044f\u0445 \u0441 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043e\u0439 \u0432\u0445\u043e\u0434\u043d\u043e\u0433\u043e \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044f. \u0412\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u0440\u0430\u0437\u0434\u0435\u043b\u0435\u043d\u0438\u0435 \u043b\u043e\u0442\u0430 \u043c\u0435\u0436\u0434\u0443 \u0434\u0432\u0443\u043c\u044f \u043f\u043e\u0441\u0442\u0430\u0432\u0449\u0438\u043a\u0430\u043c\u0438.',
-    budget:'3 200 000 \u20bd',
-    deadline:'20 \u0430\u0432\u0433\u0443\u0441\u0442\u0430 2026',
-    specs:'\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b: \u0442\u043a\u0430\u043d\u044b\u0439 \u043f\u0440\u0435\u043f\u0440\u0435\u0433 T700/M21\n\u0422\u043e\u043b\u0449\u0438\u043d\u0430 \u0441\u0442\u0435\u043d\u043a\u0438: 1.5 \u043c\u043c \u00b10.1\n\u0423\u0442\u044f\u0436\u0435\u043b\u0435\u043d\u0438\u0439 \u0438 \u0440\u0430\u0441\u0441\u043b\u043e\u0435\u043d\u0438\u0439 \u043d\u0435 \u0434\u043e\u043f\u0443\u0441\u043a\u0430\u0435\u0442\u0441\u044f\n\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u044f AS9100D',
+    material:'Карбон T700 / выкладка + автоклав',
+    qty:'80 шт.',
+    comment:'Несущие лонжероны для БПЛА самолётного типа. Производство только на сертифицированных предприятиях с процедурой входного контроля. Возможно разделение лота между двумя поставщиками.',
+    budget:'3 200 000 ₽',
+    deadline:'20 августа 2026',
+    specs:'Материал: тканый препрег T700/M21\nТолщина стенки: 1.5 мм ±0.1\nУтяжелений и расслоений не допускается\nСертификация AS9100D',
     file_name:'spar_uav_longerons.step',
-    file_meta:'STEP \u00b7 Assembly \u00b7 12.1 \u041c\u0411',
-    file_icon:'\u2708\ufe0f',
+    file_meta:'STEP · Assembly · 12.1 МБ',
+    file_icon:'✈️',
     status:'work',
     created_at:'2026-04-09 16:41:00',
     model:'carbon_beam'
@@ -483,7 +483,7 @@ async function fetchLeads(){return new Promise(r=>setTimeout(()=>r([...mockDatab
 async function updateStatus(id,s){return new Promise(r=>setTimeout(()=>{const l=mockDatabase.find(x=>x.id==id);if(l)l.status=s;r();},200))}
 async function deleteLead(id){return new Promise(r=>setTimeout(()=>{mockDatabase=mockDatabase.filter(x=>x.id!=id);r();},200))}
 
-// \u2500\u2500 AUTH \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── AUTH ──────────────────────────────────────────────────────────────────
 const loginScreen=document.getElementById('login-screen');
 const appEl=document.getElementById('app');
 const pwInput=document.getElementById('pw-input');
@@ -491,18 +491,18 @@ const loginErr=document.getElementById('login-err');
 function checkSession(){return sessionStorage.getItem('zuply_admin')==='ok'}
 function login(){
   if(pwInput.value===ADMIN_PASSWORD){sessionStorage.setItem('zuply_admin','ok');loginScreen.classList.add('hidden');setTimeout(()=>{loginScreen.style.display='none';appEl.classList.add('visible');initApp();},400);}
-  else{loginErr.textContent='\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043f\u0430\u0440\u043e\u043b\u044c';pwInput.value='';pwInput.focus();}
+  else{loginErr.textContent='Неверный пароль';pwInput.value='';pwInput.focus();}
 }
 document.getElementById('login-btn').addEventListener('click',login);
 pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')login();});
 document.getElementById('logout-btn').addEventListener('click',()=>{sessionStorage.removeItem('zuply_admin');location.reload();});
 if(checkSession()){loginScreen.style.display='none';appEl.classList.add('visible');initApp();}
 
-// \u2500\u2500 CLOCK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── CLOCK ─────────────────────────────────────────────────────────────────
 function updateClock(){document.getElementById('topbar-time').textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 setInterval(updateClock,1000);updateClock();
 
-// \u2500\u2500 STATS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── STATS ─────────────────────────────────────────────────────────────────
 function updateStats(leads){
   const today=new Date().toISOString().slice(0,10);
   const weekAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
@@ -518,7 +518,7 @@ function updateStats(leads){
   const b=document.getElementById('new-badge');b.style.display=nc>0?'inline':'none';b.textContent=nc;
 }
 
-// \u2500\u2500 CHART \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── CHART ─────────────────────────────────────────────────────────────────
 function drawChart(leads){
   const wrap=document.getElementById('chart-wrap');const days=[];
   for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*864e5);const key=d.toISOString().slice(0,10);days.push({key,label:d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}),count:leads.filter(l=>(l.created_at||'').startsWith(key)).length});}
@@ -526,10 +526,10 @@ function drawChart(leads){
   wrap.innerHTML=days.map(d=>`<div class="chart-bar-group" title="${d.label}: ${d.count}"><div class="chart-bar" style="height:${Math.max(3,Math.round(d.count/max*54))}px;${d.count===0?'opacity:.12':''}"></div><div class="chart-day">${d.label.slice(0,5)}</div></div>`).join('');
 }
 
-// \u2500\u2500 SORT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-function sortBy(f){if(sortField===f)sortDir*=-1;else{sortField=f;sortDir=-1;}document.querySelectorAll('th.sorted').forEach(t=>t.classList.remove('sorted'));const el=document.getElementById('arr-'+f);if(el){el.parentElement.classList.add('sorted');el.textContent=sortDir===-1?' \u2193':' \u2191';}applyFilters();}
+// ── SORT ──────────────────────────────────────────────────────────────────
+function sortBy(f){if(sortField===f)sortDir*=-1;else{sortField=f;sortDir=-1;}document.querySelectorAll('th.sorted').forEach(t=>t.classList.remove('sorted'));const el=document.getElementById('arr-'+f);if(el){el.parentElement.classList.add('sorted');el.textContent=sortDir===-1?' ↓':' ↑';}applyFilters();}
 
-// \u2500\u2500 FILTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── FILTER ────────────────────────────────────────────────────────────────
 function applyFilters(){
   const q=document.getElementById('search-input').value.toLowerCase();
   const st=document.getElementById('filter-status').value;
@@ -538,13 +538,13 @@ function applyFilters(){
   renderTable(filtered);renderMobile(filtered);
 }
 
-function formatDate(dt){if(!dt)return'\u2014';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'2-digit'})+'<br>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
-function formatDateFull(dt){if(!dt)return'\u2014';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'long',year:'numeric'})+' \u0432 '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
+function formatDate(dt){if(!dt)return'—';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'2-digit'})+'<br>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
+function formatDateFull(dt){if(!dt)return'—';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'long',year:'numeric'})+' в '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function statusTag(s){const m={new:['\u041d\u043e\u0432\u0430\u044f','tag-new'],work:['\u0412 \u0440\u0430\u0431\u043e\u0442\u0435','tag-work'],closed:['\u0417\u0430\u043a\u0440\u044b\u0442\u0430','tag-closed']};const[l,c]=m[s]||m.new;return`<span class="detail-tag ${c}">${l}</span>`;}
+function statusTag(s){const m={new:['Новая','tag-new'],work:['В работе','tag-work'],closed:['Закрыта','tag-closed']};const[l,c]=m[s]||m.new;return`<span class="detail-tag ${c}">${l}</span>`;}
 
-// \u2500\u2500 TABLE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── TABLE ─────────────────────────────────────────────────────────────────
 function renderTable(leads){
   document.getElementById('table-loading').style.display='none';
   if(!leads.length){document.getElementById('leads-table').style.display='none';document.getElementById('empty-state').style.display='block';return;}
@@ -553,69 +553,69 @@ function renderTable(leads){
     <td class="lead-id">#${l.id}</td>
     <td><div class="lead-name">${esc(l.name)}</div></td>
     <td><div class="lead-contact">
-      ${l.phone?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.phone)}','\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e')">\ud83d\udcde ${esc(l.phone)}</span>`:''}
-      ${l.telegram?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.telegram)}','\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e')">\u2708 ${esc(l.telegram)}</span>`:''}
-      ${!l.phone&&!l.telegram?'<span style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">\u2014</span>':''}
+      ${l.phone?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.phone)}','Скопировано')">📞 ${esc(l.phone)}</span>`:''}
+      ${l.telegram?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.telegram)}','Скопировано')">✈ ${esc(l.telegram)}</span>`:''}
+      ${!l.phone&&!l.telegram?'<span style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">—</span>':''}
     </div></td>
     <td><span class="lead-material">${esc(l.material)}</span></td>
     <td style="font-family:var(--mono);font-size:12px">${esc(l.qty)}</td>
-    <td class="lead-comment-cell"><div class="comment-short">${esc((l.comment||'').slice(0,60))}${l.comment&&l.comment.length>60?'\u2026':''}</div></td>
-    <td>${l.file_name?`<span style="font-family:var(--mono);font-size:10px;color:var(--accent)">${esc(l.file_name.slice(0,18))}</span>`:'<span style="color:var(--border2);font-family:var(--mono);font-size:11px">\u2014</span>'}</td>
-    <td><select class="status-select" data-id="${l.id}" onchange="event.stopPropagation();onStatusChange(this)"><option value="new" ${(l.status||'new')==='new'?'selected':''}>\u041d\u043e\u0432\u0430\u044f</option><option value="work" ${l.status==='work'?'selected':''}>\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option><option value="closed" ${l.status==='closed'?'selected':''}>\u0417\u0430\u043a\u0440\u044b\u0442\u0430</option></select></td>
+    <td class="lead-comment-cell"><div class="comment-short">${esc((l.comment||'').slice(0,60))}${l.comment&&l.comment.length>60?'…':''}</div></td>
+    <td>${l.file_name?`<span style="font-family:var(--mono);font-size:10px;color:var(--accent)">${esc(l.file_name.slice(0,18))}</span>`:'<span style="color:var(--border2);font-family:var(--mono);font-size:11px">—</span>'}</td>
+    <td><select class="status-select" data-id="${l.id}" onchange="event.stopPropagation();onStatusChange(this)"><option value="new" ${(l.status||'new')==='new'?'selected':''}>Новая</option><option value="work" ${l.status==='work'?'selected':''}>В работе</option><option value="closed" ${l.status==='closed'?'selected':''}>Закрыта</option></select></td>
     <td class="lead-date">${formatDate(l.created_at)}</td>
-    <td><div class="actions"><button class="btn-delete" onclick="event.stopPropagation();confirmDelete(${l.id})">\u2715</button></div></td>
+    <td><div class="actions"><button class="btn-delete" onclick="event.stopPropagation();confirmDelete(${l.id})">✕</button></div></td>
   </tr>`).join('');
 }
 
 function renderMobile(leads){
   const wrap=document.getElementById('mobile-cards');
-  if(!leads.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">\ud83d\udced</div><div class="empty-text">\u0417\u0430\u044f\u0432\u043e\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e</div></div>';return;}
+  if(!leads.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">Заявок не найдено</div></div>';return;}
   wrap.innerHTML=leads.map(l=>`<div class="mobile-card" onclick="openDetail(${l.id})">
     <div class="mobile-card-header">
       <div><div class="mobile-card-id">#${l.id}</div><div class="mobile-card-name">${esc(l.name)}</div></div>
       ${statusTag(l.status||'new')}
     </div>
-    ${l.phone?`<div class="mobile-card-row"><span class="mobile-card-label">\u0422\u0435\u043b</span><span class="mobile-card-val">${esc(l.phone)}</span></div>`:''}
-    <div class="mobile-card-row"><span class="mobile-card-label">\u041c\u0430\u0442.</span><span class="mobile-card-val" style="color:var(--accent);font-family:var(--mono);font-size:11px">${esc(l.material)}</span></div>
-    <div class="mobile-card-row"><span class="mobile-card-label">\u0422\u0438\u0440\u0430\u0436</span><span class="mobile-card-val" style="font-family:var(--mono);font-size:11px">${esc(l.qty)}</span></div>
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:8px">\u041d\u0430\u0436\u043c\u0438\u0442\u0435 \u0434\u043b\u044f \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430 \u2192</div>
+    ${l.phone?`<div class="mobile-card-row"><span class="mobile-card-label">Тел</span><span class="mobile-card-val">${esc(l.phone)}</span></div>`:''}
+    <div class="mobile-card-row"><span class="mobile-card-label">Мат.</span><span class="mobile-card-val" style="color:var(--accent);font-family:var(--mono);font-size:11px">${esc(l.material)}</span></div>
+    <div class="mobile-card-row"><span class="mobile-card-label">Тираж</span><span class="mobile-card-val" style="font-family:var(--mono);font-size:11px">${esc(l.qty)}</span></div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:8px">Нажмите для просмотра →</div>
   </div>`).join('');
 }
 
-// \u2500\u2500 DETAIL MODAL \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── DETAIL MODAL ──────────────────────────────────────────────────────────
 function openDetail(id){
   const l=allLeads.find(x=>x.id===id);if(!l)return;
   currentDetailId=id;
   document.getElementById('d-id').textContent='#'+l.id;
-  document.getElementById('d-name').textContent=l.name||'\u2014';
+  document.getElementById('d-name').textContent=l.name||'—';
   document.getElementById('d-date').textContent=formatDateFull(l.created_at);
   // contacts
   let cc='';
-  if(l.phone)cc+=`<a class="detail-contact-btn" onclick="copyText('${esc(l.phone)}','\u0422\u0435\u043b\u0435\u0444\u043e\u043d \u0441\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d');return false" href="#">\ud83d\udcde ${esc(l.phone)}</a>`;
-  if(l.telegram)cc+=`<a class="detail-contact-btn" href="https://t.me/${esc(l.telegram.replace('@',''))}" target="_blank">\u2708 ${esc(l.telegram)}</a>`;
-  if(!cc)cc='<span style="color:var(--text-dim);font-family:var(--mono);font-size:12px">\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u044b</span>';
+  if(l.phone)cc+=`<a class="detail-contact-btn" onclick="copyText('${esc(l.phone)}','Телефон скопирован');return false" href="#">📞 ${esc(l.phone)}</a>`;
+  if(l.telegram)cc+=`<a class="detail-contact-btn" href="https://t.me/${esc(l.telegram.replace('@',''))}" target="_blank">✈ ${esc(l.telegram)}</a>`;
+  if(!cc)cc='<span style="color:var(--text-dim);font-family:var(--mono);font-size:12px">Не указаны</span>';
   document.getElementById('d-contacts').innerHTML=cc;
-  document.getElementById('d-material').textContent=l.material||'\u2014';
-  document.getElementById('d-qty').textContent=l.qty||'\u2014';
-  document.getElementById('d-budget').textContent=l.budget||'\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d';
-  document.getElementById('d-deadline').textContent=l.deadline||'\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d';
-  document.getElementById('d-specs').textContent=l.specs||'\u2014';
-  document.getElementById('d-comment').textContent=l.comment||'\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442';
+  document.getElementById('d-material').textContent=l.material||'—';
+  document.getElementById('d-qty').textContent=l.qty||'—';
+  document.getElementById('d-budget').textContent=l.budget||'Не указан';
+  document.getElementById('d-deadline').textContent=l.deadline||'Не указан';
+  document.getElementById('d-specs').textContent=l.specs||'—';
+  document.getElementById('d-comment').textContent=l.comment||'Комментарий отсутствует';
   // file
   if(l.file_name){
     document.getElementById('d-file-section').style.display='';
-    document.getElementById('d-file-icon').textContent=l.file_icon||'\ud83d\udcc1';
+    document.getElementById('d-file-icon').textContent=l.file_icon||'📁';
     document.getElementById('d-file-name').textContent=l.file_name;
     document.getElementById('d-file-meta').textContent=l.file_meta||'';
   }else{document.getElementById('d-file-section').style.display='none';}
   // status select
   const sel=document.getElementById('d-status-select');
-  sel.innerHTML='<option value="new">\u041d\u043e\u0432\u0430\u044f</option><option value="work">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option><option value="closed">\u0417\u0430\u043a\u0440\u044b\u0442\u0430</option>';
+  sel.innerHTML='<option value="new">Новая</option><option value="work">В работе</option><option value="closed">Закрыта</option>';
   sel.value=l.status||'new';
   // delete btn
   document.getElementById('d-delete-btn').onclick=()=>confirmDelete(id);
   // viewer labels
-  document.getElementById('viewer-part-label').textContent=l.file_name||'\u2014';
+  document.getElementById('viewer-part-label').textContent=l.file_name||'—';
   document.getElementById('viewer-mat-label').textContent=l.material.split('/')[0].trim();
   // show modal
   document.getElementById('detail-modal').classList.add('show');
@@ -635,58 +635,58 @@ async function onDetailStatusChange(sel){
   try{
     await updateStatus(currentDetailId,sel.value);
     const l=allLeads.find(x=>x.id==currentDetailId);if(l)l.status=sel.value;
-    updateStats(allLeads);applyFilters();toast('\u0421\u0442\u0430\u0442\u0443\u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d','ok');
-  }catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430','err');}
+    updateStats(allLeads);applyFilters();toast('Статус обновлён','ok');
+  }catch{toast('Ошибка','err');}
 }
 
-// \u2500\u2500 STATUS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── STATUS ────────────────────────────────────────────────────────────────
 async function onStatusChange(sel){
-  try{await updateStatus(sel.dataset.id,sel.value);const l=allLeads.find(l=>l.id==sel.dataset.id);if(l)l.status=sel.value;updateStats(allLeads);toast('\u0421\u0442\u0430\u0442\u0443\u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d','ok');}
-  catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f','err');}
+  try{await updateStatus(sel.dataset.id,sel.value);const l=allLeads.find(l=>l.id==sel.dataset.id);if(l)l.status=sel.value;updateStats(allLeads);toast('Статус обновлён','ok');}
+  catch{toast('Ошибка обновления','err');}
 }
 
-// \u2500\u2500 DELETE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── DELETE ────────────────────────────────────────────────────────────────
 function confirmDelete(id){
   deleteId=id;
-  document.getElementById('modal-text').textContent=`\u0417\u0430\u044f\u0432\u043a\u0430 #${id} \u0431\u0443\u0434\u0435\u0442 \u0443\u0434\u0430\u043b\u0435\u043d\u0430 \u043d\u0430\u0432\u0441\u0435\u0433\u0434\u0430. \u042d\u0442\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u043e\u0442\u043c\u0435\u043d\u0438\u0442\u044c.`;
+  document.getElementById('modal-text').textContent=`Заявка #${id} будет удалена навсегда. Это действие нельзя отменить.`;
   document.getElementById('confirm-modal').classList.add('show');
 }
 document.getElementById('modal-cancel').addEventListener('click',()=>{document.getElementById('confirm-modal').classList.remove('show');deleteId=null;});
 document.getElementById('modal-confirm').addEventListener('click',async()=>{
   if(!deleteId)return;document.getElementById('confirm-modal').classList.remove('show');
-  try{await deleteLead(deleteId);allLeads=allLeads.filter(l=>l.id!=deleteId);updateStats(allLeads);drawChart(allLeads);applyFilters();toast(`\u0417\u0430\u044f\u0432\u043a\u0430 #${deleteId} \u0443\u0434\u0430\u043b\u0435\u043d\u0430`,'ok');
+  try{await deleteLead(deleteId);allLeads=allLeads.filter(l=>l.id!=deleteId);updateStats(allLeads);drawChart(allLeads);applyFilters();toast(`Заявка #${deleteId} удалена`,'ok');
     if(currentDetailId==deleteId)closeDetail();
-  }catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u044f','err');}deleteId=null;
+  }catch{toast('Ошибка удаления','err');}deleteId=null;
 });
 
-// \u2500\u2500 COPY / EXPORT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── COPY / EXPORT ─────────────────────────────────────────────────────────
 function copyText(text,msg){navigator.clipboard.writeText(text).then(()=>toast(msg,'ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast(msg,'ok');});}
-function exportCSV(){const h=['ID','\u0418\u043c\u044f','\u0422\u0435\u043b\u0435\u0444\u043e\u043d','Telegram','\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b','\u0422\u0438\u0440\u0430\u0436','\u0411\u044e\u0434\u0436\u0435\u0442','\u0414\u0435\u0434\u043b\u0430\u0439\u043d','\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439','\u0424\u0430\u0439\u043b','\u0421\u0442\u0430\u0442\u0443\u0441','\u0414\u0430\u0442\u0430'];const rows=allLeads.map(l=>[l.id,l.name,l.phone,l.telegram,l.material,l.qty,l.budget,l.deadline,l.comment,l.file_name,l.status,l.created_at].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"'));const csv='\uFEFF'+[h,...rows].map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='zuply-leads-'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('CSV \u0441\u043a\u0430\u0447\u0430\u043d','ok');}
+function exportCSV(){const h=['ID','Имя','Телефон','Telegram','Материал','Тираж','Бюджет','Дедлайн','Комментарий','Файл','Статус','Дата'];const rows=allLeads.map(l=>[l.id,l.name,l.phone,l.telegram,l.material,l.qty,l.budget,l.deadline,l.comment,l.file_name,l.status,l.created_at].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"'));const csv='\uFEFF'+[h,...rows].map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='zuply-leads-'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('CSV скачан','ok');}
 
-// \u2500\u2500 TOAST \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── TOAST ─────────────────────────────────────────────────────────────────
 let toastTimer;
 function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className='show toast-'+type;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='';},3500);}
 
-// \u2500\u2500 EVENTS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── EVENTS ────────────────────────────────────────────────────────────────
 document.getElementById('refresh-btn').addEventListener('click',loadLeads);
 document.getElementById('search-input').addEventListener('input',applyFilters);
 document.getElementById('filter-status').addEventListener('change',applyFilters);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentDetailId)closeDetail();});
 
-// \u2500\u2500 LOAD \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+// ── LOAD ──────────────────────────────────────────────────────────────────
 async function loadLeads(){
   document.getElementById('table-loading').style.display='flex';
   document.getElementById('leads-table').style.display='none';
   document.getElementById('empty-state').style.display='none';
   document.getElementById('mobile-cards').innerHTML='';
   try{allLeads=await fetchLeads();prevCount=allLeads.filter(l=>(l.status||'new')==='new').length;updateStats(allLeads);drawChart(allLeads);applyFilters();}
-  catch{toast('\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0438','err');document.getElementById('table-loading').style.display='none';document.getElementById('empty-state').style.display='block';}
+  catch{toast('Не удалось загрузить заявки','err');document.getElementById('table-loading').style.display='none';document.getElementById('empty-state').style.display='block';}
 }
 function initApp(){loadLeads();}
 
-// \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
-// 3D VIEWER \u2014 Three.js
-// \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+// ══════════════════════════════════════════════════════════════════════════
+// 3D VIEWER — Three.js
+// ══════════════════════════════════════════════════════════════════════════
 let viewerScene,viewerCamera,viewerRenderer,viewerMesh,viewerWireMesh,viewerAnimId;
 let viewerMode='solid',viewerAutoRotate=false;
 let isDragging=false,prevMouse={x:0,y:0};
@@ -727,4 +727,119 @@ function initViewer(modelType,lead){
   const mat=buildMaterial(lead);
   const wireMat=new THREE.MeshBasicMaterial({color:0x00c8ff,wireframe:true,opacity:.4,transparent:true});
 
-  viewerMesh=new THREE.
+  viewerMesh=new THREE.Mesh(geo,mat);
+  viewerMesh.castShadow=true;
+  viewerMesh.receiveShadow=true;
+  viewerScene.add(viewerMesh);
+
+  viewerWireMesh=new THREE.Mesh(geo,wireMat);
+  viewerWireMesh.visible=false;
+  viewerScene.add(viewerWireMesh);
+
+  // MOUSE / TOUCH
+  const canvas=viewerRenderer.domElement;
+  canvas.addEventListener('mousedown',e=>{isDragging=true;prevMouse={x:e.clientX,y:e.clientY};});
+  canvas.addEventListener('mousemove',e=>{if(!isDragging)return;const dx=e.clientX-prevMouse.x,dy=e.clientY-prevMouse.y;rotY+=dx*0.008;rotX+=dy*0.008;rotX=Math.max(-1.4,Math.min(1.4,rotX));prevMouse={x:e.clientX,y:e.clientY};});
+  canvas.addEventListener('mouseup',()=>isDragging=false);
+  canvas.addEventListener('mouseleave',()=>isDragging=false);
+  canvas.addEventListener('wheel',e=>{e.preventDefault();camDist=Math.max(1.2,Math.min(8,camDist+e.deltaY*0.005));},{passive:false});
+  // touch
+  let lastTouch=null;
+  canvas.addEventListener('touchstart',e=>{if(e.touches.length===1)lastTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();if(e.touches.length===1&&lastTouch){const dx=e.touches[0].clientX-lastTouch.x,dy=e.touches[0].clientY-lastTouch.y;rotY+=dx*0.01;rotX+=dy*0.01;rotX=Math.max(-1.4,Math.min(1.4,rotX));lastTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};}},{passive:false});
+  canvas.addEventListener('touchend',()=>lastTouch=null);
+
+  animateViewer();
+}
+
+function buildModel(type){
+  switch(type){
+    case 'shaft': {
+      // Вал — составная геометрия из цилиндров
+      const g=new THREE.CylinderGeometry(0.08,0.08,2.4,32);
+      const g2=new THREE.CylinderGeometry(0.12,0.12,0.3,32);
+      const g3=new THREE.CylinderGeometry(0.15,0.15,0.25,32);
+      const m=new THREE.MeshStandardMaterial();
+      const merged=new THREE.BufferGeometry();
+      // Main shaft
+      g2.translate(0,1.0,0);
+      g3.translate(0,-0.9,0);
+      const meshes=[new THREE.Mesh(g),new THREE.Mesh(g2),new THREE.Mesh(g3)];
+      // Simple: just return main cylinder
+      return new THREE.CylinderGeometry(0.1,0.1,2.2,48,1,false);
+    }
+    case 'housing': {
+      // Корпус датчика — скруглённый прямоугольник
+      return new THREE.BoxGeometry(1.2,0.7,0.8,4,4,4);
+    }
+    case 'wearable': {
+      // Носимое устройство — плоское скруглённое
+      return new THREE.CylinderGeometry(0.55,0.55,0.22,48);
+    }
+    case 'carbon_beam': {
+      // Лонжерон — тонкая балка
+      return new THREE.BoxGeometry(0.15,0.15,2.6,2,2,8);
+    }
+    case 'cnc_bracket':
+    default: {
+      // Кронштейн — L-профиль (аппроксимация боксом)
+      return new THREE.BoxGeometry(1.4,0.9,0.6,6,4,3);
+    }
+  }
+}
+
+function buildMaterial(lead){
+  const mat=lead.material.toLowerCase();
+  let color=0x8899aa,roughness=0.3,metalness=0.8,envMapIntensity=1;
+  if(mat.includes('алюмин')||mat.includes('alu')){color=0xb0bec5;roughness=0.25;metalness=0.9;}
+  else if(mat.includes('сталь')||mat.includes('steel')){color=0x78909c;roughness=0.2;metalness=0.95;}
+  else if(mat.includes('abs')||mat.includes('пластик')||mat.includes('литьё')){color=0xf5f5f0;roughness=0.6;metalness=0.0;}
+  else if(mat.includes('карбон')||mat.includes('carbon')){color=0x1a1a1a;roughness=0.4;metalness=0.3;}
+  else if(mat.includes('sla')||mat.includes('смола')||mat.includes('смол')){color=0xe8e8e0;roughness=0.5;metalness=0.05;}
+  return new THREE.MeshStandardMaterial({color,roughness,metalness});
+}
+
+function animateViewer(){
+  viewerAnimId=requestAnimationFrame(animateViewer);
+  if(viewerAutoRotate)rotY+=0.008;
+  if(viewerMesh){
+    viewerMesh.rotation.x=rotX;
+    viewerMesh.rotation.y=rotY;
+    if(viewerWireMesh){viewerWireMesh.rotation.x=rotX;viewerWireMesh.rotation.y=rotY;}
+  }
+  viewerCamera.position.set(
+    camDist*Math.sin(rotY)*Math.cos(rotX),
+    camDist*Math.sin(rotX),
+    camDist*Math.cos(rotY)*Math.cos(rotX)
+  );
+  viewerCamera.lookAt(0,0,0);
+  viewerRenderer.render(viewerScene,viewerCamera);
+}
+
+function destroyViewer(){
+  if(viewerAnimId){cancelAnimationFrame(viewerAnimId);viewerAnimId=null;}
+  if(viewerRenderer){
+    viewerRenderer.dispose();
+    const c=viewerRenderer.domElement;
+    if(c.parentNode)c.parentNode.removeChild(c);
+    viewerRenderer=null;
+  }
+  viewerScene=viewerCamera=viewerMesh=viewerWireMesh=null;
+  rotX=0.3;rotY=0.5;camDist=3.5;viewerMode='solid';viewerAutoRotate=false;
+}
+
+function setViewerMode(mode,btn){
+  viewerMode=mode;
+  document.querySelectorAll('.viewer-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(!viewerMesh)return;
+  if(mode==='solid'){viewerMesh.visible=true;viewerWireMesh.visible=false;viewerMesh.material.opacity=1;viewerMesh.material.transparent=false;}
+  else if(mode==='wire'){viewerMesh.visible=false;viewerWireMesh.visible=true;}
+  else if(mode==='xray'){viewerMesh.visible=true;viewerWireMesh.visible=true;viewerMesh.material.opacity=0.25;viewerMesh.material.transparent=true;}
+}
+
+function resetCamera(){rotX=0.3;rotY=0.5;camDist=3.5;}
+function toggleAutoRotate(){viewerAutoRotate=!viewerAutoRotate;toast(viewerAutoRotate?'Авто-вращение вкл':'Авто-вращение выкл','info');}
+</script>
+</body>
+</html>
