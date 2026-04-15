@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zuply — Панель управления</title>
+<title>Zuply \u2014 \u041f\u0430\u043d\u0435\u043b\u044c \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--bg:#070a0e;--surface:#0d1117;--surface2:#131920;--border:#1c2535;--border2:#243044;--text:#c9d4e0;--text-dim:#5a6a80;--accent:#00c8ff;--accent-glow:rgba(0,200,255,0.15);--amber:#f59e0b;--green:#22c55e;--red:#ef4444;--mono:'Space Mono',monospace;--sans:'Syne',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -69,19 +70,19 @@ thead tr{border-bottom:1px solid var(--border2);background:var(--surface2)}
 th{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);font-weight:400;padding:11px 14px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color .2s}
 th:hover{color:var(--accent)}
 th.sorted{color:var(--accent)}
-tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--surface2)}
+tbody tr:hover{background:rgba(0,200,255,0.04)}
+tbody tr:hover td.lead-id{color:var(--accent)}
 td{padding:12px 14px;font-size:13px;vertical-align:middle}
-.lead-id{font-family:var(--mono);font-size:11px;color:var(--text-dim)}
+.lead-id{font-family:var(--mono);font-size:11px;color:var(--text-dim);transition:color .2s}
 .lead-name{font-weight:600;color:#e8edf5;font-size:13px}
 .lead-contact{display:flex;flex-wrap:wrap;gap:5px}
 .contact-chip{font-family:var(--mono);font-size:10px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:2px 7px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .contact-chip:hover{border-color:var(--accent);color:var(--accent)}
 .lead-material{font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--border);padding:3px 8px;color:var(--accent);display:inline-block;white-space:nowrap}
-.lead-comment-cell{max-width:180px}
-.comment-short{font-size:12px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
-.comment-short:hover{color:var(--text)}
+.lead-comment-cell{max-width:160px}
+.comment-short{font-size:12px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .status-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:10px;padding:5px 8px;cursor:pointer;outline:none;text-transform:uppercase;letter-spacing:1px}
 .actions{display:flex;gap:6px}
 .btn-file{font-family:var(--mono);font-size:10px;background:none;border:1px solid var(--border);color:var(--accent);padding:4px 8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:all .2s;white-space:nowrap;text-transform:uppercase;letter-spacing:1px}
@@ -96,12 +97,14 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle}
 .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px}
-#toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);padding:12px 20px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:1px;transform:translateY(80px);opacity:0;transition:all .3s;z-index:200;max-width:300px}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);padding:12px 20px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:1px;transform:translateY(80px);opacity:0;transition:all .3s;z-index:500;max-width:300px}
 #toast.show{transform:translateY(0);opacity:1}
 #toast.toast-ok{border-left:3px solid var(--green);color:var(--green)}
 #toast.toast-err{border-left:3px solid var(--red);color:var(--red)}
 #toast.toast-info{border-left:3px solid var(--accent);color:var(--accent)}
-.modal-bg{position:fixed;inset:0;background:rgba(7,10,14,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .2s;padding:16px}
+
+/* MODALS */
+.modal-bg{position:fixed;inset:0;background:rgba(7,10,14,.9);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s;padding:16px}
 .modal-bg.show{opacity:1;pointer-events:all}
 .modal-card{background:var(--surface);border:1px solid var(--border2);padding:32px;width:100%;position:relative}
 .modal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -113,8 +116,66 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle}
 .btn-cancel{flex:1;padding:10px;background:none;border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
 .btn-confirm-del{flex:1;padding:10px;background:var(--red);border:none;color:#fff;font-family:var(--mono);font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
 .btn-ok{flex:1;padding:10px;background:var(--accent);border:none;color:#000;font-family:var(--mono);font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+
+/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+   DETAIL MODAL
+\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 */
+#detail-modal{position:fixed;inset:0;background:rgba(7,10,14,.95);backdrop-filter:blur(8px);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
+#detail-modal.show{opacity:1;pointer-events:all}
+.detail-inner{max-width:1100px;margin:0 auto;padding:24px}
+.detail-topbar{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.detail-back{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:none;border:1px solid var(--border);padding:7px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .2s;display:flex;align-items:center;gap:6px}
+.detail-back:hover{border-color:var(--accent);color:var(--accent)}
+.detail-topbar-title{font-family:var(--mono);font-size:12px;color:var(--text-dim)}
+.detail-topbar-title span{color:#e8edf5;font-weight:700}
+.detail-topbar-spacer{flex:1}
+.detail-status-wrap{display:flex;align-items:center;gap:10px}
+.detail-layout{display:grid;grid-template-columns:1fr 420px;gap:20px}
+@media(max-width:900px){.detail-layout{grid-template-columns:1fr}}
+
+/* LEFT PANEL */
+.detail-section{background:var(--surface);border:1px solid var(--border);margin-bottom:16px}
+.detail-section-header{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.detail-section-title{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim)}
+.detail-section-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.detail-body{padding:20px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.detail-grid{grid-template-columns:1fr}}
+.detail-field{}
+.detail-field-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px}
+.detail-field-value{font-size:14px;color:#e8edf5;font-weight:600;line-height:1.5}
+.detail-field-value.mono{font-family:var(--mono);font-size:13px}
+.detail-field-value.accent{color:var(--accent)}
+.detail-field-value.comment{font-size:13px;font-weight:400;color:var(--text);line-height:1.7;white-space:pre-wrap}
+.detail-contact-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:5px 10px;cursor:pointer;transition:all .2s;margin-right:6px;margin-bottom:6px;text-decoration:none}
+.detail-contact-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:3px 10px;border:1px solid;margin-right:5px}
+.tag-new{color:var(--accent);border-color:rgba(0,200,255,.3);background:rgba(0,200,255,.05)}
+.tag-work{color:var(--amber);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05)}
+.tag-closed{color:var(--text-dim);border-color:var(--border)}
+.detail-file-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--accent);background:none;border:1px solid var(--border);padding:8px 14px;cursor:pointer;text-decoration:none;transition:all .2s}
+.detail-file-btn:hover{border-color:var(--accent);background:var(--accent-glow)}
+.detail-file-icon{font-size:20px}
+
+/* 3D VIEWER */
+.viewer-section{background:var(--surface);border:1px solid var(--border);position:sticky;top:24px}
+.viewer-header{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.viewer-title{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim)}
+.viewer-hint{font-family:var(--mono);font-size:9px;color:var(--text-dim);opacity:.6}
+#viewer-canvas-wrap{width:100%;height:360px;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#0d1a2a 0%,#070a0e 70%);cursor:grab}
+#viewer-canvas-wrap:active{cursor:grabbing}
+#viewer-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
+.viewer-overlay{position:absolute;bottom:12px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}
+.viewer-label{font-family:var(--mono);font-size:10px;color:rgba(0,200,255,.5);text-transform:uppercase;letter-spacing:1px}
+.viewer-controls{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap}
+.viewer-btn{font-family:var(--mono);font-size:10px;background:none;border:1px solid var(--border);color:var(--text-dim);padding:5px 10px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:1px}
+.viewer-btn:hover{border-color:var(--accent);color:var(--accent)}
+.viewer-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+
+/* MOBILE CARDS */
 .mobile-cards{display:none}
-.mobile-card{background:var(--surface);border:1px solid var(--border);margin-bottom:10px;padding:16px}
+.mobile-card{background:var(--surface);border:1px solid var(--border);margin-bottom:10px;padding:16px;cursor:pointer;transition:border-color .2s}
+.mobile-card:hover{border-color:var(--border2)}
 .mobile-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
 .mobile-card-id{font-family:var(--mono);font-size:10px;color:var(--text-dim)}
 .mobile-card-name{font-weight:700;color:#e8edf5;font-size:14px;margin-top:2px}
@@ -122,36 +183,35 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle}
 .mobile-card-label{font-family:var(--mono);font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;min-width:55px;margin-top:1px}
 .mobile-card-val{font-size:12px;color:var(--text);flex:1}
 .mobile-card-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2)}
 @media(max-width:768px){
-  .content{padding:12px}
-  .topbar{padding:0 12px}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
-  .search-box input{width:110px}
-  .chart-section{display:none}
-  table,#table-loading,#empty-state{display:none!important}
-  .mobile-cards{display:block!important}
+.content{padding:12px}.topbar{padding:0 12px}
+.stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+.search-box input{width:110px}
+.chart-section{display:none}
+table,#table-loading,#empty-state{display:none!important}
+.mobile-cards{display:block!important}
 }
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo"><span style="font-size:18px">📦</span><span>Zuply · Admin</span></div>
-    <div class="login-title">Панель управления</div>
-    <div class="login-sub">Введите пароль для входа</div>
-    <div class="field">
-      <label>Пароль</label>
-      <input type="password" id="pw-input" placeholder="••••••••">
-    </div>
+    <div class="login-logo"><span style="font-size:18px">\ud83d\udce6</span><span>Zuply \u00b7 Admin</span></div>
+    <div class="login-title">\u041f\u0430\u043d\u0435\u043b\u044c \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f</div>
+    <div class="login-sub">\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043f\u0430\u0440\u043e\u043b\u044c \u0434\u043b\u044f \u0432\u0445\u043e\u0434\u0430</div>
+    <div class="field"><label>\u041f\u0430\u0440\u043e\u043b\u044c</label><input type="password" id="pw-input" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"></div>
     <div class="login-err" id="login-err"></div>
-    <button class="btn-primary" id="login-btn">Войти →</button>
+    <button class="btn-primary" id="login-btn">\u0412\u043e\u0439\u0442\u0438 \u2192</button>
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <header class="topbar">
     <span class="topbar-logo-text">ZUPLY</span>
@@ -159,114 +219,271 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle}
     <span id="new-badge" class="new-badge">NEW</span>
     <div class="topbar-spacer"></div>
     <span class="topbar-time" id="topbar-time"></span>
-    <button class="btn-logout" id="logout-btn">Выйти</button>
+    <button class="btn-logout" id="logout-btn">\u0412\u044b\u0439\u0442\u0438</button>
   </header>
-
   <main class="content">
     <div class="page-header">
-      <div>
-        <h1 class="page-title">Заявки</h1>
-        <p class="page-sub">Управление входящими запросами · Zuply CRM</p>
-      </div>
-      <button class="btn-export" onclick="exportCSV()">↓ Экспорт CSV</button>
+      <div><h1 class="page-title">\u0417\u0430\u044f\u0432\u043a\u0438</h1><p class="page-sub">\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0432\u0445\u043e\u0434\u044f\u0449\u0438\u043c\u0438 \u0437\u0430\u043f\u0440\u043e\u0441\u0430\u043c\u0438 \u00b7 Zuply CRM</p></div>
+      <button class="btn-export" onclick="exportCSV()">\u2193 \u042d\u043a\u0441\u043f\u043e\u0440\u0442 CSV</button>
     </div>
-
     <div class="stats-grid">
-      <div class="stat-card" style="--accent-color:var(--accent)"><div class="stat-label">Всего</div><div class="stat-value" id="stat-total">—</div></div>
-      <div class="stat-card" style="--accent-color:var(--accent)"><div class="stat-label">Новые</div><div class="stat-value" style="--stat-color:var(--accent)" id="stat-new">—</div></div>
-      <div class="stat-card" style="--accent-color:var(--amber)"><div class="stat-label">В работе</div><div class="stat-value" style="--stat-color:var(--amber)" id="stat-work">—</div></div>
-      <div class="stat-card" style="--accent-color:#4b5563"><div class="stat-label">Закрыты</div><div class="stat-value" style="--stat-color:#4b5563" id="stat-closed">—</div></div>
-      <div class="stat-card" style="--accent-color:var(--green)"><div class="stat-label">Сегодня</div><div class="stat-value" style="--stat-color:var(--green)" id="stat-today">—</div></div>
-      <div class="stat-card" style="--accent-color:#818cf8"><div class="stat-label">За неделю</div><div class="stat-value" style="--stat-color:#818cf8" id="stat-week">—</div></div>
-      <div class="stat-card" style="--accent-color:#f472b6"><div class="stat-label">За месяц</div><div class="stat-value" style="--stat-color:#f472b6" id="stat-month">—</div></div>
+      <div class="stat-card" style="--accent-color:var(--accent)"><div class="stat-label">\u0412\u0441\u0435\u0433\u043e</div><div class="stat-value" id="stat-total">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u041d\u043e\u0432\u044b\u0435</div><div class="stat-value" style="--stat-color:var(--accent)" id="stat-new">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</div><div class="stat-value" style="--stat-color:var(--amber)" id="stat-work">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u0417\u0430\u043a\u0440\u044b\u0442\u044b</div><div class="stat-value" style="--stat-color:#4b5563" id="stat-closed">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u0421\u0435\u0433\u043e\u0434\u043d\u044f</div><div class="stat-value" style="--stat-color:var(--green)" id="stat-today">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u0417\u0430 \u043d\u0435\u0434\u0435\u043b\u044e</div><div class="stat-value" style="--stat-color:#818cf8" id="stat-week">\u2014</div></div>
+      <div class="stat-card"><div class="stat-label">\u0417\u0430 \u043c\u0435\u0441\u044f\u0446</div><div class="stat-value" style="--stat-color:#f472b6" id="stat-month">\u2014</div></div>
     </div>
-
     <div class="chart-section">
-      <div class="chart-title">Заявки за последние 7 дней</div>
+      <div class="chart-title">\u0417\u0430\u044f\u0432\u043a\u0438 \u0437\u0430 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0435 7 \u0434\u043d\u0435\u0439</div>
       <div class="chart-wrap" id="chart-wrap"></div>
     </div>
-
     <div class="toolbar">
-      <span class="toolbar-title">Список заявок</span>
+      <span class="toolbar-title">\u0421\u043f\u0438\u0441\u043e\u043a \u0437\u0430\u044f\u0432\u043e\u043a</span>
       <div class="toolbar-spacer"></div>
       <div class="search-box">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5a6a80" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="search-input" placeholder="Поиск по #id, имени, контакту...">
+        <input type="text" id="search-input" placeholder="\u041f\u043e\u0438\u0441\u043a \u043f\u043e #id, \u0438\u043c\u0435\u043d\u0438, \u043a\u043e\u043d\u0442\u0430\u043a\u0442\u0443...">
       </div>
       <select class="filter-select" id="filter-status">
-        <option value="">Все статусы</option>
-        <option value="new">Новые</option>
-        <option value="work">В работе</option>
-        <option value="closed">Закрытые</option>
+        <option value="">\u0412\u0441\u0435 \u0441\u0442\u0430\u0442\u0443\u0441\u044b</option>
+        <option value="new">\u041d\u043e\u0432\u044b\u0435</option>
+        <option value="work">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option>
+        <option value="closed">\u0417\u0430\u043a\u0440\u044b\u0442\u044b\u0435</option>
       </select>
-      <button class="btn-refresh" id="refresh-btn">↻</button>
+      <button class="btn-refresh" id="refresh-btn">\u21bb</button>
     </div>
-
     <div class="table-wrap">
-      <div class="loading" id="table-loading"><div class="spinner"></div><span class="loading-text">Загрузка</span></div>
+      <div class="loading" id="table-loading"><div class="spinner"></div><span class="loading-text">\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430</span></div>
       <table id="leads-table" style="display:none">
-        <thead>
-          <tr>
-            <th onclick="sortBy('id')">№ <span id="arr-id"></span></th>
-            <th onclick="sortBy('name')">Клиент <span id="arr-name"></span></th>
-            <th>Контакт</th>
-            <th onclick="sortBy('material')">Материал <span id="arr-material"></span></th>
-            <th onclick="sortBy('qty')">Тираж <span id="arr-qty"></span></th>
-            <th>Комментарий</th>
-            <th>Файл</th>
-            <th onclick="sortBy('status')">Статус <span id="arr-status"></span></th>
-            <th onclick="sortBy('created_at')">Дата <span id="arr-created_at"></span></th>
-            <th>Действия</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th onclick="sortBy('id')">\u2116 <span id="arr-id"></span></th>
+          <th onclick="sortBy('name')">\u041a\u043b\u0438\u0435\u043d\u0442 <span id="arr-name"></span></th>
+          <th>\u041a\u043e\u043d\u0442\u0430\u043a\u0442</th>
+          <th onclick="sortBy('material')">\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b <span id="arr-material"></span></th>
+          <th onclick="sortBy('qty')">\u0422\u0438\u0440\u0430\u0436 <span id="arr-qty"></span></th>
+          <th>\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439</th>
+          <th>\u0424\u0430\u0439\u043b</th>
+          <th onclick="sortBy('status')">\u0421\u0442\u0430\u0442\u0443\u0441 <span id="arr-status"></span></th>
+          <th onclick="sortBy('created_at')">\u0414\u0430\u0442\u0430 <span id="arr-created_at"></span></th>
+          <th>\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044f</th>
+        </tr></thead>
         <tbody id="leads-body"></tbody>
       </table>
-      <div class="empty-state" id="empty-state" style="display:none"><div class="empty-icon">📭</div><div class="empty-text">Заявок не найдено</div></div>
+      <div class="empty-state" id="empty-state" style="display:none"><div class="empty-icon">\ud83d\udced</div><div class="empty-text">\u0417\u0430\u044f\u0432\u043e\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e</div></div>
     </div>
-
     <div class="mobile-cards" id="mobile-cards"></div>
   </main>
 </div>
 
-<div id="toast"></div>
+<!-- DETAIL MODAL -->
+<div id="detail-modal">
+  <div class="detail-inner">
+    <div class="detail-topbar">
+      <button class="detail-back" onclick="closeDetail()">\u2190 \u041d\u0430\u0437\u0430\u0434</button>
+      <div class="detail-topbar-title">\u0417\u0430\u044f\u0432\u043a\u0430 <span id="d-id">#\u2014</span></div>
+      <div class="detail-topbar-spacer"></div>
+      <div class="detail-status-wrap">
+        <select class="status-select" id="d-status-select" onchange="onDetailStatusChange(this)" style="font-size:11px;padding:7px 12px"></select>
+        <button class="btn-delete" id="d-delete-btn" style="padding:7px 12px">\u2715 \u0423\u0434\u0430\u043b\u0438\u0442\u044c</button>
+      </div>
+    </div>
 
-<div class="modal-bg" id="confirm-modal">
-  <div class="modal-card danger" style="max-width:360px">
-    <div class="modal-title">Удалить заявку?</div>
-    <div class="modal-text" id="modal-text"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" id="modal-cancel">Отмена</button>
-      <button class="btn-confirm-del" id="modal-confirm">Удалить</button>
+    <div class="detail-layout">
+      <!-- LEFT -->
+      <div>
+        <!-- CLIENT INFO -->
+        <div class="detail-section">
+          <div class="detail-section-header"><div class="detail-section-dot"></div><div class="detail-section-title">\u041a\u043b\u0438\u0435\u043d\u0442</div></div>
+          <div class="detail-body">
+            <div class="detail-grid">
+              <div class="detail-field"><div class="detail-field-label">\u041a\u043e\u043c\u043f\u0430\u043d\u0438\u044f / \u0418\u043c\u044f</div><div class="detail-field-value" id="d-name">\u2014</div></div>
+              <div class="detail-field"><div class="detail-field-label">\u0414\u0430\u0442\u0430 \u0437\u0430\u044f\u0432\u043a\u0438</div><div class="detail-field-value mono" id="d-date">\u2014</div></div>
+              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b</div><div id="d-contacts"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDER INFO -->
+        <div class="detail-section">
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--amber)"></div><div class="detail-section-title">\u041f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0437\u0430\u043a\u0430\u0437\u0430</div></div>
+          <div class="detail-body">
+            <div class="detail-grid">
+              <div class="detail-field"><div class="detail-field-label">\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b / \u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f</div><div class="detail-field-value accent mono" id="d-material">\u2014</div></div>
+              <div class="detail-field"><div class="detail-field-label">\u0422\u0438\u0440\u0430\u0436</div><div class="detail-field-value mono" id="d-qty">\u2014</div></div>
+              <div class="detail-field"><div class="detail-field-label">\u0411\u044e\u0434\u0436\u0435\u0442</div><div class="detail-field-value mono" id="d-budget">\u2014</div></div>
+              <div class="detail-field"><div class="detail-field-label">\u0421\u0440\u043e\u043a</div><div class="detail-field-value mono" id="d-deadline">\u2014</div></div>
+              <div class="detail-field" style="grid-column:1/-1"><div class="detail-field-label">\u0422\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0442\u0440\u0435\u0431\u043e\u0432\u0430\u043d\u0438\u044f</div><div class="detail-field-value comment" id="d-specs">\u2014</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMENT -->
+        <div class="detail-section">
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:var(--green)"></div><div class="detail-section-title">\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043a\u043b\u0438\u0435\u043d\u0442\u0430</div></div>
+          <div class="detail-body">
+            <div class="detail-field-value comment" id="d-comment" style="color:var(--text)">\u2014</div>
+          </div>
+        </div>
+
+        <!-- FILE -->
+        <div class="detail-section" id="d-file-section">
+          <div class="detail-section-header"><div class="detail-section-dot" style="background:#818cf8"></div><div class="detail-section-title">\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u043b\u0451\u043d\u043d\u044b\u0439 \u0444\u0430\u0439\u043b</div></div>
+          <div class="detail-body" style="display:flex;align-items:center;gap:16px">
+            <div class="detail-file-icon" id="d-file-icon">\ud83d\udce6</div>
+            <div style="flex:1">
+              <div style="font-weight:700;color:#e8edf5;margin-bottom:4px" id="d-file-name">\u2014</div>
+              <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim)" id="d-file-meta">\u2014</div>
+            </div>
+            <a class="detail-file-btn" href="#" id="d-file-btn" onclick="toast('\u0424\u0430\u0439\u043b \u0434\u043e\u0441\u0442\u0443\u043f\u0435\u043d \u043f\u043e\u0441\u043b\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0431\u044d\u043a\u0435\u043d\u0434\u0430','info');return false">\u2193 \u0421\u043a\u0430\u0447\u0430\u0442\u044c</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: 3D VIEWER -->
+      <div>
+        <div class="viewer-section">
+          <div class="viewer-header">
+            <div class="viewer-title">3D \u041c\u043e\u0434\u0435\u043b\u044c \u0434\u0435\u0442\u0430\u043b\u0438</div>
+            <div class="viewer-hint">Drag to rotate \u00b7 Scroll to zoom</div>
+          </div>
+          <div id="viewer-canvas-wrap">
+            <div class="viewer-overlay">
+              <span class="viewer-label" id="viewer-part-label">\u2014</span>
+              <span class="viewer-label" id="viewer-mat-label">\u2014</span>
+            </div>
+          </div>
+          <div class="viewer-controls">
+            <button class="viewer-btn active" onclick="setViewerMode('solid',this)">Solid</button>
+            <button class="viewer-btn" onclick="setViewerMode('wire',this)">Wire</button>
+            <button class="viewer-btn" onclick="setViewerMode('xray',this)">X-Ray</button>
+            <button class="viewer-btn" onclick="resetCamera()">\u21ba Reset</button>
+            <button class="viewer-btn" onclick="toggleAutoRotate()">\u27f3 Auto</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="modal-bg" id="comment-modal">
-  <div class="modal-card info" style="max-width:500px">
-    <div class="modal-title" id="comment-modal-title">Комментарий</div>
-    <div class="modal-text" id="comment-modal-text"></div>
-    <div class="modal-actions"><button class="btn-ok" id="comment-modal-close">Закрыть</button></div>
+<!-- DELETE MODAL -->
+<div class="modal-bg" id="confirm-modal">
+  <div class="modal-card danger" style="max-width:360px">
+    <div class="modal-title">\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0443?</div>
+    <div class="modal-text" id="modal-text"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">\u041e\u0442\u043c\u0435\u043d\u0430</button>
+      <button class="btn-confirm-del" id="modal-confirm">\u0423\u0434\u0430\u043b\u0438\u0442\u044c</button>
+    </div>
   </div>
 </div>
 
+<div id="toast"></div>
+
 <script>
 const ADMIN_PASSWORD='zuply2024';
-let allLeads=[],deleteId=null,sortField='id',sortDir=-1,prevCount=0;
+let allLeads=[],deleteId=null,sortField='id',sortDir=-1,prevCount=0,currentDetailId=null;
 
-// ── MOCK DATA ──────────────────────────────────
+// \u2500\u2500 MOCK DATA \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 let mockDatabase=[
-  {id:1,name:'ООО "ТехПромИнвест"',phone:'+7 999 123-45-67',telegram:'@techprom_ceo',material:'PCB платы (FR4, 4 слоя)',qty:'5 000 шт',comment:'Нужна фабрика в Шэньчжэне с AI-проверкой качества. Срок — до конца квартала. Бюджет согласован.',file_name:'gerber_files.zip',status:'new',created_at:new Date().toISOString().slice(0,10)+' 09:30:00'},
-  {id:2,name:'ИП Смирнов А.В.',phone:'+7 900 000-11-22',telegram:'@smirnov_apparel',material:'Ткань Оксфорд 600D PU',qty:'3 000 пог. м',comment:'Цвет черный. Нужен расчет логистики в РФ.',file_name:'',status:'work',created_at:'2026-04-11 14:15:00'},
-  {id:3,name:'SmartHome RU',phone:'+7 800 555-35-35',telegram:'',material:'Корпуса для датчиков (ABS)',qty:'15 000 шт',comment:'3D модели во вложении, ждем просчет стоимости пресс-формы. Важно: допуск ±0.1мм.',file_name:'3d_models_v2.rar',status:'closed',created_at:'2026-04-10 11:20:00'},
-  {id:4,name:'ElectroTrade',phone:'+7 918 555-44-33',telegram:'@electro_trade',material:'Микроконтроллеры ESP32',qty:'10 000 шт',comment:'Срочный заказ, горят сроки. Нужна отгрузка до 20 апреля.',file_name:'BOM_list.xlsx',status:'new',created_at:new Date().toISOString().slice(0,10)+' 12:05:00'},
-  {id:5,name:'АвиаКомпозит',phone:'+7 495 000-22-11',telegram:'@aviacomp',material:'Карбон T300 3K',qty:'200 пог. м',comment:'',file_name:'',status:'work',created_at:'2026-04-08 08:00:00'},
+  {
+    id:1,
+    name:'\u041e\u041e\u041e "\u0420\u043e\u0431\u043e\u0422\u0435\u0445 \u0421\u0438\u0441\u0442\u0435\u043c\u0441"',
+    phone:'+7 (495) 120-44-87',
+    telegram:'@robotech_cto',
+    material:'\u0410\u043b\u044e\u043c\u0438\u043d\u0438\u0435\u0432\u044b\u0439 \u0441\u043f\u043b\u0430\u0432 6061-T6',
+    qty:'500 \u0448\u0442.',
+    comment:'\u0414\u0435\u0442\u0430\u043b\u0438 \u0434\u043b\u044f \u0440\u043e\u0431\u043e\u0442\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0440\u0443\u043a\u0438 \u043f\u0440\u043e\u043c\u044b\u0448\u043b\u0435\u043d\u043d\u043e\u0433\u043e \u043c\u0430\u043d\u0438\u043f\u0443\u043b\u044f\u0442\u043e\u0440\u0430. \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044f \u0432\u044b\u0441\u043e\u043a\u0430\u044f \u0442\u043e\u0447\u043d\u043e\u0441\u0442\u044c \u0441\u043e\u043f\u0440\u044f\u0436\u0451\u043d\u043d\u044b\u0445 \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u0435\u0439 \u2014 \u043f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0435 \u043e\u0442\u0432\u0435\u0440\u0441\u0442\u0438\u044f \u043f\u043e\u0434 \u043f\u043e\u0434\u0448\u0438\u043f\u043d\u0438\u043a\u0438 SKF 6204. \u0410\u043d\u043e\u0434\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0432 \u0447\u0451\u0440\u043d\u044b\u0439 \u0446\u0432\u0435\u0442, \u0442\u043e\u043b\u0449\u0438\u043d\u0430 \u043f\u043e\u043a\u0440\u044b\u0442\u0438\u044f 15\u201320 \u043c\u043a\u043c. \u0413\u043e\u0442\u043e\u0432\u044b \u043e\u0431\u0441\u0443\u0434\u0438\u0442\u044c NDA \u0434\u043e \u043f\u0435\u0440\u0435\u0434\u0430\u0447\u0438 \u0447\u0435\u0440\u0442\u0435\u0436\u0435\u0439.',
+    budget:'\u043e\u0442 2 400 000 \u20bd',
+    deadline:'28 \u043c\u0430\u044f 2026',
+    specs:'\u0414\u043e\u043f\u0443\u0441\u043a: \u00b10.015 \u043c\u043c \u043d\u0430 \u043f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0445 \u043e\u0442\u0432\u0435\u0440\u0441\u0442\u0438\u044f\u0445\n\u0428\u0435\u0440\u043e\u0445\u043e\u0432\u0430\u0442\u043e\u0441\u0442\u044c Ra 0.8 \u043d\u0430 \u0442\u0440\u0443\u0449\u0438\u0445\u0441\u044f \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u044f\u0445\n\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043a\u0430\u0442 EN 573-3\n\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430 \u043b\u0430\u0437\u0435\u0440\u043e\u043c: \u0441\u0435\u0440\u0438\u0439\u043d\u044b\u0439 \u043d\u043e\u043c\u0435\u0440 + QR',
+    file_name:'arm_bracket_v3.step',
+    file_meta:'STEP \u00b7 3D CAD \u00b7 4.2 \u041c\u0411',
+    file_icon:'\u2699\ufe0f',
+    status:'new',
+    created_at:new Date().toISOString().slice(0,10)+' 09:14:32',
+    model:'cnc_bracket'
+  },
+  {
+    id:2,
+    name:'\u0418\u041f \u041a\u0438\u0440\u0438\u043b\u043b\u043e\u0432 \u0414.\u0410. / SmartSensor',
+    phone:'+7 (903) 887-22-10',
+    telegram:'@kirillov_smartsensor',
+    material:'\u041b\u0438\u0442\u044c\u0451 \u043f\u043e\u0434 \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u0435\u043c ABS+PC',
+    qty:'12 000 \u0448\u0442.',
+    comment:'\u041a\u043e\u0440\u043f\u0443\u0441 \u0434\u0430\u0442\u0447\u0438\u043a\u0430 \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b/\u0432\u043b\u0430\u0436\u043d\u043e\u0441\u0442\u0438 \u0434\u043b\u044f \u0443\u043c\u043d\u043e\u0433\u043e \u0434\u043e\u043c\u0430. \u0424\u0438\u043d\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u0435\u0440\u0441\u0438\u044f \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u0438\u0432\u0430. \u041d\u0443\u0436\u043d\u043e \u0438\u0437\u0433\u043e\u0442\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0440\u0435\u0441\u0441-\u0444\u043e\u0440\u043c\u044b \u0438 \u043f\u0440\u043e\u0431\u043d\u0430\u044f \u043f\u0430\u0440\u0442\u0438\u044f 200 \u0448\u0442. \u043d\u0430 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0443 \u0434\u043e \u0437\u0430\u043f\u0443\u0441\u043a\u0430 \u0441\u0435\u0440\u0438\u0438.',
+    budget:'680 000 \u20bd (\u043f\u0440\u0435\u0441\u0441-\u0444\u043e\u0440\u043c\u0430) + \u0441\u0435\u0440\u0438\u044f',
+    deadline:'15 \u0438\u044e\u043d\u044f 2026',
+    specs:'\u041a\u043b\u0430\u0441\u0441 \u0437\u0430\u0449\u0438\u0442\u044b IP54\n\u041f\u043e\u043b\u0438\u043c\u0435\u0440: ABS+PC Sabic Cycoloy C2950\n\u0426\u0432\u0435\u0442: RAL 9003 (\u0431\u0435\u043b\u044b\u0439)\n\u041b\u043e\u0433\u043e \u0442\u0438\u0441\u043d\u0435\u043d\u0438\u0435\u043c \u043d\u0430 \u043d\u0438\u0436\u043d\u0435\u0439 \u043a\u0440\u044b\u0448\u043a\u0435',
+    file_name:'smartsensor_housing_r4.step',
+    file_meta:'STEP \u00b7 3D CAD \u00b7 1.8 \u041c\u0411',
+    file_icon:'\ud83c\udfe0',
+    status:'work',
+    created_at:'2026-04-13 14:22:05',
+    model:'housing'
+  },
+  {
+    id:3,
+    name:'\u0410\u041e "\u042d\u043d\u0435\u0440\u0433\u043e\u041c\u0430\u0448-\u0423\u0440\u0430\u043b"',
+    phone:'+7 (343) 290-11-55',
+    telegram:'',
+    material:'\u0421\u0442\u0430\u043b\u044c 40\u0425 / \u0427\u041f\u0423 \u0442\u043e\u043a\u0430\u0440\u043a\u0430 + \u0444\u0440\u0435\u0437\u0435\u0440\u043e\u0432\u043a\u0430',
+    qty:'250 \u0448\u0442.',
+    comment:'\u0412\u0430\u043b \u0440\u0435\u0434\u0443\u043a\u0442\u043e\u0440\u0430 \u0434\u043b\u044f \u043d\u0430\u0441\u043e\u0441\u043d\u043e\u0433\u043e \u0430\u0433\u0440\u0435\u0433\u0430\u0442\u0430 \u041d\u0414-80. \u041a\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u0432\u0430\u0436\u043d\u0430 \u0433\u0435\u043e\u043c\u0435\u0442\u0440\u0438\u044f \u0448\u043f\u043e\u043d\u043e\u0447\u043d\u044b\u0445 \u043f\u0430\u0437\u043e\u0432 \u0438 \u0440\u0435\u0437\u044c\u0431\u043e\u0432\u044b\u0445 \u0443\u0447\u0430\u0441\u0442\u043a\u043e\u0432. \u041f\u0440\u0438\u043b\u0430\u0433\u0430\u0435\u043c \u0442\u0435\u0445\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0447\u0435\u0440\u0442\u0451\u0436 \u043f\u043e \u0415\u0421\u041a\u0414. \u0422\u0440\u0435\u0431\u0443\u0435\u043c \u043f\u0440\u043e\u0442\u043e\u043a\u043e\u043b \u041e\u0422\u041a \u043d\u0430 \u043a\u0430\u0436\u0434\u0443\u044e \u0434\u0435\u0442\u0430\u043b\u044c.',
+    budget:'1 150 000 \u20bd',
+    deadline:'10 \u0438\u044e\u043b\u044f 2026',
+    specs:'\u0422\u0435\u0440\u043c\u043e\u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430: \u0437\u0430\u043a\u0430\u043b\u043a\u0430 HRC 45-50\n\u041f\u043e\u0441\u0430\u0434\u043e\u0447\u043d\u044b\u0435 \u0434\u0438\u0430\u043c\u0435\u0442\u0440\u044b h6/k6\n\u0414\u0438\u0430\u043c\u0435\u0442\u0440: \u00d842 \u043c\u043c, \u0434\u043b\u0438\u043d\u0430 380 \u043c\u043c\n\u0411\u0438\u0435\u043d\u0438\u0435 \u043d\u0435 \u0431\u043e\u043b\u0435\u0435 0.02 \u043c\u043c',
+    file_name:'shaft_ND80_rev2.step',
+    file_meta:'STEP \u00b7 3D CAD \u00b7 890 \u041a\u0411',
+    file_icon:'\ud83d\udd29',
+    status:'closed',
+    created_at:'2026-04-10 08:55:18',
+    model:'shaft'
+  },
+  {
+    id:4,
+    name:'\u0421\u0442\u0430\u0440\u0442\u0430\u043f Levio / \u041e\u041e\u041e "\u041b\u0435\u0432\u0438\u043e"',
+    phone:'+7 (916) 334-77-02',
+    telegram:'@levio_founder',
+    material:'SLA-\u0441\u043c\u043e\u043b\u0430 Formlabs Grey Pro + \u043f\u043e\u043a\u0440\u0430\u0441\u043a\u0430',
+    qty:'15 \u0448\u0442.',
+    comment:'\u041f\u0440\u043e\u0442\u043e\u0442\u0438\u043f\u044b \u043a\u043e\u0440\u043f\u0443\u0441\u0430 \u0434\u043b\u044f \u043c\u0435\u0434\u0438\u0446\u0438\u043d\u0441\u043a\u043e\u0433\u043e \u043d\u043e\u0441\u0438\u043c\u043e\u0433\u043e \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430. \u041d\u0443\u0436\u043d\u0430 \u0438\u0434\u0435\u0430\u043b\u044c\u043d\u0430\u044f \u043f\u043e\u0432\u0435\u0440\u0445\u043d\u043e\u0441\u0442\u044c \u043f\u043e\u0434 \u043f\u043e\u043a\u0440\u0430\u0441\u043a\u0443 \u2014 \u0443\u0440\u043e\u0432\u0435\u043d\u044c A-surface. \u041f\u043b\u0430\u043d\u0438\u0440\u0443\u0435\u043c \u043f\u0438\u0442\u0447 \u043f\u0435\u0440\u0435\u0434 \u0438\u043d\u0432\u0435\u0441\u0442\u043e\u0440\u0430\u043c\u0438 5 \u0438\u044e\u043d\u044f, \u0434\u0435\u0434\u043b\u0430\u0439\u043d \u043a\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439.',
+    budget:'\u0434\u043e 180 000 \u20bd',
+    deadline:'1 \u0438\u044e\u043d\u044f 2026',
+    specs:'\u0421\u043b\u043e\u0439 \u043f\u0435\u0447\u0430\u0442\u0438: 0.05 \u043c\u043c\n\u041f\u043e\u0441\u0442\u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0430: \u0448\u043b\u0438\u0444\u043e\u0432\u043a\u0430 2000 \u0433\u0440\u0438\u0442 + \u0433\u0440\u0443\u043d\u0442\n\u0426\u0432\u0435\u0442: \u0431\u0435\u043b\u044b\u0439 \u043f\u043e\u043b\u0443\u043c\u0430\u0442\u043e\u0432\u044b\u0439 NCS S 0502-Y\n\u041c\u0430\u0440\u043a\u0438\u0440\u043e\u0432\u043a\u0430 \u043f\u043e \u0448\u0430\u0431\u043b\u043e\u043d\u0443 (\u043b\u043e\u0433\u043e + CE)',
+    file_name:'levio_wearable_proto.stl',
+    file_meta:'STL \u00b7 Mesh \u00b7 22.6 \u041c\u0411',
+    file_icon:'\u231a',
+    status:'new',
+    created_at:new Date().toISOString().slice(0,10)+' 11:03:44',
+    model:'wearable'
+  },
+  {
+    id:5,
+    name:'\u041e\u041e\u041e "\u0410\u0432\u0438\u0430\u041a\u043e\u043c\u043f\u043e\u0437\u0438\u0442-\u041c"',
+    phone:'+7 (495) 780-33-19',
+    telegram:'@aviacomp_msk',
+    material:'\u041a\u0430\u0440\u0431\u043e\u043d T700 / \u0432\u044b\u043a\u043b\u0430\u0434\u043a\u0430 + \u0430\u0432\u0442\u043e\u043a\u043b\u0430\u0432',
+    qty:'80 \u0448\u0442.',
+    comment:'\u041d\u0435\u0441\u0443\u0449\u0438\u0435 \u043b\u043e\u043d\u0436\u0435\u0440\u043e\u043d\u044b \u0434\u043b\u044f \u0411\u041f\u041b\u0410 \u0441\u0430\u043c\u043e\u043b\u0451\u0442\u043d\u043e\u0433\u043e \u0442\u0438\u043f\u0430. \u041f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0441\u0442\u0432\u043e \u0442\u043e\u043b\u044c\u043a\u043e \u043d\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u0446\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0445 \u043f\u0440\u0435\u0434\u043f\u0440\u0438\u044f\u0442\u0438\u044f\u0445 \u0441 \u043f\u0440\u043e\u0446\u0435\u0434\u0443\u0440\u043e\u0439 \u0432\u0445\u043e\u0434\u043d\u043e\u0433\u043e \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044f. \u0412\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u0440\u0430\u0437\u0434\u0435\u043b\u0435\u043d\u0438\u0435 \u043b\u043e\u0442\u0430 \u043c\u0435\u0436\u0434\u0443 \u0434\u0432\u0443\u043c\u044f \u043f\u043e\u0441\u0442\u0430\u0432\u0449\u0438\u043a\u0430\u043c\u0438.',
+    budget:'3 200 000 \u20bd',
+    deadline:'20 \u0430\u0432\u0433\u0443\u0441\u0442\u0430 2026',
+    specs:'\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b: \u0442\u043a\u0430\u043d\u044b\u0439 \u043f\u0440\u0435\u043f\u0440\u0435\u0433 T700/M21\n\u0422\u043e\u043b\u0449\u0438\u043d\u0430 \u0441\u0442\u0435\u043d\u043a\u0438: 1.5 \u043c\u043c \u00b10.1\n\u0423\u0442\u044f\u0436\u0435\u043b\u0435\u043d\u0438\u0439 \u0438 \u0440\u0430\u0441\u0441\u043b\u043e\u0435\u043d\u0438\u0439 \u043d\u0435 \u0434\u043e\u043f\u0443\u0441\u043a\u0430\u0435\u0442\u0441\u044f\n\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u044f AS9100D',
+    file_name:'spar_uav_longerons.step',
+    file_meta:'STEP \u00b7 Assembly \u00b7 12.1 \u041c\u0411',
+    file_icon:'\u2708\ufe0f',
+    status:'work',
+    created_at:'2026-04-09 16:41:00',
+    model:'carbon_beam'
+  }
 ];
+
 async function fetchLeads(){return new Promise(r=>setTimeout(()=>r([...mockDatabase]),500))}
 async function updateStatus(id,s){return new Promise(r=>setTimeout(()=>{const l=mockDatabase.find(x=>x.id==id);if(l)l.status=s;r();},200))}
 async function deleteLead(id){return new Promise(r=>setTimeout(()=>{mockDatabase=mockDatabase.filter(x=>x.id!=id);r();},200))}
-// ──────────────────────────────────────────────
 
-// AUTH
+// \u2500\u2500 AUTH \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 const loginScreen=document.getElementById('login-screen');
 const appEl=document.getElementById('app');
 const pwInput=document.getElementById('pw-input');
@@ -274,30 +491,18 @@ const loginErr=document.getElementById('login-err');
 function checkSession(){return sessionStorage.getItem('zuply_admin')==='ok'}
 function login(){
   if(pwInput.value===ADMIN_PASSWORD){sessionStorage.setItem('zuply_admin','ok');loginScreen.classList.add('hidden');setTimeout(()=>{loginScreen.style.display='none';appEl.classList.add('visible');initApp();},400);}
-  else{loginErr.textContent='Неверный пароль';pwInput.value='';pwInput.focus();}
+  else{loginErr.textContent='\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043f\u0430\u0440\u043e\u043b\u044c';pwInput.value='';pwInput.focus();}
 }
 document.getElementById('login-btn').addEventListener('click',login);
 pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')login();});
 document.getElementById('logout-btn').addEventListener('click',()=>{sessionStorage.removeItem('zuply_admin');location.reload();});
 if(checkSession()){loginScreen.style.display='none';appEl.classList.add('visible');initApp();}
 
-// CLOCK
+// \u2500\u2500 CLOCK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function updateClock(){document.getElementById('topbar-time').textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 setInterval(updateClock,1000);updateClock();
 
-// AUTO-REFRESH
-setInterval(()=>{if(checkSession())silentRefresh();},30000);
-async function silentRefresh(){
-  try{
-    const fresh=await fetchLeads();
-    const nc=fresh.filter(l=>(l.status||'new')==='new').length;
-    if(prevCount>0&&nc>prevCount){toast(`+${nc-prevCount} новых заявок!`,'info');}
-    allLeads=fresh;prevCount=nc;
-    updateStats(allLeads);drawChart(allLeads);applyFilters();
-  }catch{}
-}
-
-// STATS
+// \u2500\u2500 STATS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function updateStats(leads){
   const today=new Date().toISOString().slice(0,10);
   const weekAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
@@ -310,158 +515,216 @@ function updateStats(leads){
   document.getElementById('stat-week').textContent=leads.filter(l=>(l.created_at||'')>=weekAgo).length;
   document.getElementById('stat-month').textContent=leads.filter(l=>(l.created_at||'')>=monthAgo).length;
   const nc=leads.filter(l=>(l.status||'new')==='new').length;
-  const badge=document.getElementById('new-badge');
-  badge.style.display=nc>0?'inline':'none';badge.textContent=nc;
+  const b=document.getElementById('new-badge');b.style.display=nc>0?'inline':'none';b.textContent=nc;
 }
 
-// CHART
+// \u2500\u2500 CHART \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function drawChart(leads){
-  const wrap=document.getElementById('chart-wrap');
-  const days=[];
-  for(let i=6;i>=0;i--){
-    const d=new Date(Date.now()-i*864e5);
-    const key=d.toISOString().slice(0,10);
-    const label=d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'});
-    days.push({key,label,count:leads.filter(l=>(l.created_at||'').startsWith(key)).length});
-  }
+  const wrap=document.getElementById('chart-wrap');const days=[];
+  for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*864e5);const key=d.toISOString().slice(0,10);days.push({key,label:d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}),count:leads.filter(l=>(l.created_at||'').startsWith(key)).length});}
   const max=Math.max(...days.map(d=>d.count),1);
-  wrap.innerHTML=days.map(d=>`<div class="chart-bar-group" title="${d.label}: ${d.count}"><div class="chart-bar" style="height:${Math.max(3,Math.round(d.count/max*54))}px;${d.count===0?'opacity:.15':''}"></div><div class="chart-day">${d.label.slice(0,5)}</div></div>`).join('');
+  wrap.innerHTML=days.map(d=>`<div class="chart-bar-group" title="${d.label}: ${d.count}"><div class="chart-bar" style="height:${Math.max(3,Math.round(d.count/max*54))}px;${d.count===0?'opacity:.12':''}"></div><div class="chart-day">${d.label.slice(0,5)}</div></div>`).join('');
 }
 
-// SORT
-function sortBy(f){
-  if(sortField===f)sortDir*=-1;else{sortField=f;sortDir=-1;}
-  document.querySelectorAll('th.sorted').forEach(t=>t.classList.remove('sorted'));
-  const el=document.getElementById('arr-'+f);
-  if(el){el.parentElement.classList.add('sorted');el.textContent=sortDir===-1?' ↓':' ↑';}
-  applyFilters();
-}
+// \u2500\u2500 SORT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function sortBy(f){if(sortField===f)sortDir*=-1;else{sortField=f;sortDir=-1;}document.querySelectorAll('th.sorted').forEach(t=>t.classList.remove('sorted'));const el=document.getElementById('arr-'+f);if(el){el.parentElement.classList.add('sorted');el.textContent=sortDir===-1?' \u2193':' \u2191';}applyFilters();}
 
-// FILTER
+// \u2500\u2500 FILTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function applyFilters(){
   const q=document.getElementById('search-input').value.toLowerCase();
   const st=document.getElementById('filter-status').value;
-  let filtered=allLeads.filter(l=>{
-    const ms=!st||(l.status||'new')===st;
-    const mq=!q||('#'+l.id).includes(q)||[l.name,l.phone,l.telegram,l.material,l.comment].join(' ').toLowerCase().includes(q);
-    return ms&&mq;
-  });
+  let filtered=allLeads.filter(l=>{const ms=!st||(l.status||'new')===st;const mq=!q||('#'+l.id).includes(q)||[l.name,l.phone,l.telegram,l.material,l.comment].join(' ').toLowerCase().includes(q);return ms&&mq;});
   filtered.sort((a,b)=>{let av=a[sortField]??'',bv=b[sortField]??'';if(sortField==='id'){av=+av;bv=+bv;}return av<bv?sortDir:av>bv?-sortDir:0;});
-  renderTable(filtered);
-  renderMobile(filtered);
+  renderTable(filtered);renderMobile(filtered);
 }
 
-function formatDate(dt){if(!dt)return'—';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'2-digit'})+'<br>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function formatDate(dt){if(!dt)return'\u2014';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'2-digit'})+'<br>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
+function formatDateFull(dt){if(!dt)return'\u2014';try{const d=new Date(dt.replace(' ','T'));return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'long',year:'numeric'})+' \u0432 '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{return dt;}}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function contactChips(phone,telegram){
-  let h='<div class="lead-contact">';
-  if(phone)h+=`<span class="contact-chip" onclick="copyText('${esc(phone)}','Телефон скопирован')" title="Скопировать">📞 ${esc(phone)}</span>`;
-  if(telegram)h+=`<span class="contact-chip" onclick="copyText('${esc(telegram)}','Telegram скопирован')" title="Скопировать">✈ ${esc(telegram)}</span>`;
-  if(!phone&&!telegram)h+='<span style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">—</span>';
-  return h+'</div>';
-}
+function statusTag(s){const m={new:['\u041d\u043e\u0432\u0430\u044f','tag-new'],work:['\u0412 \u0440\u0430\u0431\u043e\u0442\u0435','tag-work'],closed:['\u0417\u0430\u043a\u0440\u044b\u0442\u0430','tag-closed']};const[l,c]=m[s]||m.new;return`<span class="detail-tag ${c}">${l}</span>`;}
 
+// \u2500\u2500 TABLE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function renderTable(leads){
   document.getElementById('table-loading').style.display='none';
   if(!leads.length){document.getElementById('leads-table').style.display='none';document.getElementById('empty-state').style.display='block';return;}
-  document.getElementById('empty-state').style.display='none';
-  document.getElementById('leads-table').style.display='table';
-  document.getElementById('leads-body').innerHTML=leads.map(l=>{
-    const hasComment=l.comment&&l.comment.trim();
-    const isLong=l.comment&&l.comment.length>50;
-    return `<tr>
-      <td class="lead-id">#${l.id}</td>
-      <td><div class="lead-name">${esc(l.name||'—')}</div></td>
-      <td>${contactChips(l.phone,l.telegram)}</td>
-      <td><span class="lead-material">${esc(l.material||'—')}</span></td>
-      <td style="font-family:var(--mono);font-size:12px">${esc(l.qty||'—')}</td>
-      <td class="lead-comment-cell">${hasComment?(isLong?`<div class="comment-short" onclick="openComment(${l.id})" title="Нажмите чтобы раскрыть">${esc(l.comment.slice(0,48))}… <span style="color:var(--accent);font-size:10px">[читать]</span></div>`:`<div style="font-size:12px;color:var(--text-dim)">${esc(l.comment)}</div>`):'<span style="color:var(--border2);font-family:var(--mono);font-size:11px">—</span>'}</td>
-      <td>${l.file_name?`<a class="btn-file" href="#" onclick="toast('Файл: ${esc(l.file_name)}','info');return false">↓ ${esc(l.file_name.length>14?l.file_name.slice(0,14)+'…':l.file_name)}</a>`:'<span style="color:var(--border2);font-family:var(--mono);font-size:11px">—</span>'}</td>
-      <td><select class="status-select" data-id="${l.id}" onchange="onStatusChange(this)"><option value="new" ${(l.status||'new')==='new'?'selected':''}>Новая</option><option value="work" ${l.status==='work'?'selected':''}>В работе</option><option value="closed" ${l.status==='closed'?'selected':''}>Закрыта</option></select></td>
-      <td class="lead-date">${formatDate(l.created_at)}</td>
-      <td><div class="actions"><button class="btn-delete" onclick="confirmDelete(${l.id})">✕</button></div></td>
-    </tr>`;
-  }).join('');
+  document.getElementById('empty-state').style.display='none';document.getElementById('leads-table').style.display='table';
+  document.getElementById('leads-body').innerHTML=leads.map(l=>`<tr onclick="openDetail(${l.id})">
+    <td class="lead-id">#${l.id}</td>
+    <td><div class="lead-name">${esc(l.name)}</div></td>
+    <td><div class="lead-contact">
+      ${l.phone?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.phone)}','\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e')">\ud83d\udcde ${esc(l.phone)}</span>`:''}
+      ${l.telegram?`<span class="contact-chip" onclick="event.stopPropagation();copyText('${esc(l.telegram)}','\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e')">\u2708 ${esc(l.telegram)}</span>`:''}
+      ${!l.phone&&!l.telegram?'<span style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">\u2014</span>':''}
+    </div></td>
+    <td><span class="lead-material">${esc(l.material)}</span></td>
+    <td style="font-family:var(--mono);font-size:12px">${esc(l.qty)}</td>
+    <td class="lead-comment-cell"><div class="comment-short">${esc((l.comment||'').slice(0,60))}${l.comment&&l.comment.length>60?'\u2026':''}</div></td>
+    <td>${l.file_name?`<span style="font-family:var(--mono);font-size:10px;color:var(--accent)">${esc(l.file_name.slice(0,18))}</span>`:'<span style="color:var(--border2);font-family:var(--mono);font-size:11px">\u2014</span>'}</td>
+    <td><select class="status-select" data-id="${l.id}" onchange="event.stopPropagation();onStatusChange(this)"><option value="new" ${(l.status||'new')==='new'?'selected':''}>\u041d\u043e\u0432\u0430\u044f</option><option value="work" ${l.status==='work'?'selected':''}>\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option><option value="closed" ${l.status==='closed'?'selected':''}>\u0417\u0430\u043a\u0440\u044b\u0442\u0430</option></select></td>
+    <td class="lead-date">${formatDate(l.created_at)}</td>
+    <td><div class="actions"><button class="btn-delete" onclick="event.stopPropagation();confirmDelete(${l.id})">\u2715</button></div></td>
+  </tr>`).join('');
 }
 
 function renderMobile(leads){
   const wrap=document.getElementById('mobile-cards');
-  if(!leads.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">Заявок не найдено</div></div>';return;}
-  wrap.innerHTML=leads.map(l=>`<div class="mobile-card">
+  if(!leads.length){wrap.innerHTML='<div class="empty-state"><div class="empty-icon">\ud83d\udced</div><div class="empty-text">\u0417\u0430\u044f\u0432\u043e\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e</div></div>';return;}
+  wrap.innerHTML=leads.map(l=>`<div class="mobile-card" onclick="openDetail(${l.id})">
     <div class="mobile-card-header">
-      <div><div class="mobile-card-id">#${l.id} · ${formatDate(l.created_at).replace('<br>',' ')}</div><div class="mobile-card-name">${esc(l.name||'—')}</div></div>
-      <select class="status-select" data-id="${l.id}" onchange="onStatusChange(this)" style="font-size:9px"><option value="new" ${(l.status||'new')==='new'?'selected':''}>Новая</option><option value="work" ${l.status==='work'?'selected':''}>В работе</option><option value="closed" ${l.status==='closed'?'selected':''}>Закрыта</option></select>
+      <div><div class="mobile-card-id">#${l.id}</div><div class="mobile-card-name">${esc(l.name)}</div></div>
+      ${statusTag(l.status||'new')}
     </div>
-    ${l.phone?`<div class="mobile-card-row"><span class="mobile-card-label">Тел</span><span class="mobile-card-val contact-chip" onclick="copyText('${esc(l.phone)}','Скопировано')">${esc(l.phone)}</span></div>`:''}
-    ${l.telegram?`<div class="mobile-card-row"><span class="mobile-card-label">TG</span><span class="mobile-card-val contact-chip" onclick="copyText('${esc(l.telegram)}','Скопировано')">${esc(l.telegram)}</span></div>`:''}
-    <div class="mobile-card-row"><span class="mobile-card-label">Мат.</span><span class="mobile-card-val" style="color:var(--accent);font-family:var(--mono);font-size:11px">${esc(l.material||'—')}</span></div>
-    <div class="mobile-card-row"><span class="mobile-card-label">Тираж</span><span class="mobile-card-val" style="font-family:var(--mono);font-size:11px">${esc(l.qty||'—')}</span></div>
-    ${l.comment?`<div class="mobile-card-row"><span class="mobile-card-label">Комм.</span><span class="mobile-card-val" style="font-size:12px;color:var(--text-dim)">${esc(l.comment)}</span></div>`:''}
-    <div class="mobile-card-actions">
-      ${l.file_name?`<a class="btn-file" href="#" onclick="toast('${esc(l.file_name)}','info');return false">↓ Файл</a>`:''}
-      <button class="btn-delete" onclick="confirmDelete(${l.id})" style="padding:6px 12px">✕ Удалить</button>
-    </div>
+    ${l.phone?`<div class="mobile-card-row"><span class="mobile-card-label">\u0422\u0435\u043b</span><span class="mobile-card-val">${esc(l.phone)}</span></div>`:''}
+    <div class="mobile-card-row"><span class="mobile-card-label">\u041c\u0430\u0442.</span><span class="mobile-card-val" style="color:var(--accent);font-family:var(--mono);font-size:11px">${esc(l.material)}</span></div>
+    <div class="mobile-card-row"><span class="mobile-card-label">\u0422\u0438\u0440\u0430\u0436</span><span class="mobile-card-val" style="font-family:var(--mono);font-size:11px">${esc(l.qty)}</span></div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:8px">\u041d\u0430\u0436\u043c\u0438\u0442\u0435 \u0434\u043b\u044f \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430 \u2192</div>
   </div>`).join('');
 }
 
-// COMMENT MODAL
-function openComment(id){
+// \u2500\u2500 DETAIL MODAL \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function openDetail(id){
   const l=allLeads.find(x=>x.id===id);if(!l)return;
-  document.getElementById('comment-modal-title').textContent='Комментарий — '+l.name+' #'+l.id;
-  document.getElementById('comment-modal-text').textContent=l.comment;
-  document.getElementById('comment-modal').classList.add('show');
+  currentDetailId=id;
+  document.getElementById('d-id').textContent='#'+l.id;
+  document.getElementById('d-name').textContent=l.name||'\u2014';
+  document.getElementById('d-date').textContent=formatDateFull(l.created_at);
+  // contacts
+  let cc='';
+  if(l.phone)cc+=`<a class="detail-contact-btn" onclick="copyText('${esc(l.phone)}','\u0422\u0435\u043b\u0435\u0444\u043e\u043d \u0441\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d');return false" href="#">\ud83d\udcde ${esc(l.phone)}</a>`;
+  if(l.telegram)cc+=`<a class="detail-contact-btn" href="https://t.me/${esc(l.telegram.replace('@',''))}" target="_blank">\u2708 ${esc(l.telegram)}</a>`;
+  if(!cc)cc='<span style="color:var(--text-dim);font-family:var(--mono);font-size:12px">\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d\u044b</span>';
+  document.getElementById('d-contacts').innerHTML=cc;
+  document.getElementById('d-material').textContent=l.material||'\u2014';
+  document.getElementById('d-qty').textContent=l.qty||'\u2014';
+  document.getElementById('d-budget').textContent=l.budget||'\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d';
+  document.getElementById('d-deadline').textContent=l.deadline||'\u041d\u0435 \u0443\u043a\u0430\u0437\u0430\u043d';
+  document.getElementById('d-specs').textContent=l.specs||'\u2014';
+  document.getElementById('d-comment').textContent=l.comment||'\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442';
+  // file
+  if(l.file_name){
+    document.getElementById('d-file-section').style.display='';
+    document.getElementById('d-file-icon').textContent=l.file_icon||'\ud83d\udcc1';
+    document.getElementById('d-file-name').textContent=l.file_name;
+    document.getElementById('d-file-meta').textContent=l.file_meta||'';
+  }else{document.getElementById('d-file-section').style.display='none';}
+  // status select
+  const sel=document.getElementById('d-status-select');
+  sel.innerHTML='<option value="new">\u041d\u043e\u0432\u0430\u044f</option><option value="work">\u0412 \u0440\u0430\u0431\u043e\u0442\u0435</option><option value="closed">\u0417\u0430\u043a\u0440\u044b\u0442\u0430</option>';
+  sel.value=l.status||'new';
+  // delete btn
+  document.getElementById('d-delete-btn').onclick=()=>confirmDelete(id);
+  // viewer labels
+  document.getElementById('viewer-part-label').textContent=l.file_name||'\u2014';
+  document.getElementById('viewer-mat-label').textContent=l.material.split('/')[0].trim();
+  // show modal
+  document.getElementById('detail-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+  // init 3d
+  setTimeout(()=>initViewer(l.model||'cnc_bracket',l),100);
 }
-document.getElementById('comment-modal-close').addEventListener('click',()=>document.getElementById('comment-modal').classList.remove('show'));
 
-// STATUS
+function closeDetail(){
+  document.getElementById('detail-modal').classList.remove('show');
+  document.body.style.overflow='';
+  destroyViewer();
+  currentDetailId=null;
+}
+
+async function onDetailStatusChange(sel){
+  try{
+    await updateStatus(currentDetailId,sel.value);
+    const l=allLeads.find(x=>x.id==currentDetailId);if(l)l.status=sel.value;
+    updateStats(allLeads);applyFilters();toast('\u0421\u0442\u0430\u0442\u0443\u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d','ok');
+  }catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430','err');}
+}
+
+// \u2500\u2500 STATUS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 async function onStatusChange(sel){
-  try{await updateStatus(sel.dataset.id,sel.value);const l=allLeads.find(l=>l.id==sel.dataset.id);if(l)l.status=sel.value;updateStats(allLeads);toast('Статус обновлён','ok');}
-  catch{toast('Ошибка обновления','err');}
+  try{await updateStatus(sel.dataset.id,sel.value);const l=allLeads.find(l=>l.id==sel.dataset.id);if(l)l.status=sel.value;updateStats(allLeads);toast('\u0421\u0442\u0430\u0442\u0443\u0441 \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d','ok');}
+  catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430 \u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f','err');}
 }
 
-// DELETE
-function confirmDelete(id){deleteId=id;document.getElementById('modal-text').textContent=`Заявка #${id} будет удалена навсегда. Это действие нельзя отменить.`;document.getElementById('confirm-modal').classList.add('show');}
+// \u2500\u2500 DELETE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function confirmDelete(id){
+  deleteId=id;
+  document.getElementById('modal-text').textContent=`\u0417\u0430\u044f\u0432\u043a\u0430 #${id} \u0431\u0443\u0434\u0435\u0442 \u0443\u0434\u0430\u043b\u0435\u043d\u0430 \u043d\u0430\u0432\u0441\u0435\u0433\u0434\u0430. \u042d\u0442\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u043e\u0442\u043c\u0435\u043d\u0438\u0442\u044c.`;
+  document.getElementById('confirm-modal').classList.add('show');
+}
 document.getElementById('modal-cancel').addEventListener('click',()=>{document.getElementById('confirm-modal').classList.remove('show');deleteId=null;});
 document.getElementById('modal-confirm').addEventListener('click',async()=>{
-  if(!deleteId)return;
-  document.getElementById('confirm-modal').classList.remove('show');
-  try{await deleteLead(deleteId);allLeads=allLeads.filter(l=>l.id!=deleteId);updateStats(allLeads);drawChart(allLeads);applyFilters();toast(`Заявка #${deleteId} удалена`,'ok');}
-  catch{toast('Ошибка удаления','err');}
-  deleteId=null;
+  if(!deleteId)return;document.getElementById('confirm-modal').classList.remove('show');
+  try{await deleteLead(deleteId);allLeads=allLeads.filter(l=>l.id!=deleteId);updateStats(allLeads);drawChart(allLeads);applyFilters();toast(`\u0417\u0430\u044f\u0432\u043a\u0430 #${deleteId} \u0443\u0434\u0430\u043b\u0435\u043d\u0430`,'ok');
+    if(currentDetailId==deleteId)closeDetail();
+  }catch{toast('\u041e\u0448\u0438\u0431\u043a\u0430 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u044f','err');}deleteId=null;
 });
 
-// COPY
+// \u2500\u2500 COPY / EXPORT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 function copyText(text,msg){navigator.clipboard.writeText(text).then(()=>toast(msg,'ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast(msg,'ok');});}
+function exportCSV(){const h=['ID','\u0418\u043c\u044f','\u0422\u0435\u043b\u0435\u0444\u043e\u043d','Telegram','\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b','\u0422\u0438\u0440\u0430\u0436','\u0411\u044e\u0434\u0436\u0435\u0442','\u0414\u0435\u0434\u043b\u0430\u0439\u043d','\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439','\u0424\u0430\u0439\u043b','\u0421\u0442\u0430\u0442\u0443\u0441','\u0414\u0430\u0442\u0430'];const rows=allLeads.map(l=>[l.id,l.name,l.phone,l.telegram,l.material,l.qty,l.budget,l.deadline,l.comment,l.file_name,l.status,l.created_at].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"'));const csv='\uFEFF'+[h,...rows].map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='zuply-leads-'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('CSV \u0441\u043a\u0430\u0447\u0430\u043d','ok');}
 
-// CSV EXPORT
-function exportCSV(){
-  const h=['ID','Имя','Телефон','Telegram','Материал','Тираж','Комментарий','Файл','Статус','Дата'];
-  const rows=allLeads.map(l=>[l.id,l.name,l.phone,l.telegram,l.material,l.qty,l.comment,l.file_name,l.status,l.created_at].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"'));
-  const csv='\uFEFF'+[h,...rows].map(r=>r.join(',')).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='zuply-leads-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
-  toast('CSV скачан','ok');
-}
-
-// TOAST
+// \u2500\u2500 TOAST \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 let toastTimer;
 function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className='show toast-'+type;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{el.className='';},3500);}
 
-// EVENTS
+// \u2500\u2500 EVENTS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 document.getElementById('refresh-btn').addEventListener('click',loadLeads);
 document.getElementById('search-input').addEventListener('input',applyFilters);
 document.getElementById('filter-status').addEventListener('change',applyFilters);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentDetailId)closeDetail();});
 
-// LOAD
+// \u2500\u2500 LOAD \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
 async function loadLeads(){
   document.getElementById('table-loading').style.display='flex';
   document.getElementById('leads-table').style.display='none';
   document.getElementById('empty-state').style.display='none';
   document.getElementById('mobile-cards').innerHTML='';
   try{allLeads=await fetchLeads();prevCount=allLeads.filter(l=>(l.status||'new')==='new').length;updateStats(allLeads);drawChart(allLeads);applyFilters();}
-  catch{toast('Не удалось загрузить заявки','err');document.getElementById('table-loading').style.display='none';document.getElementById('empty-state').style.display='block';}
+  catch{toast('\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0438','err');document.getElementById('table-loading').style.display='none';document.getElementById('empty-state').style.display='block';}
 }
 function initApp(){loadLeads();}
-</script>
-</body>
-</html>
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+// 3D VIEWER \u2014 Three.js
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+let viewerScene,viewerCamera,viewerRenderer,viewerMesh,viewerWireMesh,viewerAnimId;
+let viewerMode='solid',viewerAutoRotate=false;
+let isDragging=false,prevMouse={x:0,y:0};
+let rotX=0.3,rotY=0.5,camDist=3.5;
+
+function initViewer(modelType,lead){
+  destroyViewer();
+  const wrap=document.getElementById('viewer-canvas-wrap');
+  const W=wrap.clientWidth,H=wrap.clientHeight||360;
+
+  viewerScene=new THREE.Scene();
+  viewerCamera=new THREE.PerspectiveCamera(45,W/H,0.01,100);
+  viewerCamera.position.set(0,0,camDist);
+
+  viewerRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  viewerRenderer.setSize(W,H);
+  viewerRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  viewerRenderer.shadowMap.enabled=true;
+  viewerRenderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  wrap.appendChild(viewerRenderer.domElement);
+
+  // LIGHTS
+  const ambient=new THREE.AmbientLight(0x334466,0.8);
+  viewerScene.add(ambient);
+  const sun=new THREE.DirectionalLight(0xffffff,1.2);
+  sun.position.set(5,8,6);sun.castShadow=true;viewerScene.add(sun);
+  const fill=new THREE.DirectionalLight(0x00c8ff,0.3);
+  fill.position.set(-4,-3,-5);viewerScene.add(fill);
+  const rim=new THREE.DirectionalLight(0xffa040,0.2);
+  rim.position.set(3,-2,4);viewerScene.add(rim);
+
+  // GRID
+  const grid=new THREE.GridHelper(6,20,0x1c2535,0x1c2535);
+  grid.position.y=-1.1;viewerScene.add(grid);
+
+  // BUILD MODEL
+  const geo=buildModel(modelType);
+  const mat=buildMaterial(lead);
+  const wireMat=new THREE.MeshBasicMaterial({color:0x00c8ff,wireframe:true,opacity:.4,transparent:true});
+
+  viewerMesh=new THREE.
